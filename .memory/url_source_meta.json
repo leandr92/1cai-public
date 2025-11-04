@@ -1,0 +1,626 @@
+{
+  "_source_id": 85,
+  "sources": {
+    "Стандарты интеграции внешних API в 1С:Предприятие 2024-2025": {
+      "https://its.1c.ru": {
+        "id": 1,
+        "publisher": "1С-Битрикс",
+        "url": "https://its.1c.ru",
+        "title": "Библиотека ИТС - Портал информационно-технологического сопровождения",
+        "info": "Подключение с учетными данными its_rrpk/RRPK_2022, исследование документации по интеграции внешних API в 1С:Предприятие"
+      },
+      "https://its.1c.ru/db/v8doc": {
+        "id": 2,
+        "publisher": "1С-Битрикс",
+        "url": "https://its.1c.ru/db/v8doc",
+        "title": "Документация платформы 1С:Предприятие",
+        "info": "Официальная документация по HTTP-сервисам, REST API, JSON обработке, веб-сервисам и безопасности интеграций"
+      },
+      "https://its.1c.ru/db/content#doc:doc:3": {
+        "id": 3,
+        "publisher": "1С-Битрикс",
+        "url": "https://its.1c.ru/db/content#doc:doc:3",
+        "title": "HTTP-сервисы в 1С:Предприятие",
+        "info": "Подробная документация по созданию и использованию HTTP-сервисов для REST API интеграции"
+      },
+      "https://its.1c.ru/db/content#doc:doc:4": {
+        "id": 4,
+        "publisher": "1С-Битрикс",
+        "url": "https://its.1c.ru/db/content#doc:doc:4",
+        "title": "JSON обработка в 1С:Предприятие",
+        "info": "Документация по работе с JSON данными, сериализации и десериализации в контексте интеграций"
+      },
+      "https://its.1c.ru/db/content#doc:doc:5": {
+        "id": 5,
+        "publisher": "1С-Битрикс",
+        "url": "https://its.1c.ru/db/content#doc:doc:5",
+        "title": "1С:Шина - корпоративная шина данных",
+        "info": "Информация о корпоративной шине данных для интеграции с внешними системами"
+      }
+    },
+    "Современные стандарты тестирования в 1С:Предприятие 2024-2025": {
+      "https://its.1c.ru/db/kip": {
+        "id": 6,
+        "publisher": "1С",
+        "url": "https://its.1c.ru/db/kip",
+        "title": "1С:Корпоративный инструментальный пакет 8, версия 2.1",
+        "info": "Основной источник информации о тестировании в 1С: включает Тест-центр (аналог xUnit), Сценарное тестирование (E2E), Центр контроля качества (метрики), APDEX как метрика производительности, возможности CI/CD через RemoteManagement веб-сервис"
+      },
+      "https://github.com/xDrivenDevelopment/xUnitFor1C": {
+        "id": 7,
+        "publisher": "xDrivenDevelopment",
+        "url": "https://github.com/xDrivenDevelopment/xUnitFor1C",
+        "title": "xUnitFor1C - Unit testing tools for 1C:Enterprise 8 platform",
+        "info": "Основной фреймворк для юнит-тестирования в 1С:Enterprise 8, поддерживает модульное, приемочное и сценарное тестирование"
+      },
+      "https://github.com/Pr-Mex/vanessa-automation": {
+        "id": 8,
+        "publisher": "Pr-Mex",
+        "url": "https://github.com/Pr-Mex/vanessa-automation",
+        "title": "Vanessa-automation: BDD в 1С",
+        "info": "BDD фреймворк для автоматизированного тестирования в 1С, поддержка различных типов тестов и интеграций"
+      },
+      "https://www.ibm.com/think/insights/unit-testing-best-practices": {
+        "id": 9,
+        "publisher": "IBM",
+        "url": "https://www.ibm.com/think/insights/unit-testing-best-practices",
+        "title": "Unit Testing Best Practices",
+        "info": "Best Practices для написания юнит-тестов: AAA паттерн, организация тестов, тестовые фреймворки"
+      },
+      "https://docs.sonarsource.com/sonarqube-server/10.8/user-guide/code-metrics/metrics-definition": {
+        "id": 10,
+        "publisher": "SonarSource",
+        "url": "https://docs.sonarsource.com/sonarqube-server/10.8/user-guide/code-metrics/metrics-definition",
+        "title": "Understanding measures and metrics - SonarQube Documentation",
+        "info": "Документация по метрикам и измерениям кода в SonarQube, включая покрытие кода, циклическую сложность, когнитивную сложность"
+      },
+      "https://www.sonarsource.com/blog/sonarqube-code-coverage/": {
+        "id": 11,
+        "publisher": "SonarSource",
+        "url": "https://www.sonarsource.com/blog/sonarqube-code-coverage/",
+        "title": "Using and Understanding SonarQube Server for Code Coverage",
+        "info": "Принципы работы с покрытием кода в SonarQube: настройка анализа, интерпретация результатов, лучшие практики"
+      }
+    },
+    "Стандарты обработки ошибок в 1С:Предприятие 2024-2025": {
+      "https://its.1c.ru/db/content/v8std/src/400/200/i8100499.htm": {
+        "id": 12,
+        "publisher": "1С:ИТС",
+        "url": "https://its.1c.ru/db/content/v8std/src/400/200/i8100499.htm",
+        "title": "Перехват исключений в коде - Стандарты разработки 1С",
+        "info": "Официальные рекомендации по перехвату исключений в 1С: не перехватывать без необходимости, локальные блоки Попытка-Исключение, использование ОбработкаОшибок.ПодробноеПредставлениеОшибки, запрет на анализ текстов исключений"
+      },
+      "https://topkoder.ru/stati/kak-integrirovat-1s-s-sistemami-monitoringa-i-kontrolya-dlya-umnogo-biznesa/": {
+        "id": 13,
+        "publisher": "TopKoder",
+        "url": "https://topkoder.ru/stati/kak-integrirovat-1s-s-sistemami-monitoringa-i-kontrolya-dlya-umnogo-biznesa/",
+        "title": "Как интегрировать 1С с системами мониторинга для умного бизнеса",
+        "info": "Пошаговое руководство по интеграции 1С с системами мониторинга: определение целей, выбор технологий (API, веб-сервисы, MQTT, OPC-UA), настройка сбора данных, тестирование. Кейсы: IoT-мониторинг оборудования, RFID-системы, видеоаналитика"
+      },
+      "https://de-coder.ru/kak-nastroit-sistemu-monitoringa-proizvoditelnosti-v-1s/": {
+        "id": 14,
+        "publisher": "Декодер",
+        "url": "https://de-coder.ru/kak-nastroit-sistemu-monitoringa-proizvoditelnosti-v-1s/",
+        "title": "Как настроить систему мониторинга производительности в 1С",
+        "info": "Руководство по настройке мониторинга 1С: стандартные инструменты (Журнал регистрации, Монитор производительности), внешние системы (Zabbix, Grafana, Prometheus), настройка оповещений, анализ данных, решение типичных проблем"
+      },
+      "https://its.1c.ru/db/content/metod8dev/src/developers/additional/configs/i8105856.htm": {
+        "id": 15,
+        "publisher": "1С:ИТС",
+        "url": "https://its.1c.ru/db/content/metod8dev/src/developers/additional/configs/i8105856.htm",
+        "title": "1С:Библиотека стандартных подсистем (БСП)",
+        "info": "Обзор БСП 3.1 - более 60 подсистем, включая логирование (История изменений объектов), обработку ошибок, технологические механизмы. Лицензия CC BY 4.0. Поддержка интеграции с внешними системами"
+      },
+      "https://habr.com/ru/companies/netologyru/articles/861800/": {
+        "id": 16,
+        "publisher": "Habr",
+        "url": "https://habr.com/ru/companies/netologyru/articles/861800/",
+        "title": "10 лучших приёмов логирования для разработчиков",
+        "info": "Лучшие практики структурированного логирования: JSON/XML форматы, уникальные идентификаторы (request ID, trace ID), OpenTelemetry стандартизация, централизованное управление логами, маскирование конфиденциальных данных, настройка оповещений"
+      }
+    },
+    "Стандарты производительности 1С:Предприятие 2024-2025": {
+      "https://consulting.1c.ru/technologies/kip/": {
+        "id": 17,
+        "publisher": "1С:Консалтинг",
+        "url": "https://consulting.1c.ru/technologies/kip/",
+        "title": "1С:Корпоративный инструментальный пакет 8",
+        "info": "Подробная информация о Центре управления производительностью (ЦУП) в КИП: возможности мониторинга, анализа производительности, определение узких мест в системе"
+      },
+      "https://de-coder.ru/kak-uluchshit-proizvoditelnost-1s-tehnicheskie-rekomendacii/": {
+        "id": 18,
+        "publisher": "DE-CODER",
+        "url": "https://de-coder.ru/kak-uluchshit-proizvoditelnost-1s-tehnicheskie-rekomendacii/",
+        "title": "Как улучшить производительность 1С: технические рекомендации",
+        "info": "Технические рекомендации по улучшению производительности 1С: управление нагрузкой, оптимизация серверного оборудования, базы данных, мониторинг системных ресурсов"
+      },
+      "https://rarus.ru/publications/20240425-ot-ekspertov-optimizaciya-proizvoditelnosti-1c-dokumentooborota-01-651728/": {
+        "id": 19,
+        "publisher": "1С-Рарус",
+        "url": "https://rarus.ru/publications/20240425-ot-ekspertov-optimizaciya-proizvoditelnosti-1c-dokumentooborota-01-651728/",
+        "title": "Оптимизация производительности 1С:Документооборота. Часть 1",
+        "info": "Кейсы оптимизации производительности 1С:Документооборота: настройка прав доступа, ускорение работы АРМ, регламентные задания, обмен данными. Показатели прироста производительности"
+      },
+      "https://mclouds.ru/2024/09/test-gileva-dlya-1s-kak-ustanovit-provesti-i-ponyat-rezultaty/": {
+        "id": 20,
+        "publisher": "mClouds",
+        "url": "https://mclouds.ru/2024/09/test-gileva-dlya-1s-kak-ustanovit-provesti-i-ponyat-rezultaty/",
+        "title": "Тест Гилева для 1С: как установить, провести и понять результаты",
+        "info": "Подробное руководство по тесту Гилева (ТРС-1С): назначение, метрики производительности, интерпретация результатов, факторы влияния, KPI шкала (10-60 баллов)"
+      }
+    },
+    "Современные стандарты кэширования в 1С:Предприятие": {
+      "https://topkoder.ru/stati/kak-nastroit-keshirovanie-v-1s-dlya-uskoreniya-raboty/": {
+        "id": 21,
+        "publisher": "TopKoder",
+        "url": "https://topkoder.ru/stati/kak-nastroit-keshirovanie-v-1s-dlya-uskoreniya-raboty/",
+        "title": "Как настроить кэширование в 1С для ускорения работы",
+        "info": "Подробная документация по настройке кэширования в 1С: виды кэширования (запросов, объектов, метаданных), настройка кэширования на сервере и клиенте, лучшие практики оптимизации производительности"
+      },
+      "https://developer.mozilla.org/ru/docs/Web/HTTP/Guides/Caching": {
+        "id": 22,
+        "publisher": "MDN Web Docs",
+        "url": "https://developer.mozilla.org/ru/docs/Web/HTTP/Guides/Caching",
+        "title": "HTTP-кеширование - руководство",
+        "info": "Стандарты HTTP-кэширования: заголовки Cache-Control, ETag, Last-Modified, If-None-Match; методы валидации кэша; типы кэша (приватный, общий); расчет времени жизни кэша"
+      },
+      "https://habr.com/ru/companies/timeweb/articles/958898/": {
+        "id": 23,
+        "publisher": "Habr (Timeweb)",
+        "url": "https://habr.com/ru/companies/timeweb/articles/958898/",
+        "title": "Полное руководство по HTTP-кэшированию. Часть 2",
+        "info": "Практическое руководство по HTTP-кэшированию с ETag: стратегии кэширования для разных типов контента (статические ресурсы, HTML, API, персонализированные данные), поведение браузера за пределами заголовков, отладка и диагностика кэширования"
+      },
+      "https://its.1c.ru/db/metod8dev/content/4105/hdoc": {
+        "id": 24,
+        "publisher": "1С-Библиотека ИТС",
+        "url": "https://its.1c.ru/db/metod8dev/content/4105/hdoc",
+        "title": "Оптимизация клиент-серверного взаимодействия прикладных решений",
+        "info": "Методические рекомендации по оптимизации клиент-серверного взаимодействия в 1С с использованием многоуровневого кэширования для предотвращения повторной передачи информации на клиента"
+      },
+      "https://v8.1c.ru/metod/article/arkhitektura-1s-predpriyatiya-kak-produkt-inzhenernoy-mysli.htm": {
+        "id": 25,
+        "publisher": "1С",
+        "url": "https://v8.1c.ru/metod/article/arkhitektura-1s-predpriyatiya-kak-produkt-inzhenernoy-mysli.htm",
+        "title": "Архитектура «1С:Предприятия» как продукт инженерной мысли",
+        "info": "Архитектура 1С:Предприятия с акцентом на метаданные как основу бизнес-приложений, структурированное декларативное описание системы и иерархия объектов конфигурации"
+      }
+    },
+    "Анализ архитектуры 1c_mcp для кэширования": {
+      "/workspace/docs/1c_caching_standards.md": {
+        "id": 26,
+        "publisher": "1С",
+        "url": "/workspace/docs/1c_caching_standards.md",
+        "title": "Современные стандарты кэширования в 1С:Предприятие",
+        "info": "Стандарты многоуровневого кэширования в 1С, HTTP-кэширование с ETag, механизмы инвалидации"
+      },
+      "/workspace/docs/1c_mcp_analysis_report.md": {
+        "id": 27,
+        "publisher": "Владимир Харин",
+        "url": "/workspace/docs/1c_mcp_analysis_report.md",
+        "title": "Анализ архитектуры проекта 1c_mcp",
+        "info": "Детальный анализ архитектуры 1c_mcp, компоненты, технологии, интеграция с AI через MCP протокол"
+      },
+      "docs/1c_mcp_caching/architecture_scheme.md": {
+        "id": 28,
+        "publisher": "MiniMax Agent",
+        "url": "docs/1c_mcp_caching/architecture_scheme.md",
+        "title": "Схема архитектуры многоуровневого кэширования 1c_mcp",
+        "info": "Схема многоуровневой архитектуры кэширования с визуализацией взаимодействия между слоями, типами кэширования и механизмами инвалидации"
+      },
+      "docs/1c_mcp_caching/1c_mcp_caching_architecture.md": {
+        "id": 29,
+        "publisher": "MiniMax Agent",
+        "url": "docs/1c_mcp_caching/1c_mcp_caching_architecture.md",
+        "title": "Проект архитектуры многоуровневого кэширования для 1c_mcp",
+        "info": "Полный отчет по интеграции многоуровневого кэширования в архитектуру 1c_mcp с анализом совместимости, планом интеграции и практическими рекомендациями"
+      }
+    },
+    "1c_mcp Testing Plan": {
+      "https://github.com/xDrivenDevelopment/xUnitFor1C": {
+        "id": 30,
+        "publisher": "xDrivenDevelopment",
+        "url": "https://github.com/xDrivenDevelopment/xUnitFor1C",
+        "title": "xUnitFor1C - Open Source фреймворк юнит-тестирования",
+        "info": "Основной фреймворк для юнит-тестирования в 1С:Enterprise 8, поддерживает модульное, приемочное и сценарное тестирование"
+      },
+      "https://github.com/Pr-Mex/vanessa-automation": {
+        "id": 31,
+        "publisher": "Pr-Mex",
+        "url": "https://github.com/Pr-Mex/vanessa-automation",
+        "title": "Vanessa-automation - BDD в 1С",
+        "info": "BDD фреймворк для автоматизированного тестирования в 1С, поддержка различных типов тестов и интеграций"
+      },
+      "https://its.1c.ru/db/kip": {
+        "id": 32,
+        "publisher": "1С",
+        "url": "https://its.1c.ru/db/kip",
+        "title": "1С:КИП 8, версия 2.1",
+        "info": "1С:Корпоративный инструментальный пакет - включает Тест-центр, Сценарное тестирование, Центр контроля качества и возможности CI/CD"
+      },
+      "https://www.sonarsource.com/blog/sonarqube-code-coverage/": {
+        "id": 33,
+        "publisher": "SonarSource",
+        "url": "https://www.sonarsource.com/blog/sonarqube-code-coverage/",
+        "title": "Using and Understanding SonarQube Server for Code Coverage",
+        "info": "Принципы работы с покрытием кода в SonarQube: настройка анализа, интерпретация результатов, лучшие практики"
+      },
+      "https://www.ibm.com/think/insights/unit-testing-best-practices": {
+        "id": 34,
+        "publisher": "IBM",
+        "url": "https://www.ibm.com/think/insights/unit-testing-best-practices",
+        "title": "Unit Testing Best Practices",
+        "info": "Лучшие практики для написания юнит-тестов: AAA паттерн, организация тестов, тестовые фреймворки"
+      },
+      "https://github.com/vanessa-opensource/add": {
+        "id": 35,
+        "publisher": "Vanessa Opensource",
+        "url": "https://github.com/vanessa-opensource/add",
+        "title": "Vanessa-ADD - Набор инструментов тестирования",
+        "info": "Продукт для тестирования 1С:Enterprise 8, миссия - повышение качества"
+      },
+      "https://infostart.ru/1c/articles/542747/": {
+        "id": 36,
+        "publisher": "INFOSTART",
+        "url": "https://infostart.ru/1c/articles/542747/",
+        "title": "Пошаговая инструкция для запуска тестов с помощью xUnitFor1C",
+        "info": "Практическое руководство по настройке и запуску тестов в xUnitFor1C"
+      }
+    },
+    "Современные методологии проектирования прикладных решений 1С": {
+      "https://www.koderline.ru/expert/narabotki/article-patterny-proektirovaniya-v-1s-stroim-nadezhnye-i-masshtabiruemye-resheniya/": {
+        "id": 37,
+        "publisher": "Кодерлайн",
+        "url": "https://www.koderline.ru/expert/narabotki/article-patterny-proektirovaniya-v-1s-stroim-nadezhnye-i-masshtabiruemye-resheniya/",
+        "title": "Создание и применение паттерна в 1С - строим надежные и масштабируемые решения",
+        "info": "Подробное описание паттернов проектирования в 1С: Слой доступа к данным (Repository), Сервисный слой (Facade), Стратегия (Strategy), Наблюдатель (Observer), Шаблонный метод (Template Method), DTO. Практические примеры и рекомендации по применению."
+      },
+      "https://www.businessstudio.ru/articles/article/dekompozitsiya_protsessov_v_notatsii_bpmn_repin/": {
+        "id": 38,
+        "publisher": "Business Studio",
+        "url": "https://www.businessstudio.ru/articles/article/dekompozitsiya_protsessov_v_notatsii_bpmn_repin/",
+        "title": "Декомпозиция процессов в нотации BPMN",
+        "info": "Три метода декомпозиции бизнес-процессов: создание подпроцессов, запуск процессов через сообщения, использование типовых процессов (Call Activity). Применение в системе Business Studio с интеграцией с 1С."
+      },
+      "https://infostart.ru/1c/tools/1714797/": {
+        "id": 39,
+        "publisher": "Инфостарт",
+        "url": "https://infostart.ru/1c/tools/1714797/",
+        "title": "Диаграмма объектов 1С на Plant UML",
+        "info": "Внешняя обработка для генерации диаграмм объектов 1С на языке PlantUML. Позволяет визуализировать структуру метаданных 1С, их взаимосвязи, использует специализированные иконки для объектов метаданных 1С."
+      },
+      "https://infostart.ru/1c/articles/1199427/": {
+        "id": 40,
+        "publisher": "Инфостарт",
+        "url": "https://infostart.ru/1c/articles/1199427/",
+        "title": "Качество кода: Поведенческие паттерны проектирования",
+        "info": "Детальный анализ четырех поведенческих паттернов в 1С: Наблюдатель (Observer), Посредник (Mediator), Цепочка обязанностей (Chain of Responsibility), Итератор (Iterator). Практические примеры реализации в коде 1С."
+      },
+      "https://www.mista.ru/topic/606631": {
+        "id": 41,
+        "publisher": "Форум Mista.ru",
+        "url": "https://www.mista.ru/topic/606631",
+        "title": "Шаблоны проектирования - обсуждение применения паттернов в 1С",
+        "info": "Детальное обсуждение применимости классических паттернов проектирования в 1С: Фасад, Декоратор, Фабрика, Синглтон, Адаптер, Итератор, Строитель. Анализ особенностей платформы 1С и ее отличий от классических ООП-подходов."
+      },
+      "https://www.uml2.ru/forum/index.php?topic=220.0": {
+        "id": 42,
+        "publisher": "Форум UML2.ru",
+        "url": "https://www.uml2.ru/forum/index.php?topic=220.0",
+        "title": "Использование UML при проектировании задач в 1С",
+        "info": "Подробное обсуждение применения UML в 1С: применимость на стадиях бизнес-моделирования, сложности перехода к реализации, особенности платформы 1С. Опыт использования Sybase PowerDesigner, Rational Rose для моделирования 1С-конфигураций."
+      }
+    },
+    "Автоматизация процессов проектирования архитектуры в 1С": {
+      "https://roshancloudarchitect.me/how-github-copilot-can-help-software-architects-e7bdf96abebb": {
+        "id": 43,
+        "publisher": "Medium / Roshan Cloud Architect",
+        "url": "https://roshancloudarchitect.me/how-github-copilot-can-help-software-architects-e7bdf96abebb",
+        "title": "How GitHub Copilot Can Help Software Architects",
+        "info": "Возможности GitHub Copilot для архитекторов: автоматическая генерация кода, применение архитектурных паттернов, улучшение качества кода, поддержка документации и создание архитектурных диаграмм"
+      },
+      "https://ilovedotnet.org/blogs/using-github-copilot-ai-for-architecture-diagram-generation/": {
+        "id": 44,
+        "publisher": "ILoveDotNet",
+        "url": "https://ilovedotnet.org/blogs/using-github-copilot-ai-for-architecture-diagram-generation/",
+        "title": "Using GitHub Copilot AI for Architecture Diagram Generation",
+        "info": "Пошаговое руководство по автоматической генерации архитектурных диаграмм с использованием GitHub Copilot, Mermaid синтаксиса и GitHub Actions"
+      },
+      "https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-accelerate-software-dev-lifecycle-gen-ai/generative-ai-capabilities-arch-design.html": {
+        "id": 45,
+        "publisher": "AWS",
+        "url": "https://docs.aws.amazon.com/prescriptive-guidance/latest/strategy-accelerate-software-dev-lifecycle-gen-ai/generative-ai-capabilities-arch-design.html",
+        "title": "Generative AI use cases for architecture and design",
+        "info": "Генеративные возможности ИИ для архитектуры: анализ требований, генерация альтернативных дизайнов, ускорение процесса проектирования и создание проектной документации"
+      },
+      "https://www.thoughtworks.com/en-us/insights/blog/generative-ai/using-ai-requirements-analysis-case-study": {
+        "id": 46,
+        "publisher": "Thoughtworks",
+        "url": "https://www.thoughtworks.com/en-us/insights/blog/generative-ai/using-ai-requirements-analysis-case-study",
+        "title": "Using AI for requirements analysis: A case study",
+        "info": "Исследование применения генеративного ИИ для анализа требований: сокращение времени анализа на 20%, снижение количества ошибок на 10%, улучшение качества пользовательских историй"
+      },
+      "https://blog.1ci.com/en/partner-insights/how-ai-and-1c-enterprise-are-transforming-erp-systems/": {
+        "id": 47,
+        "publisher": "1Ci Blog",
+        "url": "https://blog.1ci.com/en/partner-insights/how-ai-and-1c-enterprise-are-transforming-erp-systems/",
+        "title": "Artificial Intelligence and ERP Systems",
+        "info": "Интеграция ИИ с 1С:Enterprise: машинное обучение, NLP, прогностическая аналитика, компьютерное зрение; примеры использования в 1С ERP системах с автоматическим сопоставлением кандидатов"
+      },
+      "https://1c-dn.com/1c_enterprise/1c_enterprise_development_tools/": {
+        "id": 48,
+        "publisher": "1C Developer Network",
+        "url": "https://1c-dn.com/1c_enterprise/1c_enterprise_development_tools/",
+        "title": "1С:Enterprise Development Tools",
+        "info": "1С:EDT - современная среда разработки на базе Eclipse с CASE-инструментами, поддержкой плагинов, Git интеграцией, автоматизированным тестированием и валидацией в реальном времени"
+      },
+      "https://www.stack-ai.com/blog/the-role-of-ai-in-enterprise-architecture": {
+        "id": 49,
+        "publisher": "Stack AI",
+        "url": "https://www.stack-ai.com/blog/the-role-of-ai-in-enterprise-architecture",
+        "title": "AI in Enterprise Architecture: Strategy, Design & Impact",
+        "info": "Роль ИИ в корпоративной архитектуре: ИИ-ориентированное планирование, автоматизация моделирования данных, оптимизация архитектурного проектирования, непрерывный мониторинг безопасности и соответствия"
+      },
+      "https://github.com/swark-io/swark": {
+        "id": 50,
+        "publisher": "GitHub / Swark",
+        "url": "https://github.com/swark-io/swark",
+        "title": "Swark: Architecture diagrams from code using LLMs",
+        "info": "Swark - расширение VS Code для автоматической генерации архитектурных диаграмм из кода с использованием больших языковых моделей и интеграцией с GitHub Copilot, генерация Mermaid диаграмм"
+      }
+    },
+    "Роль архитектора 1С в современных проектах": {
+      "https://it-atlas.ru/blog/pagen_5/tpost/tmkomos421-kto-eto-arhitektor-1s-i-kakie-zadachi-on": {
+        "id": 51,
+        "publisher": "IT Atlas",
+        "url": "https://it-atlas.ru/blog/pagen_5/tpost/tmkomos421-kto-eto-arhitektor-1s-i-kakie-zadachi-on",
+        "title": "Кто это архитектор 1С и какие задачи он выполняет?",
+        "info": "Основные обязанности архитектора 1С: проектирование архитектуры информационной системы, выбор технологических решений, обеспечение масштабируемости и совместимости решений"
+      },
+      "https://it-atlas.ru/blog/pagen_5/tpost/4526js3io1-tehnicheskii-arhitektor-1s-i-ego-obyazan": {
+        "id": 52,
+        "publisher": "IT Atlas",
+        "url": "https://it-atlas.ru/blog/pagen_5/tpost/4526js3io1-tehnicheskii-arhitektor-1s-i-ego-obyazan",
+        "title": "Технический архитектор 1С и его обязанности",
+        "info": "Технические обязанности архитектора 1С: выстраивание технической архитектуры проекта, оптимизация производительности базы данных, CI/CD и DevOps процессы"
+      },
+      "https://otus.ru/lessons/architector1c/": {
+        "id": 53,
+        "publisher": "OTUS",
+        "url": "https://otus.ru/lessons/architector1c/",
+        "title": "Курс Архитектор 1С: научитесь формировать архитектуру",
+        "info": "Информация о программе курса архитектора 1С, необходимых навыках, инструментах (Git, SonarQube, Grafana, Jenkins), методологиях разработки и тестирования"
+      },
+      "https://vc.ru/services/1271961-neprostaya-zadacha-vybor-celevoi-arhitektury-reshenii-1s": {
+        "id": 54,
+        "publisher": "VC.ru",
+        "url": "https://vc.ru/services/1271961-neprostaya-zadacha-vybor-celevoi-arhitektury-reshenii-1s",
+        "title": "Непростая задача: выбор целевой архитектуры решений 1С",
+        "info": "Пятиэтапный процесс выбора целевой архитектуры 1С: сбор вводных, анализ данных, подбор решений, продумывание интеграций, тестирование архитектуры"
+      },
+      "https://rudesignshop.ru/blog/proektirovanie-arhitektury-1s/": {
+        "id": 55,
+        "publisher": "RU Design Shop",
+        "url": "https://rudesignshop.ru/blog/proektirovanie-arhitektury-1s/",
+        "title": "Проектирование архитектуры 1с",
+        "info": "Принципы проектирования архитектуры 1С: гибкость, масштабируемость, надежность, безопасность. Типы архитектур: монолитная, микросервисная, гибридная. Статистика проблем внедрения"
+      },
+      "https://ibs-training.ru/about/news/CHto_dolzhen_znat_i_umet_arkhitektor_PO_v_2025_godu/": {
+        "id": 56,
+        "publisher": "IBS Training",
+        "url": "https://ibs-training.ru/about/news/CHto_dolzhen_znat_i_umet_arkhitektor_PO_v_2025_godu/",
+        "title": "Что должен знать и уметь архитектор ПО в 2025 году",
+        "info": "Информация о требованиях к архитектору ПО в 2025 году: архитектурные стили, работа с требованиями, создание устойчивых решений"
+      },
+      "https://www.xn--1-ptbahnx.xn--p1ai/articles/klyuchevye-navyki-1s-razrabotchika-vostrebovannye-v-2025-godu": {
+        "id": 57,
+        "publisher": "1С Блог",
+        "url": "https://www.xn--1-ptbahnx.xn--p1ai/articles/klyuchevye-navyki-1s-razrabotchika-vostrebovannye-v-2025-godu",
+        "title": "Ключевые навыки 1С-разработчика, востребованные в 2025 году",
+        "info": "Ключевые навыки 1С-разработчика в 2025 году: технические навыки платформы 1С:Предприятие, конфигурации, архитектура платформы, распределенные системы"
+      },
+      "https://1solution.ru/events/articles/1s-shina-rabbitmq-i-apache-kafka-sravnenie/": {
+        "id": 58,
+        "publisher": "1Solution",
+        "url": "https://1solution.ru/events/articles/1s-shina-rabbitmq-i-apache-kafka-sravnenie/",
+        "title": "1С:Шина, RabbitMQ и Apache Kafka – сравнение возможностей",
+        "info": "Сравнение технологий интеграции: 1С:Шина, RabbitMQ, Apache Kafka. Особенности реализации микросервисной архитектуры, B2B интеграции"
+      },
+      "https://assino.ru/news/11-prichin-slozhnostej-v-proekte-vnedreniya-1s/": {
+        "id": 59,
+        "publisher": "Assino",
+        "url": "https://assino.ru/news/11-prichin-slozhnostej-v-proekte-vnedreniya-1s/",
+        "title": "11 причин сложностей в проекте по внедрению 1С",
+        "info": "Основные проблемы в проектах внедрения 1С: выбор неподходящей архитектуры, ошибки планирования, недостаток тестирования, безопасность"
+      },
+      "https://infostart.ru/public/article/priemy_i_metody_razrabotki/devops_i_avtomatizaciya_razrabotki/": {
+        "id": 60,
+        "publisher": "Инфостарт",
+        "url": "https://infostart.ru/public/article/priemy_i_metody_razrabotki/devops_i_avtomatizaciya_razrabotki/",
+        "title": "Библиотека по теме DevOps и автоматизация разработки для 1С",
+        "info": "Современные инструменты DevOps для 1С: CI/CD инструменты, облачные технологии, автоматизация разработки на платформе 1С:Предприятие"
+      }
+    },
+    "Исследование трендов и инноваций Infostart.ru для 1С разработки": {
+      "https://infostart.ru/1c/articles/2272637/": {
+        "id": 61,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/1c/articles/2272637/",
+        "title": "1С: Предприятие с новым интерфейсом",
+        "info": "Обзор бета-версии 1С:Предприятие 8.5 с новым интерфейсом, модернизированным дизайном, темной/светлой темами, обновленным стартером платформы и новой системой версионирования"
+      },
+      "https://infostart.ru/1c/articles/2509402/": {
+        "id": 62,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/1c/articles/2509402/",
+        "title": "AI-агенты для 1С: от генерации кода до автоматизации",
+        "info": "Детальный анализ возможностей ИИ-агентов в 1С, протоколов MCP и A2A, автоматизации разработки и тестирования, практические примеры интеграции с OneScript"
+      },
+      "https://infostart.ru/1c/articles/1227351/": {
+        "id": 63,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/1c/articles/1227351/",
+        "title": "Выразительный Web API",
+        "info": "Архитектурные принципы создания REST API в 1С, лучшие практики разработки HTTP-сервисов, примеры URI-ресурсов и интеграционные решения"
+      },
+      "https://infostart.ru/1c/articles/2505666/": {
+        "id": 64,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/1c/articles/2505666/",
+        "title": "Продвинутый интерфейс на 1С: Часть 2 - Новый вид",
+        "info": "Практические подходы к созданию современных UI/UX интерфейсов в 1С без SVG и HTML, дизайнерские решения для повышения удобства и презентабельности"
+      },
+      "https://infostart.ru/1c/articles/2462524/": {
+        "id": 65,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/1c/articles/2462524/",
+        "title": "Разработка веб-приложений на технологии 1С:Предприятие.Элемент",
+        "info": "Опыт разработки веб-приложений на 1С:Элемент, новые возможности YAML-интерфейсов, статической типизации, виртуальных таблиц и современных подходов"
+      },
+      "https://infostart.ru/1c/articles/2453928/": {
+        "id": 66,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/1c/articles/2453928/",
+        "title": "ТОП-5 источников ошибок в 1С: Анализ тестировщика и пути их устранения",
+        "info": "Глубокий анализ источников ошибок в 1С-разработке: невнимательность, copy/paste антипаттерны, незнание бизнес-процессов, некорректные тестовые данные и ошибки в хранилище. Лучшие практики GRASP и контроля качества"
+      },
+      "https://infostart.ru/1c/articles/2514331/": {
+        "id": 67,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/1c/articles/2514331/",
+        "title": "1С и AI от хайпа к практике. Создаем MCP-сервер для интеграции",
+        "info": "Практическое применение ИИ в 1С, создание MCP-серверов для интеграции с LLM, архитектура и реализация MCP-протокола, безопасность данных, реальные кейсы для программистов, аналитиков и пользователей"
+      },
+      "https://infostart.ru/1c/articles/2481400/": {
+        "id": 68,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/1c/articles/2481400/",
+        "title": "Быстрая организация HTTP-сервиса, или О том, как я...",
+        "info": "Практические советы по созданию HTTP-сервисов в 1С, универсальный модуль для автоматизации рутинных задач API, современные подходы к интеграции и созданию микросервисов"
+      },
+      "https://infostart.ru/1c/articles/2272587/": {
+        "id": 69,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/1c/articles/2272587/",
+        "title": "Новый интерфейс 8.5: записки сумасшедшего. Часть 1",
+        "info": "Детальный обзор нового интерфейса 1С 8.5, особенности адаптации форм, изменения в настройках, выявленные баги и рекомендации по переходу на новую платформу"
+      },
+      "https://infostart.ru/journal/news/mir-1s/publikuem-trendovye-temy-ot-moderatorov-infostart-tech-event-2024_2138633/": {
+        "id": 70,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/journal/news/mir-1s/publikuem-trendovye-temy-ot-moderatorov-infostart-tech-event-2024_2138633/",
+        "title": "Публикуем трендовые темы от модераторов INFOSTART TECH EVENT 2024",
+        "info": "Актуальные трендовые темы от модераторов конференции 2024 года: технологические тренды в 1С, архитектурные подходы, DevOps, интеграции, AI, импортозамещение и развитие экосистемы"
+      },
+      "https://infostart.ru/1c/articles/2407502/": {
+        "id": 71,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/1c/articles/2407502/",
+        "title": "Автоматизация тестирования решений на 1С",
+        "info": "Обширное сравнение инструментов тестирования в 1С (Vanessa, YAxUnit, xUnit), стратегия тестирования, перевернутая пирамида тестирования, UI-тесты против юнит-тестов, современные подходы к автоматизации и контролю качества"
+      },
+      "https://infostart.ru/pm/2410935/": {
+        "id": 72,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/pm/2410935/",
+        "title": "Как не отстать от развития экосистемы 1С",
+        "info": "Анализ новых функций платформы 1С 8.3.23-8.3.26: комьюнити-лицензии, регулярные выражения, множественные значения, распознавание и синтез речи, улучшения отладки, пакетная обработка, интеграция с 1С:Аналитикой"
+      },
+      "https://infostart.ru/journal/news/mir-1s/v-novyy-2025-god-s-novoy-platformoy-1s-predpriyatie-8-5_2272912/": {
+        "id": 73,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/journal/news/mir-1s/v-novyy-2025-god-s-novoy-platformoy-1s-predpriyatie-8-5_2272912/",
+        "title": "В новый 2025 год – с новой платформой 1С:Предприятие 8.5",
+        "info": "Официальная информация о выходе бета-версии 1С:Предприятие 8.5, новые возможности интерфейса, темы оформления, векторные иконки, оптимизация производительности, планы дальнейшего развития"
+      },
+      "https://infostart.ru/1c/articles/2477768/": {
+        "id": 74,
+        "publisher": "Infostart.ru",
+        "url": "https://infostart.ru/1c/articles/2477768/",
+        "title": "Интеграция между 1С без боли и страданий",
+        "info": "Практический фреймворк CoreTech Exchange для интеграции 1С, современные паттерны онлайн-обмена, событийная интеграция, бесшовная интеграция, кейсы центрального казначейства с 50+ базами 1С"
+      }
+    },
+    "Анализ функциональности проекта 1c-ai-demo-classic": {
+      "https://speech.1c.ai/apps/demo_app/": {
+        "id": 75,
+        "publisher": "ООО \"1С-Софт\"",
+        "url": "https://speech.1c.ai/apps/demo_app/",
+        "title": "Демонстрационное приложение - 1С:Речевые технологии",
+        "info": "Основная информация о демо-приложении 1С:Речевые технологии, включая возможности распознавания речи (потоковое распознавание, диктовка, распознавание аудиофайлов), синтеза речи, настройки и управление"
+      },
+      "https://speech.1c.ai/": {
+        "id": 76,
+        "publisher": "ООО \"1С-Софт\"",
+        "url": "https://speech.1c.ai/",
+        "title": "Главная - 1С:Речевые технологии",
+        "info": "Полное описание возможностей платформы 1С:Речевые технологии, включая 1С:Распознавание речи и 1С:Синтез речи, их возможности, применение в бизнесе и примеры использования"
+      },
+      "https://portal.1c.ru/applications/1C-Speech-Synthesis": {
+        "id": 77,
+        "publisher": "ООО \"1С-Софт\"",
+        "url": "https://portal.1c.ru/applications/1C-Speech-Synthesis",
+        "title": "1С:Синтез речи - Официальный портал продуктов 1С",
+        "info": "Подробное описание продукта 1С:Синтез речи, включая тарифы, технические характеристики, возможности интеграции и сценарии использования"
+      },
+      "https://consulting.1c.ru/news/219403.html": {
+        "id": 78,
+        "publisher": "Фирма \"1С\"",
+        "url": "https://consulting.1c.ru/news/219403.html",
+        "title": "Новый продукт для пользователей «1С:Предприятие»",
+        "info": "Анонс нового продукта 1С:Синтез речи от 20 мая 2024 года, включая технические детали, тарифы и тестовый доступ"
+      },
+      "https://infostart.ru/1c/tools/2431689/": {
+        "id": 79,
+        "publisher": "InfoStart.ru",
+        "url": "https://infostart.ru/1c/tools/2431689/",
+        "title": "Использование ИИ в 1С: Автоматизация рутинных задач",
+        "info": "Решение для интеграции ИИ в 1С, позволяющее автоматизировать рутинные задачи через интеграцию с различными языковыми моделями (YandexGPT, Gemini, Deepseek, GigaChat)"
+      }
+    },
+    "Анализ архитектуры проекта 1c-ai-demo-classic": {
+      "https://v8.1c.ru/platforma/1s-predpriyatie-element/": {
+        "id": 80,
+        "publisher": "1С",
+        "url": "https://v8.1c.ru/platforma/1s-predpriyatie-element/",
+        "title": "Технология «1С:Предприятие.Элемент»",
+        "info": "Официальная документация технологии 1С:Предприятие.Элемент, включая архитектурные особенности, возможности разработки веб-приложений и интеграции с ИИ"
+      },
+      "https://v8.1c.ru/platforma/obzor-arkhitektury-platformy/": {
+        "id": 81,
+        "publisher": "1С",
+        "url": "https://v8.1c.ru/platforma/obzor-arkhitektury-platformy/",
+        "title": "Обзор архитектуры платформы | Базовые механизмы",
+        "info": "Детальный обзор архитектуры платформы 1С, включая многозвенную архитектуру, технологический стек, архитектурные паттерны и компоненты системы"
+      },
+      "https://v8.1c.ru/podderzhka-i-obuchenie/demonstratsionnye-konfiguratsii/": {
+        "id": 82,
+        "publisher": "1С",
+        "url": "https://v8.1c.ru/podderzhka-i-obuchenie/demonstratsionnye-konfiguratsii/",
+        "title": "Демонстрационные конфигурации 1С:Предприятие 8.3",
+        "info": "Демонстрационная информационная база для изучения возможностей платформы 1С:Предприятие 8.3"
+      },
+      "https://infostart.ru/1c/tools/2431689/": {
+        "id": 83,
+        "publisher": "Infostart",
+        "url": "https://infostart.ru/1c/tools/2431689/",
+        "title": "Использование ИИ в 1С: Автоматизация рутинных задач",
+        "info": "Решение для интеграции искусственного интеллекта в систему 1С с целью автоматизации рутинных задач"
+      },
+      "https://github.com/artbear/1c-intelligence": {
+        "id": 84,
+        "publisher": "artbear",
+        "url": "https://github.com/artbear/1c-intelligence",
+        "title": "1С:Интеллект",
+        "info": "Проект 1С:Интеллект с новыми подходами к разработке и внедрению решений на платформе 1С"
+      },
+      "https://github.com/Oxotka/StackTechnologies1C": {
+        "id": 85,
+        "publisher": "Oxotka",
+        "url": "https://github.com/Oxotka/StackTechnologies1C",
+        "title": "StackTechnologies1C",
+        "info": "Обзор технологического стека для разработчика на 1С, включая компоненты, связанные с ИИ и архитектурными решениями"
+      }
+    }
+  }
+}

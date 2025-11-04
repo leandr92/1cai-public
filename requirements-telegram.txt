@@ -1,0 +1,17 @@
+# Telegram Bot Dependencies
+# Install: pip install -r requirements-telegram.txt
+
+# Telegram bot framework
+aiogram==3.4.1
+
+# Async HTTP client (used by aiogram)
+aiohttp==3.9.3
+
+# Environment variables
+python-dotenv==1.0.0
+
+# Optional: Redis для rate limiting (production)
+# redis==5.0.1
+# aioredis==2.0.1
+
+

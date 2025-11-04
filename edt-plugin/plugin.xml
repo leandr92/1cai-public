@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<!-- 
+  1C AI Assistant EDT Plugin
+  Enterprise 1C AI Development Stack
+-->
+<plugin>
+   <extension point="org.eclipse.ui.views">
+      <!-- AI Assistant View -->
+      <view
+         id="com.1cai.edt.views.AIAssistant"
+         name="AI Assistant"
+         icon="icons/ai-assistant.png"
+         category="com.1cai.edt.category"
+         class="com.1cai.edt.views.AIAssistantView"
+         allowMultiple="false">
+      </view>
+      
+      <!-- Metadata Graph View -->
+      <view
+         id="com.1cai.edt.views.MetadataGraph"
+         name="Metadata Graph"
+         icon="icons/graph.png"
+         category="com.1cai.edt.category"
+         class="com.1cai.edt.views.MetadataGraphView"
+         allowMultiple="false">
+      </view>
+      
+      <!-- Semantic Search View -->
+      <view
+         id="com.1cai.edt.views.SemanticSearch"
+         name="Semantic Search"
+         icon="icons/search.png"
+         category="com.1cai.edt.category"
+         class="com.1cai.edt.views.SemanticSearchView"
+         allowMultiple="false">
+      </view>
+      
+      <!-- Code Optimizer View -->
+      <view
+         id="com.1cai.edt.views.CodeOptimizer"
+         name="Code Optimizer"
+         icon="icons/optimize.png"
+         category="com.1cai.edt.category"
+         class="com.1cai.edt.views.CodeOptimizerView"
+         allowMultiple="false">
+      </view>
+   </extension>
+   
+   <!-- View Category -->
+   <extension point="org.eclipse.ui.views">
+      <category
+         id="com.1cai.edt.category"
+         name="1C AI Assistant">
+      </category>
+   </extension>
+   
+   <!-- Context Menu Actions for BSL Editor -->
+   <extension point="org.eclipse.ui.popupMenus">
+      <objectContribution
+         id="com.1cai.edt.actions.bsl"
+         objectClass="com._1c.g5.v8.dt.bsl.model.Method">
+         
+         <action
+            id="com.1cai.edt.actions.analyzeFunction"
+            label="Analyze with AI"
+            icon="icons/analyze.png"
+            class="com.1cai.edt.actions.AnalyzeFunctionAction"
+            menubarPath="additions">
+         </action>
+         
+         <action
+            id="com.1cai.edt.actions.optimizeFunction"
+            label="Optimize Function"
+            icon="icons/optimize.png"
+            class="com.1cai.edt.actions.OptimizeFunctionAction"
+            menubarPath="additions">
+         </action>
+         
+         <action
+            id="com.1cai.edt.actions.findSimilar"
+            label="Find Similar Code"
+            icon="icons/search.png"
+            class="com.1cai.edt.actions.FindSimilarCodeAction"
+            menubarPath="additions">
+         </action>
+         
+         <action
+            id="com.1cai.edt.actions.showCallGraph"
+            label="Show Call Graph"
+            icon="icons/graph.png"
+            class="com.1cai.edt.actions.ShowCallGraphAction"
+            menubarPath="additions">
+         </action>
+      </objectContribution>
+   </extension>
+   
+   <!-- Preferences -->
+   <extension point="org.eclipse.ui.preferencePages">
+      <page
+         id="com.1cai.edt.preferences.main"
+         name="1C AI Assistant"
+         class="com.1cai.edt.preferences.MainPreferencePage">
+      </page>
+      
+      <page
+         id="com.1cai.edt.preferences.connection"
+         name="Connection Settings"
+         category="com.1cai.edt.preferences.main"
+         class="com.1cai.edt.preferences.ConnectionPreferencePage">
+      </page>
+   </extension>
+   
+   <!-- Startup extension (for initialization) -->
+   <extension point="org.eclipse.ui.startup">
+      <startup class="com.1cai.edt.Activator"/>
+   </extension>
+</plugin>
+
+
+
+
+

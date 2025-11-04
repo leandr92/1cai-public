@@ -1,0 +1,26 @@
+# Stage 1: Additional Dependencies
+# Graph Database, Vector Search, Full-text Search
+
+# Neo4j
+neo4j==5.15.0
+
+# Qdrant Vector Database
+qdrant-client==1.7.3
+
+# Elasticsearch
+elasticsearch==8.11.0
+
+# Embeddings (for Qdrant)
+sentence-transformers==2.2.2
+torch==2.1.2
+
+# Graph algorithms
+networkx==3.2.1
+
+# Progress bars
+tqdm==4.66.1
+
+
+
+
+

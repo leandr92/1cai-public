@@ -1,0 +1,80 @@
+{
+  "name": "1c-copilot",
+  "displayName": "1С:Copilot",
+  "description": "AI pair programmer for 1C (BSL)",
+  "version": "0.1.0",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Machine Learning",
+    "Snippets"
+  ],
+  "activationEvents": [
+    "onLanguage:bsl"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "1c-copilot.generateFunction",
+        "title": "1С:Copilot: Generate Function"
+      },
+      {
+        "command": "1c-copilot.optimizeCode",
+        "title": "1С:Copilot: Optimize Code"
+      },
+      {
+        "command": "1c-copilot.generateTests",
+        "title": "1С:Copilot: Generate Tests"
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "1c-copilot.generateFunction",
+        "key": "ctrl+shift+g",
+        "when": "editorTextFocus && editorLangId == 'bsl'"
+      }
+    ],
+    "configuration": {
+      "title": "1С:Copilot",
+      "properties": {
+        "1c-copilot.apiUrl": {
+          "type": "string",
+          "default": "http://localhost:8000/api/copilot",
+          "description": "API URL для 1С:Copilot backend"
+        },
+        "1c-copilot.apiKey": {
+          "type": "string",
+          "default": "",
+          "description": "API key для авторизации"
+        },
+        "1c-copilot.autoComplete": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable auto-complete suggestions"
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "eslint src --ext ts"
+  },
+  "devDependencies": {
+    "@types/node": "^18.x",
+    "@types/vscode": "^1.80.0",
+    "@typescript-eslint/eslint-plugin": "^5.x",
+    "@typescript-eslint/parser": "^5.x",
+    "eslint": "^8.x",
+    "typescript": "^5.0.0"
+  },
+  "dependencies": {
+    "axios": "^1.6.0"
+  }
+}
+
+

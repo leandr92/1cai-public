@@ -1,0 +1,119 @@
+{
+  "dashboard": {
+    "title": "1C AI Stack - System Overview",
+    "tags": ["system", "overview"],
+    "timezone": "browser",
+    "panels": [
+      {
+        "id": 1,
+        "title": "Request Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total[5m])",
+            "legendFormat": "Requests/sec"
+          }
+        ],
+        "gridPos": {"x": 0, "y": 0, "w": 12, "h": 8}
+      },
+      {
+        "id": 2,
+        "title": "Response Time (p95)",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))",
+            "legendFormat": "p95 latency"
+          }
+        ],
+        "gridPos": {"x": 12, "y": 0, "w": 12, "h": 8}
+      },
+      {
+        "id": 3,
+        "title": "Error Rate",
+        "type": "graph",
+        "targets": [
+          {
+            "expr": "rate(http_requests_total{status=~\"5..\"}[5m])",
+            "legendFormat": "Errors/sec"
+          }
+        ],
+        "gridPos": {"x": 0, "y": 8, "w": 12, "h": 8}
+      },
+      {
+        "id": 4,
+        "title": "Active Connections",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "sum(websocket_connections_active)"
+          }
+        ],
+        "gridPos": {"x": 12, "y": 8, "w": 6, "h": 4}
+      },
+      {
+        "id": 5,
+        "title": "Database Pool",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "database_pool_active_connections"
+          }
+        ],
+        "gridPos": {"x": 18, "y": 8, "w": 6, "h": 4}
+      },
+      {
+        "id": 6,
+        "title": "AI Query Duration",
+        "type": "heatmap",
+        "targets": [
+          {
+            "expr": "ai_query_duration_seconds",
+            "legendFormat": "Duration"
+          }
+        ],
+        "gridPos": {"x": 0, "y": 16, "w": 24, "h": 8}
+      },
+      {
+        "id": 7,
+        "title": "Cache Hit Rate",
+        "type": "gauge",
+        "targets": [
+          {
+            "expr": "rate(cache_hits_total[5m]) / rate(cache_requests_total[5m]) * 100"
+          }
+        ],
+        "gridPos": {"x": 0, "y": 24, "w": 8, "h": 6}
+      },
+      {
+        "id": 8,
+        "title": "System Health Score",
+        "type": "gauge",
+        "targets": [
+          {
+            "expr": "system_health_score"
+          }
+        ],
+        "gridPos": {"x": 8, "y": 24, "w": 8, "h": 6}
+      },
+      {
+        "id": 9,
+        "title": "Customer Count",
+        "type": "stat",
+        "targets": [
+          {
+            "expr": "active_tenants_total"
+          }
+        ],
+        "gridPos": {"x": 16, "y": 24, "w": 8, "h": 6}
+      }
+    ],
+    "refresh": "30s",
+    "time": {
+      "from": "now-6h",
+      "to": "now"
+    }
+  }
+}
+
+

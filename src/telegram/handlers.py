@@ -1,0 +1,344 @@
+"""
+Telegram Bot Handlers
+Обработчики команд и сообщений
+"""
+
+import logging
+from typing import Optional
+from aiogram import Router, F
+from aiogram.filters import Command
+from aiogram.types import Message, FSInputFile
+from aiogram.enums import ParseMode
+
+from src.ai.orchestrator import AIOrchestrator
+from src.telegram.formatters import TelegramFormatter
+from src.telegram.rate_limiter import RateLimiter
+from src.telegram.config import config
+
+logger = logging.getLogger(__name__)
+router = Router()
+
+# Services
+orchestrator = AIOrchestrator()
+formatter = TelegramFormatter()
+rate_limiter = RateLimiter(
+    max_per_minute=config.max_requests_per_minute,
+    max_per_day=config.max_requests_per_day
+)
+
+
+def is_premium_user(user_id: int) -> bool:
+    """Проверка Premium статуса"""
+    return user_id in (config.premium_user_ids or set())
+
+
+async def check_rate_limit(message: Message) -> bool:
+    """Проверка rate limit с автоответом"""
+    user_id = message.from_user.id
+    is_premium = is_premium_user(user_id)
+    
+    allowed, error_msg = await rate_limiter.check_limit(user_id, is_premium)
+    
+    if not allowed:
+        await message.reply(error_msg, parse_mode=ParseMode.MARKDOWN)
+    
+    return allowed
+
+
+@router.message(Command("start"))
+async def cmd_start(message: Message):
+    """Команда /start"""
+    user_name = message.from_user.first_name
+    
+    welcome = f"""👋 Привет, **{user_name}**!
+
+Я — AI-помощник для 1С разработчиков.
+
+Могу:
+🔍 Искать код по смыслу (не только по тексту!)
+💻 Генерировать BSL код
+🔗 Анализировать зависимости
+💡 Отвечать на вопросы о вашей конфигурации
+
+**Попробуйте:**
+• `/search расчет НДС`
+• Или просто спросите: "Где мы работаем с документами?"
+
+Полный список команд: /help
+
+🚀 **Начнем?**
+"""
+    
+    await message.reply(welcome, parse_mode=ParseMode.MARKDOWN)
+
+
+@router.message(Command("help"))
+async def cmd_help(message: Message):
+    """Команда /help"""
+    help_text = formatter.format_help()
+    await message.reply(help_text, parse_mode=ParseMode.MARKDOWN)
+
+
+@router.message(Command("search"))
+async def cmd_search(message: Message):
+    """Команда /search - семантический поиск"""
+    
+    # Rate limiting
+    if not await check_rate_limit(message):
+        return
+    
+    # Извлечение запроса
+    query = message.text.replace("/search", "").strip()
+    
+    if not query:
+        await message.reply(
+            "❓ Укажите запрос для поиска\n\n"
+            "Пример: `/search расчет НДС`",
+            parse_mode=ParseMode.MARKDOWN
+        )
+        return
+    
+    # Typing indicator
+    await message.answer("🔍 Ищу...")
+    
+    try:
+        # Поиск через orchestrator
+        result = await orchestrator.process_query(
+            query,
+            context={
+                "type": "semantic_search",
+                "user_id": message.from_user.id,
+                "limit": 10
+            }
+        )
+        
+        # Форматирование
+        response = formatter.format_search_results(result)
+        
+        await message.reply(response, parse_mode=ParseMode.MARKDOWN)
+        
+        logger.info(f"Search completed for user {message.from_user.id}: {query}")
+        
+    except Exception as e:
+        logger.error(f"Search error: {e}")
+        await message.reply(
+            formatter.format_error(str(e)),
+            parse_mode=ParseMode.MARKDOWN
+        )
+
+
+@router.message(Command("generate"))
+async def cmd_generate(message: Message):
+    """Команда /generate - генерация кода"""
+    
+    if not config.enable_code_generation:
+        await message.reply("❌ Генерация кода временно отключена")
+        return
+    
+    # Rate limiting
+    if not await check_rate_limit(message):
+        return
+    
+    # Извлечение описания
+    description = message.text.replace("/generate", "").strip()
+    
+    if not description:
+        await message.reply(
+            "❓ Опишите, что нужно сгенерировать\n\n"
+            "Пример: `/generate функция расчета скидки по объему`",
+            parse_mode=ParseMode.MARKDOWN
+        )
+        return
+    
+    # Typing indicator
+    await message.answer("💻 Генерирую код...")
+    
+    try:
+        # Генерация через orchestrator
+        result = await orchestrator.process_query(
+            f"Создай функцию: {description}",
+            context={
+                "type": "code_generation",
+                "user_id": message.from_user.id,
+                "description": description
+            }
+        )
+        
+        # Форматирование
+        response = formatter.format_generated_code(result)
+        
+        await message.reply(response, parse_mode=ParseMode.MARKDOWN)
+        
+        logger.info(f"Code generated for user {message.from_user.id}: {description}")
+        
+    except Exception as e:
+        logger.error(f"Generation error: {e}")
+        await message.reply(
+            formatter.format_error(str(e)),
+            parse_mode=ParseMode.MARKDOWN
+        )
+
+
+@router.message(Command("deps"))
+async def cmd_dependencies(message: Message):
+    """Команда /deps - анализ зависимостей"""
+    
+    if not config.enable_dependency_analysis:
+        await message.reply("❌ Анализ зависимостей временно отключен")
+        return
+    
+    # Rate limiting
+    if not await check_rate_limit(message):
+        return
+    
+    # Парсинг аргументов: /deps <модуль> <функция>
+    args = message.text.replace("/deps", "").strip().split()
+    
+    if len(args) < 2:
+        await message.reply(
+            "❓ Укажите модуль и функцию\n\n"
+            "Пример: `/deps РасчетыСервер РассчитатьНДС`",
+            parse_mode=ParseMode.MARKDOWN
+        )
+        return
+    
+    module_name = args[0]
+    function_name = " ".join(args[1:])
+    
+    # Typing indicator
+    await message.answer("🔗 Анализирую зависимости...")
+    
+    try:
+        # Анализ через orchestrator
+        result = await orchestrator.process_query(
+            f"Покажи зависимости функции {function_name} в модуле {module_name}",
+            context={
+                "type": "dependency_analysis",
+                "user_id": message.from_user.id,
+                "module_name": module_name,
+                "function_name": function_name
+            }
+        )
+        
+        # Форматирование
+        response = formatter.format_dependencies(result)
+        
+        await message.reply(response, parse_mode=ParseMode.MARKDOWN)
+        
+        logger.info(f"Dependencies analyzed for user {message.from_user.id}")
+        
+    except Exception as e:
+        logger.error(f"Dependencies error: {e}")
+        await message.reply(
+            formatter.format_error(str(e)),
+            parse_mode=ParseMode.MARKDOWN
+        )
+
+
+@router.message(Command("stats"))
+async def cmd_stats(message: Message):
+    """Команда /stats - статистика"""
+    user_id = message.from_user.id
+    
+    stats = rate_limiter.get_stats(user_id)
+    stats["is_premium"] = is_premium_user(user_id)
+    
+    response = formatter.format_stats(stats)
+    await message.reply(response, parse_mode=ParseMode.MARKDOWN)
+
+
+@router.message(Command("premium"))
+async def cmd_premium(message: Message):
+    """Команда /premium - информация о Premium"""
+    response = formatter.format_premium_info()
+    await message.reply(response, parse_mode=ParseMode.MARKDOWN)
+
+
+@router.message(F.document)
+async def handle_document(message: Message):
+    """Обработка файлов (.bsl, .os)"""
+    
+    # Rate limiting
+    if not await check_rate_limit(message):
+        return
+    
+    document = message.document
+    
+    # Проверка расширения
+    if not document.file_name.endswith(('.bsl', '.os', '.txt')):
+        await message.reply(
+            "❌ Поддерживаются только файлы: .bsl, .os, .txt"
+        )
+        return
+    
+    await message.answer("📄 Анализирую файл...")
+    
+    try:
+        # TODO: Скачать файл и проанализировать
+        # file = await message.bot.download(document)
+        # code = file.read().decode('utf-8')
+        
+        await message.reply(
+            "✅ Файл получен!\n\n"
+            "🚧 Анализ файлов в разработке...\n"
+            "Скоро будет доступно: code review, поиск проблем, рефакторинг",
+            parse_mode=ParseMode.MARKDOWN
+        )
+        
+    except Exception as e:
+        logger.error(f"File handling error: {e}")
+        await message.reply(formatter.format_error(str(e)))
+
+
+@router.message(F.text)
+async def handle_text(message: Message):
+    """Обработка обычного текста (естественные вопросы)"""
+    
+    # Игнорируем команды
+    if message.text.startswith("/"):
+        return
+    
+    # Rate limiting
+    if not await check_rate_limit(message):
+        return
+    
+    query = message.text.strip()
+    
+    if len(query) < 5:
+        await message.reply("❓ Задайте более конкретный вопрос или используйте /help")
+        return
+    
+    await message.answer("🤔 Думаю...")
+    
+    try:
+        # Обработка естественного запроса
+        result = await orchestrator.process_query(
+            query,
+            context={
+                "type": "natural_query",
+                "user_id": message.from_user.id
+            }
+        )
+        
+        # Определяем тип ответа
+        if result.get("type") == "search_results":
+            response = formatter.format_search_results(result)
+        elif result.get("type") == "code":
+            response = formatter.format_generated_code(result)
+        else:
+            # Общий текстовый ответ
+            response = result.get("answer", "Не могу найти ответ 😔")
+        
+        await message.reply(response, parse_mode=ParseMode.MARKDOWN)
+        
+    except Exception as e:
+        logger.error(f"Text handling error: {e}")
+        await message.reply(
+            "🤔 Не совсем понял вопрос. Попробуйте:\n\n"
+            "• `/search <что ищете>`\n"
+            "• `/generate <что создать>`\n"
+            "• `/help` — список команд",
+            parse_mode=ParseMode.MARKDOWN
+        )
+
+

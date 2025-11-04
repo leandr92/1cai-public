@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1С ИИ-ассистенты - Офлайн</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            color: #f1f5f9;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .offline-container {
+            max-width: 500px;
+            text-align: center;
+            background: rgba(30, 41, 59, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 16px;
+            padding: 40px 30px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .offline-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 24px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        .offline-title {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #f1f5f9, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .offline-message {
+            font-size: 16px;
+            color: #cbd5e1;
+            line-height: 1.6;
+            margin-bottom: 32px;
+        }
+
+        .offline-features {
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 32px;
+        }
+
+        .offline-features h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: #f1f5f9;
+        }
+
+        .feature-list {
+            list-style: none;
+            text-align: left;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-size: 14px;
+        }
+
+        .feature-list li::before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 8px;
+            font-size: 16px;
+        }
+
+        .retry-button {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .retry-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.5);
+        }
+
+        .retry-button:active {
+            transform: translateY(0);
+        }
+
+        .offline-footer {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid rgba(59, 130, 246, 0.2);
+            font-size: 12px;
+            color: #64748b;
+        }
+
+        .network-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 8px;
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid rgba(239, 68, 68, 0.3);
+            border-radius: 6px;
+            font-size: 12px;
+            color: #fca5a5;
+        }
+
+        .network-status.online {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: rgba(16, 185, 129, 0.3);
+            color: #6ee7b7;
+        }
+
+        .spinner {
+            width: 16px;
+            height: 16px;
+            border: 2px solid #3b82f6;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="offline-container">
+        <div class="offline-icon">
+            <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2">
+                <line x1="1" y1="1" x2="23" y2="23"></line>
+                <line x1="23" y1="1" x2="1" y2="23"></line>
+            </svg>
+        </div>
+        
+        <h1 class="offline-title">Нет подключения</h1>
+        
+        <p class="offline-message">
+            Похоже, что вы находитесь офлайн. Но не волнуйтесь! 
+            Приложение 1С ИИ-ассистенты работает и без интернета.
+        </p>
+        
+        <div class="offline-features">
+            <h3>Доступно офлайн:</h3>
+            <ul class="feature-list">
+                <li>Просмотр последних демонстраций</li>
+                <li>Работа с сохраненными результатами</li>
+                <li>Экспорт данных в различные форматы</li>
+                <li>Доступ к документации и справке</li>
+                <li>Настройки и предпочтения</li>
+            </ul>
+        </div>
+        
+        <button class="retry-button" onclick="checkConnection()">
+            <span class="spinner hidden" id="retrySpinner"></span>
+            <span id="retryText">🔄 Проверить подключение</span>
+        </button>
+        
+        <div class="offline-footer">
+            <p>Последняя синхронизация: <span id="lastSync">Неизвестно</span></p>
+            <p style="margin-top: 8px;">
+                <span class="network-status" id="networkStatus">
+                    <span style="width: 8px; height: 8px; background: #ef4444; border-radius: 50%; display: inline-block;"></span>
+                    Офлайн
+                </span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        let retryTimeout;
+
+        function checkConnection() {
+            const button = document.querySelector('.retry-button');
+            const spinner = document.getElementById('retrySpinner');
+            const text = document.getElementById('retryText');
+            
+            // Показываем спиннер
+            spinner.classList.remove('hidden');
+            text.textContent = 'Проверка...';
+            button.disabled = true;
+            
+            // Проверяем соединение с таймаутом
+            const controller = new AbortController();
+            const timeoutId = setTimeout(() => controller.abort(), 5000);
+            
+            fetch('/', {
+                method: 'HEAD',
+                cache: 'no-cache',
+                signal: controller.signal
+            })
+            .then(() => {
+                clearTimeout(timeoutId);
+                // Соединение восстановлено
+                showSuccessAndRedirect();
+            })
+            .catch(() => {
+                clearTimeout(timeoutId);
+                // Соединение всё ещё отсутствует
+                showRetryError();
+            });
+        }
+
+        function showSuccessAndRedirect() {
+            const button = document.querySelector('.retry-button');
+            const text = document.getElementById('retryText');
+            
+            text.textContent = '✅ Подключение восстановлено!';
+            
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 1500);
+        }
+
+        function showRetryError() {
+            const button = document.querySelector('.retry-button');
+            const spinner = document.getElementById('retrySpinner');
+            const text = document.getElementById('retryText');
+            
+            spinner.classList.add('hidden');
+            text.textContent = '❌ Всё ещё офлайн';
+            button.disabled = false;
+            
+            // Сбрасываем текст через 3 секунды
+            setTimeout(() => {
+                text.textContent = '🔄 Проверить подключение';
+            }, 3000);
+        }
+
+        function updateNetworkStatus() {
+            const status = document.getElementById('networkStatus');
+            const isOnline = navigator.onLine;
+            
+            status.className = isOnline ? 'network-status online' : 'network-status';
+            status.innerHTML = isOnline 
+                ? '<span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span>Онлайн'
+                : '<span style="width: 8px; height: 8px; background: #ef4444; border-radius: 50%; display: inline-block;"></span>Офлайн';
+        }
+
+        function updateLastSync() {
+            const lastSync = localStorage.getItem('lastSyncTime');
+            if (lastSync) {
+                const date = new Date(parseInt(lastSync));
+                document.getElementById('lastSync').textContent = date.toLocaleString('ru-RU');
+            } else {
+                document.getElementById('lastSync').textContent = 'Никогда';
+            }
+        }
+
+        // Слушаем изменения состояния сети
+        window.addEventListener('online', () => {
+            updateNetworkStatus();
+            // Автоматически перенаправляем через 2 секунды
+            setTimeout(() => {
+                window.location.href = '/';
+            }, 2000);
+        });
+
+        window.addEventListener('offline', updateNetworkStatus);
+
+        // Инициализация при загрузке
+        document.addEventListener('DOMContentLoaded', () => {
+            updateNetworkStatus();
+            updateLastSync();
+            
+            // Обновляем статус каждые 30 секунд
+            setInterval(updateNetworkStatus, 30000);
+        });
+
+        // Сохраняем время последней синхронизации
+        if (navigator.onLine) {
+            localStorage.setItem('lastSyncTime', Date.now().toString());
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+{
+  "name": "@shared/service-communication",
+  "version": "1.0.0",
+  "description": "Comprehensive service communication framework for microservices architecture",
+  "main": "src/index.ts",
+  "types": "src/index.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "test": "jest",
+    "lint": "eslint src/**/*.ts",
+    "clean": "rimraf dist"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.39.0",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "@types/uuid": "^9.0.7",
+    "typescript": "^5.3.0",
+    "ts-node": "^10.9.1",
+    "ts-node-dev": "^2.0.0",
+    "jest": "^29.7.0",
+    "@types/jest": "^29.5.8",
+    "eslint": "^8.54.0",
+    "rimraf": "^5.0.5"
+  },
+  "keywords": [
+    "microservices",
+    "service-communication",
+    "service-discovery",
+    "load-balancer",
+    "health-check",
+    "circuit-breaker",
+    "distributed-tracing",
+    "event-sourcing",
+    "saga-pattern",
+    "monitoring"
+  ],
+  "author": "Microservices Team",
+  "license": "MIT",
+  "peerDependencies": {
+    "typescript": ">=5.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

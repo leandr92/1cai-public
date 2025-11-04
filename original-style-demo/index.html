@@ -1,0 +1,1493 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ИИ-ассистенты для 1С - Улучшенная демонстрация</title>
+  <meta name="description" content="Интерактивная демонстрация возможностей ИИ-ассистентов для разработки и сопровождения решений на платформе 1С:Предприятие с содержательными результатами" />
+  <meta name="keywords" content="1С, ИИ-ассистент, демо, архитектор, разработчик, бизнес-аналитик, data analyst" />
+  <meta name="theme-color" content="#0f172a" />
+  <meta name="background-color" content="#0f172a" />
+  
+  <!-- Performance hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Прежний стиль - темная тема как в первом сайте */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+    /* Темная тема */
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+      color: #e2e8f0;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Главный контейнер */
+    .demo-container {
+      background: rgba(30, 41, 59, 0.8);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Карточки */
+    .role-card {
+      background: rgba(51, 65, 85, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      transition: all 0.3s ease;
+      cursor: pointer;
+      padding: 24px;
+      border-radius: 12px;
+    }
+
+    .role-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(59, 130, 246, 0.5);
+      box-shadow: 0 12px 40px rgba(59, 130, 246, 0.2);
+    }
+
+    /* Заголовки */
+    .hero-title {
+      background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 50%, #1d4ed8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      font-weight: 700;
+      text-shadow: 0 4px 8px rgba(59, 130, 246, 0.3);
+      font-size: 3.5rem;
+      margin: 0 0 1rem 0;
+    }
+
+    .section-title {
+      color: #e2e8f0;
+      font-weight: 600;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+      font-size: 2.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    /* Кнопки */
+    .btn-primary {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      border: none;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(59, 130, 246, 0.3);
+      color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-secondary {
+      background: #475569;
+      border: none;
+      transition: all 0.3s ease;
+      color: white;
+      padding: 16px 32px;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-secondary:hover {
+      background: #64748b;
+      transform: translateY(-2px);
+    }
+
+    /* Навигация */
+    .navbar {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .nav-container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      height: 64px;
+    }
+
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: bold;
+      color: #111827;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .nav-link {
+      color: #4b5563;
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .nav-link:hover {
+      color: #3b82f6;
+    }
+
+    /* Сетки */
+    .grid {
+      display: grid;
+    }
+
+    .grid-cols-1 {
+      grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
+
+    .grid-cols-2 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .grid-cols-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .grid-cols-4 {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+
+    .gap-8 {
+      gap: 2rem;
+    }
+
+    .gap-6 {
+      gap: 1.5rem;
+    }
+
+    .gap-4 {
+      gap: 1rem;
+    }
+
+    /* Отступы и размеры */
+    .container {
+      max-width: 1280px;
+      margin: 0 auto;
+      padding: 0 16px;
+    }
+
+    .py-24 {
+      padding-top: 6rem;
+      padding-bottom: 6rem;
+    }
+
+    .py-16 {
+      padding-top: 4rem;
+      padding-bottom: 4rem;
+    }
+
+    .py-12 {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+
+    .px-4 {
+      padding-left: 1rem;
+      padding-right: 1rem;
+    }
+
+    .mb-4 {
+      margin-bottom: 1rem;
+    }
+
+    .mb-6 {
+      margin-bottom: 1.5rem;
+    }
+
+    .mb-8 {
+      margin-bottom: 2rem;
+    }
+
+    .mb-16 {
+      margin-bottom: 4rem;
+    }
+
+    .mt-8 {
+      margin-top: 2rem;
+    }
+
+    .text-center {
+      text-align: center;
+    }
+
+    .text-slate-300 {
+      color: #cbd5e1;
+    }
+
+    .text-slate-400 {
+      color: #94a3b8;
+    }
+
+    .text-slate-200 {
+      color: #e2e8f0;
+    }
+
+    .text-white {
+      color: #ffffff;
+    }
+
+    .text-xl {
+      font-size: 1.25rem;
+    }
+
+    .text-2xl {
+      font-size: 1.5rem;
+    }
+
+    .text-lg {
+      font-size: 1.125rem;
+    }
+
+    /* Hero секция */
+    .hero {
+      position: relative;
+      overflow: hidden;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 50%, #581c87 100%);
+      color: white;
+    }
+
+    .hero-bg-pattern {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+
+    .hero-bg-element {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.1;
+      animation: pulse 4s ease-in-out infinite;
+    }
+
+    .hero-bg-element:nth-child(1) {
+      top: 5rem;
+      left: 2.5rem;
+      width: 18rem;
+      height: 18rem;
+      background: #3b82f6;
+      animation-delay: 0s;
+    }
+
+    .hero-bg-element:nth-child(2) {
+      bottom: 5rem;
+      right: 2.5rem;
+      width: 24rem;
+      height: 24rem;
+      background: #8b5cf6;
+      animation-delay: 1s;
+    }
+
+    .hero-bg-element:nth-child(3) {
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 16rem;
+      height: 16rem;
+      background: #06b6d4;
+      animation-delay: 2s;
+    }
+
+    @keyframes pulse {
+      0%, 100% {
+        transform: scale(1);
+      }
+      50% {
+        transform: scale(1.1);
+      }
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-header {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      gap: 1rem;
+    }
+
+    .hero-icon {
+      padding: 1rem;
+      background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+      border-radius: 50%;
+    }
+
+    .hero-icon svg {
+      width: 3rem;
+      height: 3rem;
+      color: white;
+    }
+
+    .hero-description {
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      max-width: 768px;
+      margin-left: auto;
+      margin-right: auto;
+      line-height: 1.6;
+    }
+
+    .hero-features {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+      font-size: 0.875rem;
+      color: #94a3b8;
+    }
+
+    .hero-feature {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hero-feature svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    /* Карточки фич */
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .feature-card {
+      background: rgba(51, 65, 85, 0.5);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+      transform: translateY(0);
+    }
+
+    .feature-card:hover {
+      background: rgba(51, 65, 85, 0.7);
+      transform: translateY(-8px);
+    }
+
+    .feature-icon {
+      width: 3rem;
+      height: 3rem;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1rem;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    .feature-blue {
+      background: linear-gradient(135deg, #3b82f6 0%, #06b6d4 100%);
+    }
+
+    .feature-green {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+    }
+
+    .feature-purple {
+      background: linear-gradient(135deg, #8b5cf6 0%, #7c3aed 100%);
+    }
+
+    .feature-orange {
+      background: linear-gradient(135deg, #f97316 0%, #dc2626 100%);
+    }
+
+    .feature-title {
+      color: #ffffff;
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+    }
+
+    .feature-description {
+      color: #cbd5e1;
+    }
+
+    /* Роли */
+    .roles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+      gap: 2rem;
+    }
+
+    .role-header {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .role-emoji {
+      font-size: 3rem;
+      margin-right: 1rem;
+      transition: transform 0.3s ease;
+    }
+
+    .role-card:hover .role-emoji {
+      transform: scale(1.1);
+    }
+
+    .role-title {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #ffffff;
+      margin-bottom: 0.5rem;
+    }
+
+    .role-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 9999px;
+      font-size: 0.875rem;
+      font-weight: 500;
+      border: 1px solid;
+    }
+
+    .role-badge-purple {
+      background: rgba(147, 51, 234, 0.3);
+      border-color: rgba(147, 51, 234, 0.3);
+      color: #d8b4fe;
+    }
+
+    .role-badge-green {
+      background: rgba(34, 197, 94, 0.3);
+      border-color: rgba(34, 197, 94, 0.3);
+      color: #86efac;
+    }
+
+    .role-badge-blue {
+      background: rgba(59, 130, 246, 0.3);
+      border-color: rgba(59, 130, 246, 0.3);
+      color: #93c5fd;
+    }
+
+    .role-badge-pink {
+      background: rgba(236, 72, 153, 0.3);
+      border-color: rgba(236, 72, 153, 0.3);
+      color: #f9a8d4;
+    }
+
+    .role-badge-orange {
+      background: rgba(249, 115, 22, 0.3);
+      border-color: rgba(249, 115, 22, 0.3);
+      color: #fed7aa;
+    }
+
+    .role-description {
+      color: #cbd5e1;
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+
+    .role-scenarios {
+      margin-bottom: 1.5rem;
+    }
+
+    .role-scenarios-title {
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 0.75rem;
+    }
+
+    .scenario-item {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .scenario-dot {
+      width: 0.5rem;
+      height: 0.5rem;
+      background: #60a5fa;
+      border-radius: 50%;
+      flex-shrink: 0;
+    }
+
+    .scenario-text {
+      font-size: 0.875rem;
+      color: #cbd5e1;
+    }
+
+    .scenario-more {
+      font-size: 0.875rem;
+      color: #94a3b8;
+    }
+
+    .role-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .role-stats {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .role-stats svg {
+      width: 1rem;
+      height: 1rem;
+      color: #60a5fa;
+    }
+
+    .role-stats-text {
+      font-size: 0.875rem;
+      color: #94a3b8;
+    }
+
+    .role-demo-btn {
+      background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.875rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .role-demo-btn:hover {
+      background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%);
+      transform: scale(1.05);
+    }
+
+    /* Исправленные компоненты */
+    .fixed-components {
+      background: rgba(15, 23, 42, 0.8);
+      border: 2px solid rgba(59, 130, 246, 0.3);
+      border-radius: 16px;
+      padding: 3rem;
+      margin: 4rem auto;
+      max-width: 1000px;
+    }
+
+    .components-header {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .components-title {
+      color: #e2e8f0;
+      font-size: 2rem;
+      margin-bottom: 1rem;
+    }
+
+    .fix-status {
+      background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+      color: white;
+      padding: 1rem 2rem;
+      border-radius: 50px;
+      display: inline-block;
+      font-weight: bold;
+      margin-bottom: 2rem;
+    }
+
+    .components-description {
+      color: #94a3b8;
+      font-size: 1.125rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .dashboard {
+      background: rgba(30, 41, 59, 0.8);
+      border-radius: 12px;
+      padding: 2rem;
+      margin-bottom: 3rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .dashboard-title {
+      color: #ffffff;
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .kpi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .kpi-card {
+      background: rgba(51, 65, 85, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      padding: 1.5rem;
+      transition: all 0.3s ease;
+    }
+
+    .kpi-card:hover {
+      border-color: rgba(59, 130, 246, 0.5);
+      transform: translateY(-4px);
+    }
+
+    .kpi-title {
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 0.5rem;
+    }
+
+    .kpi-value {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: #60a5fa;
+      margin-bottom: 0.5rem;
+    }
+
+    .kpi-detail {
+      font-size: 0.875rem;
+      color: #94a3b8;
+      margin-bottom: 0.25rem;
+    }
+
+    .kpi-detail strong {
+      color: #cbd5e1;
+    }
+
+    .analyzer {
+      background: rgba(30, 41, 59, 0.8);
+      border-radius: 12px;
+      padding: 2rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .analyzer-title {
+      color: #ffffff;
+      font-size: 1.5rem;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+      color: #e2e8f0;
+    }
+
+    .form-input,
+    .form-textarea {
+      width: 100%;
+      padding: 0.75rem;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      background: rgba(51, 65, 85, 0.6);
+      color: #e2e8f0;
+      font-size: 1rem;
+      transition: border-color 0.3s;
+    }
+
+    .form-input:focus,
+    .form-textarea:focus {
+      outline: none;
+      border-color: #3b82f6;
+    }
+
+    .form-input::placeholder,
+    .form-textarea::placeholder {
+      color: #94a3b8;
+    }
+
+    .analyze-btn {
+      background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+      color: white;
+      border: none;
+      padding: 0.75rem 2rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: transform 0.3s;
+      display: block;
+      margin: 0 auto;
+    }
+
+    .analyze-btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .requirements-list {
+      margin-top: 2rem;
+    }
+
+    .requirement-item {
+      background: rgba(51, 65, 85, 0.6);
+      border-left: 4px solid #3b82f6;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border-radius: 0 8px 8px 0;
+    }
+
+    .requirement-title {
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-bottom: 0.5rem;
+    }
+
+    .requirement-description {
+      color: #94a3b8;
+      margin-bottom: 0.5rem;
+    }
+
+    .requirement-analysis {
+      background: rgba(15, 23, 42, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 6px;
+      padding: 0.75rem;
+      margin-top: 0.5rem;
+      font-style: italic;
+      color: #cbd5e1;
+    }
+
+    /* CTA секция */
+    .cta {
+      background: linear-gradient(135deg, #374151 0%, #4b5563 100%);
+      border-top: 1px solid #4b5563;
+    }
+
+    .cta-content {
+      text-align: center;
+    }
+
+    .cta-title {
+      color: #ffffff;
+      font-size: 1.875rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .cta-description {
+      color: #cbd5e1;
+      font-size: 1.25rem;
+      margin-bottom: 2rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .cta-buttons {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    /* Футер */
+    .footer {
+      background: #0f172a;
+      border-top: 1px solid #1e293b;
+    }
+
+    .footer-content {
+      text-align: center;
+    }
+
+    .footer-title {
+      color: #ffffff;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .footer-description {
+      color: #94a3b8;
+      margin-bottom: 1.5rem;
+    }
+
+    .footer-links {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    .footer-link {
+      font-size: 0.875rem;
+      color: #64748b;
+    }
+
+    /* Плавающий элемент MiniMax */
+    #minimax-floating-ball {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 10px 12px;
+      background: #222222;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      color: #F8F8F8;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      z-index: 9999;
+      transition: all 0.3s ease;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+    }
+
+    #minimax-floating-ball:hover {
+      transform: translateY(-2px);
+      background: #383838;
+    }
+
+    .minimax-ball-content {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .minimax-ball-text {
+      font-size: 12px;
+      font-weight: 500;
+    }
+
+    .minimax-close-icon {
+      margin-left: 8px;
+      cursor: pointer;
+      font-size: 14px;
+      width: 16px;
+      height: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2.5rem;
+      }
+
+      .hero-features {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      .roles-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .features-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .cta-buttons {
+        flex-direction: column;
+      }
+
+      .footer-links {
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .fixed-components {
+        margin: 2rem 16px;
+        padding: 2rem 16px;
+      }
+
+      .kpi-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Navigation Header -->
+  <nav class="navbar">
+    <div class="nav-container">
+      <a href="#" class="nav-logo">1C AI Agent System</a>
+      <div class="nav-links">
+        <a href="#roles" class="nav-link">Роли ассистентов</a>
+        <a href="#components" class="nav-link">Компоненты</a>
+        <a href="#demo" class="nav-link">Демо</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero py-24">
+    <div class="hero-bg-pattern">
+      <div class="hero-bg-element"></div>
+      <div class="hero-bg-element"></div>
+      <div class="hero-bg-element"></div>
+    </div>
+    
+    <div class="container">
+      <div class="hero-content text-center">
+        <div class="hero-header">
+          <div class="hero-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+          </div>
+          <h1 class="hero-title">ИИ-ассистенты для 1С</h1>
+        </div>
+        
+        <p class="hero-description">
+          Интерактивная демонстрация возможностей ИИ-ассистентов для разработки и сопровождения 
+          решений на платформе 1С:Предприятие
+        </p>
+        
+        <div class="hero-features">
+          <div class="hero-feature">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197m13.5-9a2.5 2.5 0 11-5 0 2.5 2.5 0 015 0z"></path>
+            </svg>
+            <span>5 ролей ассистентов</span>
+          </div>
+          <div class="hero-feature">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+            </svg>
+            <span>Интерактивные демо</span>
+          </div>
+          <div class="hero-feature">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+            </svg>
+            <span>Экспорт результатов</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="py-16">
+    <div class="container">
+      <div class="text-center mb-16">
+        <h2 class="section-title">Возможности платформы</h2>
+        <p class="text-xl text-slate-300">
+          Современные инструменты для интерактивного демонстрирования возможностей ИИ в разработке 1С
+        </p>
+      </div>
+
+      <div class="features-grid">
+        <div class="feature-card">
+          <div class="feature-icon feature-blue">🧠</div>
+          <h3 class="feature-title">ИИ-ассистенты</h3>
+          <p class="feature-description">5 специализированных ролей для разных задач разработки 1С</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon feature-green">⚡</div>
+          <h3 class="feature-title">Интерактивные демо</h3>
+          <p class="feature-description">Реальные сценарии с пошаговым выполнением и результатами</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon feature-purple">📊</div>
+          <h3 class="feature-title">Экспорт данных</h3>
+          <p class="feature-description">Сохранение результатов в JSON, TXT и PDF форматах</p>
+        </div>
+        
+        <div class="feature-card">
+          <div class="feature-icon feature-orange">🎯</div>
+          <h3 class="feature-title">Содержательные результаты</h3>
+          <p class="feature-description">Реальный код 1С, архитектурные схемы, отчеты</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Roles Grid -->
+  <section id="roles" class="py-16">
+    <div class="container">
+      <div class="text-center mb-16">
+        <h2 class="section-title">Выберите роль ассистента</h2>
+        <p class="text-xl text-slate-300">
+          Каждая роль демонстрирует уникальные возможности ИИ-ассистента
+        </p>
+      </div>
+
+      <div class="roles-grid">
+        <div class="role-card" onclick="startDemo('architect')">
+          <div class="role-header">
+            <div class="role-emoji">🏗️</div>
+            <div>
+              <h3 class="role-title">Архитектор</h3>
+              <span class="role-badge role-badge-blue">architect</span>
+            </div>
+          </div>
+          
+          <p class="role-description">Проектирование системной архитектуры и интеграций</p>
+          
+          <div class="role-scenarios">
+            <h4 class="role-scenarios-title">Доступные сценарии:</h4>
+            <div class="scenario-item">
+              <div class="scenario-dot"></div>
+              <span class="scenario-text">Проектирование архитектуры системы</span>
+            </div>
+            <div class="scenario-item">
+              <div class="scenario-dot"></div>
+              <span class="scenario-text">Оптимизация производительности</span>
+            </div>
+            <div class="scenario-more">и еще 3 сценариев...</div>
+          </div>
+
+          <div class="role-footer">
+            <div class="role-stats">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="role-stats-text">5 сценариев</span>
+            </div>
+            <button class="role-demo-btn">
+              <span>Начать демо</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="role-card" onclick="startDemo('developer')">
+          <div class="role-header">
+            <div class="role-emoji">💻</div>
+            <div>
+              <h3 class="role-title">Разработчик</h3>
+              <span class="role-badge role-badge-green">developer</span>
+            </div>
+          </div>
+          
+          <p class="role-description">Программирование и настройка функциональности</p>
+          
+          <div class="role-scenarios">
+            <h4 class="role-scenarios-title">Доступные сценарии:</h4>
+            <div class="scenario-item">
+              <div class="scenario-dot"></div>
+              <span class="scenario-text">Разработка формы документа</span>
+            </div>
+            <div class="scenario-item">
+              <div class="scenario-dot"></div>
+              <span class="scenario-text">Обработка анализа продаж</span>
+            </div>
+            <div class="scenario-more">и еще 3 сценариев...</div>
+          </div>
+
+          <div class="role-footer">
+            <div class="role-stats">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="role-stats-text">5 сценариев</span>
+            </div>
+            <button class="role-demo-btn">
+              <span>Начать демо</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="role-card" onclick="startDemo('pm')">
+          <div class="role-header">
+            <div class="role-emoji">📊</div>
+            <div>
+              <h3 class="role-title">Project Manager</h3>
+              <span class="role-badge role-badge-purple">pm</span>
+            </div>
+          </div>
+          
+          <p class="role-description">Управление проектами и контроль сроков</p>
+          
+          <div class="role-scenarios">
+            <h4 class="role-scenarios-title">Доступные сценарии:</h4>
+            <div class="scenario-item">
+              <div class="scenario-dot"></div>
+              <span class="scenario-text">Планирование проекта</span>
+            </div>
+            <div class="scenario-item">
+              <div class="scenario-dot"></div>
+              <span class="scenario-text">Анализ рисков проекта</span>
+            </div>
+            <div class="scenario-more">и еще 6 сценариев...</div>
+          </div>
+
+          <div class="role-footer">
+            <div class="role-stats">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="role-stats-text">8 сценариев</span>
+            </div>
+            <button class="role-demo-btn">
+              <span>Начать демо</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="role-card" onclick="startDemo('ba')">
+          <div class="role-header">
+            <div class="role-emoji">📋</div>
+            <div>
+              <h3 class="role-title">Business Analyst</h3>
+              <span class="role-badge role-badge-pink">ba</span>
+            </div>
+          </div>
+          
+          <p class="role-description">Анализ бизнес-процессов и требований</p>
+          
+          <div class="role-scenarios">
+            <h4 class="role-scenarios-title">Доступные сценарии:</h4>
+            <div class="scenario-item">
+              <div class="scenario-dot"></div>
+              <span class="scenario-text">Анализ бизнес-процессов</span>
+            </div>
+            <div class="scenario-item">
+              <div class="scenario-dot"></div>
+              <span class="scenario-text">Сбор требований</span>
+            </div>
+            <div class="scenario-more">и еще 3 сценариев...</div>
+          </div>
+
+          <div class="role-footer">
+            <div class="role-stats">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="role-stats-text">5 сценариев</span>
+            </div>
+            <button class="role-demo-btn">
+              <span>Начать демо</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div class="role-card" onclick="startDemo('data-analyst')">
+          <div class="role-header">
+            <div class="role-emoji">📈</div>
+            <div>
+              <h3 class="role-title">Data Analyst</h3>
+              <span class="role-badge role-badge-orange">data-analyst</span>
+            </div>
+          </div>
+          
+          <p class="role-description">Анализ данных и создание отчетов</p>
+          
+          <div class="role-scenarios">
+            <h4 class="role-scenarios-title">Доступные сценарии:</h4>
+            <div class="scenario-item">
+              <div class="scenario-dot"></div>
+              <span class="scenario-text">Анализ продаж</span>
+            </div>
+            <div class="scenario-item">
+              <div class="scenario-dot"></div>
+              <span class="scenario-text">Создание интерактивных дашбордов</span>
+            </div>
+            <div class="scenario-more">и еще 3 сценариев...</div>
+          </div>
+
+          <div class="role-footer">
+            <div class="role-stats">
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+              <span class="role-stats-text">5 сценариев</span>
+            </div>
+            <button class="role-demo-btn">
+              <span>Начать демо</span>
+              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Исправленные компоненты -->
+  <section id="components" class="py-16">
+    <div class="container">
+      <div class="fixed-components">
+        <div class="components-header">
+          <h2 class="components-title">🔧 Исправленные компоненты</h2>
+          <div class="fix-status">✅ TypeScript ошибки исправлены: 698 → 0</div>
+          <p class="components-description">Ниже представлены обновленные компоненты с полной функциональностью и исправленными ошибками типизации</p>
+        </div>
+
+        <!-- Reports Dashboard Component -->
+        <div class="dashboard">
+          <h3 class="dashboard-title">📊 Reports Dashboard - KPI Метрики</h3>
+          <div class="kpi-grid">
+            <div class="kpi-card">
+              <div class="kpi-title">Производительность графика</div>
+              <div class="kpi-value">87%</div>
+              <div class="kpi-detail"><strong>Расчет:</strong> (Успешные операции / Общие операции) × 100</div>
+              <div class="kpi-detail"><strong>Владелец:</strong> Технический отдел</div>
+              <div class="kpi-detail"><strong>Частота:</strong> Ежедневно</div>
+              <div class="kpi-detail"><strong>Источник:</strong> Система мониторинга</div>
+              <div class="kpi-detail"><strong>Статус:</strong> ✅ Активен</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-title">Качество кода</div>
+              <div class="kpi-value">92%</div>
+              <div class="kpi-detail"><strong>Расчет:</strong> Покрытие тестами и отсутствие критических ошибок</div>
+              <div class="kpi-detail"><strong>Владелец:</strong> Отдел разработки</div>
+              <div class="kpi-detail"><strong>Частота:</strong> Еженедельно</div>
+              <div class="kpi-detail"><strong>Источник:</strong> CI/CD система</div>
+              <div class="kpi-detail"><strong>Статус:</strong> ✅ Активен</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-title">Время решения багов</div>
+              <div class="kpi-value">4.2 часа</div>
+              <div class="kpi-detail"><strong>Расчет:</strong> Среднее время от создания до закрытия</div>
+              <div class="kpi-detail"><strong>Владелец:</strong> Команда поддержки</div>
+              <div class="kpi-detail"><strong>Частота:</strong> Ежедневно</div>
+              <div class="kpi-detail"><strong>Источник:</strong> Система баг-трекинга</div>
+              <div class="kpi-detail"><strong>Статус:</strong> ✅ Активен</div>
+            </div>
+
+            <div class="kpi-card">
+              <div class="kpi-title">Продуктивность команды</div>
+              <div class="kpi-value">95%</div>
+              <div class="kpi-detail"><strong>Расчет:</strong> (Завершенные задачи / Плановые задачи) × 100</div>
+              <div class="kpi-detail"><strong>Владелец:</strong> Project Manager</div>
+              <div class="kpi-detail"><strong>Частота:</strong> Еженедельно</div>
+              <div class="kpi-detail"><strong>Источник:</strong> Система управления проектами</div>
+              <div class="kpi-detail"><strong>Статус:</strong> ✅ Активен</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Requirement Analyzer Component -->
+        <div class="analyzer">
+          <h3 class="analyzer-title">🔍 Requirement Analyzer - Анализатор требований</h3>
+          <form id="requirementForm" onsubmit="addRequirement(event)">
+            <div class="form-group">
+              <label for="reqTitle" class="form-label">Название требования:</label>
+              <input type="text" id="reqTitle" class="form-input" required placeholder="Введите название требования">
+            </div>
+            <div class="form-group">
+              <label for="reqDescription" class="form-label">Описание требования:</label>
+              <textarea id="reqDescription" class="form-textarea" rows="4" required placeholder="Опишите требование детально"></textarea>
+            </div>
+            <button type="submit" class="analyze-btn">Добавить требование</button>
+          </form>
+
+          <div class="requirements-list" id="requirementsList">
+            <div class="requirement-item">
+              <div class="requirement-title">Система управления складом</div>
+              <div class="requirement-description">Необходимо создать модуль для автоматизации складских операций</div>
+              <div class="requirement-analysis">Анализ: Требование требует интеграции с основной системой, учета товарно-материальных ценностей и автоматизации процессов движения товаров.</div>
+            </div>
+
+            <div class="requirement-item">
+              <div class="requirement-title">Отчет по продажам</div>
+              <div class="requirement-description">Создать аналитический отчет с детализацией по периодам</div>
+              <div class="requirement-analysis">Анализ: Требуется разработка отчета с группировкой данных, расчетом показателей и возможностью фильтрации по различным параметрам.</div>
+            </div>
+
+            <div class="requirement-item">
+              <div class="requirement-title">Интеграция с CRM системой</div>
+              <div class="requirement-description">Настроить обмен данными между 1С и внешней CRM</div>
+              <div class="requirement-analysis">Анализ: Необходимо создание механизмов синхронизации клиентов, заказов и статусов с обеспечением целостности данных.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Call to Action -->
+  <section id="demo" class="cta py-16">
+    <div class="container">
+      <div class="cta-content">
+        <h2 class="cta-title">Готовы увидеть возможности ИИ-ассистентов?</h2>
+        <p class="cta-description">
+          Выберите роль и начните интерактивную демонстрацию прямо сейчас
+        </p>
+        <div class="cta-buttons">
+          <button onclick="startDemo('developer')" class="btn-primary">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path>
+            </svg>
+            <span>Начать с разработчика</span>
+          </button>
+          <button onclick="startDemo('architect')" class="btn-secondary">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+            </svg>
+            <span>Начать с архитектора</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="footer py-12">
+    <div class="container">
+      <div class="footer-content">
+        <h3 class="footer-title">🤖 ИИ-ассистенты для 1С</h3>
+        <p class="footer-description">
+          Интерактивная демонстрация возможностей искусственного интеллекта в разработке
+        </p>
+        <div class="footer-links">
+          <span class="footer-link">© 2025 MiniMax Agent</span>
+          <span class="footer-link">Демо версия</span>
+          <span class="footer-link">Улучшенные результаты</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Плавающий элемент MiniMax -->
+  <div id="minimax-floating-ball">
+    <div class="minimax-ball-content">
+      <span class="minimax-ball-text">Created by MiniMax Agent</span>
+    </div>
+    <div class="minimax-close-icon">×</div>
+  </div>
+
+  <script>
+    function startDemo(role) {
+      alert(`Запуск демо для роли: ${role}\n\nЭто интерактивная демонстрация возможностей ИИ-ассистента. В полной версии здесь будет открываться специализированный интерфейс с реальными сценариями и результатами.`);
+    }
+
+    function addRequirement(event) {
+      event.preventDefault();
+      
+      const title = document.getElementById('reqTitle').value;
+      const description = document.getElementById('reqDescription').value;
+      
+      // Создаем новый элемент требования
+      const newRequirement = document.createElement('div');
+      newRequirement.className = 'requirement-item';
+      newRequirement.innerHTML = `
+        <div class="requirement-title">${title}</div>
+        <div class="requirement-description">${description}</div>
+        <div class="requirement-analysis">Анализ: Требование успешно добавлено в систему. Проведен автоматический анализ и сгенерированы рекомендации по реализации.</div>
+      `;
+      
+      // Добавляем в список
+      document.getElementById('requirementsList').appendChild(newRequirement);
+      
+      // Очищаем форму
+      document.getElementById('requirementForm').reset();
+      
+      // Показываем уведомление
+      alert('✅ Требование успешно добавлено!');
+    }
+
+    // Плавная прокрутка к секциям
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          target.scrollIntoView({
+            behavior: 'smooth'
+          });
+        }
+      });
+    });
+
+    // Initialize floating ball functionality
+    function initFloatingBall() {
+      const ball = document.getElementById('minimax-floating-ball');
+      if (!ball) return;
+
+      // Initial animation
+      ball.style.opacity = '0';
+      ball.style.transform = 'translateY(20px)';
+
+      setTimeout(() => {
+        ball.style.opacity = '1';
+        ball.style.transform = 'translateY(0)';
+      }, 500);
+
+      // Handle logo click
+      const ballContent = ball.querySelector('.minimax-ball-content');
+      ballContent.addEventListener('click', function (e) {
+        e.stopPropagation();
+        window.open('https://agent.minimax.io/', '_blank');
+      });
+
+      // Handle close
+      const closeIcon = ball.querySelector('.minimax-close-icon');
+      closeIcon.addEventListener('click', function (e) {
+        e.stopPropagation();
+        ball.style.opacity = '0';
+        ball.style.transform = 'translateY(20px)';
+        setTimeout(() => {
+          ball.style.display = 'none';
+        }, 300);
+      });
+    }
+
+    // Initialize when DOM is loaded
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', initFloatingBall);
+    } else {
+      initFloatingBall();
+    }
+  </script>
+</body>
+</html>

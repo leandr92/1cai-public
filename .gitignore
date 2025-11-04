@@ -1,0 +1,133 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment variables (ВАЖНО - содержат токены и пароли!)
+.env
+.env.local
+.env.*.local
+ENV_EXAMPLE.txt
+
+# Logs
+*.log
+logs/
+*.log.*
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# OS
+Thumbs.db
+.DS_Store
+
+# Temporary files
+*.tmp
+*.temp
+tmp/
+temp/
+
+# Secrets and credentials (КРИТИЧНО!)
+**/secrets/
+**/*secret*
+**/*password*
+**/*token*
+**/*key*.json
+**/*credentials*
+
+# Personal data
+RESUME_*.md
+*resume*.txt
+
+# Archive and backups
+archive/
+archive_*/
+*.zip
+*.tar.gz
+*.rar
+backup/
+
+# Knowledge base - exclude content but keep folder
+knowledge_base/*
+!knowledge_base/.gitkeep
+
+# Node modules (если используется)
+node_modules/
+
+# Coverage reports
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+*.cover
+
+# Pytest
+.pytest_cache/
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Data files
+*.csv
+*.json.bak
+*.sql
+
+# Large binary files
+*.bin
+*.dat
+*.exe
+
+# Marketing (опционально - оставим для примера)
+# marketing/
+
+# Live demo data
+live-demo/
+
+# Personal notes
+NOTES.md
+TODO_PERSONAL.md
