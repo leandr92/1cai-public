@@ -91,6 +91,9 @@ backup/
 knowledge_base/*
 !knowledge_base/.gitkeep
 
+# Deprecated/unused directories
+docs-new/
+
 # Node modules (если используется)
 node_modules/
 
