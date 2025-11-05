@@ -47,8 +47,8 @@ Thank you for your interest in contributing! 🎉
 
 ```bash
 # Clone repository
-git clone https://github.com/your-org/1c-ai-stack.git
-cd 1c-ai-stack
+git clone https://github.com/DmitrL-dev/1cai-public.git
+cd 1cai-public
 
 # Run setup script
 chmod +x scripts/setup.sh

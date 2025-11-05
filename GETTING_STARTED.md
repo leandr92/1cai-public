@@ -128,12 +128,12 @@ Use this token to access the HTTP API:
 
 **Вариант A: Через Git (если установлен):**
 ```bash
-git clone https://github.com/your-username/1c-ai-assistant.git
-cd 1c-ai-assistant
+git clone https://github.com/DmitrL-dev/1cai-public.git
+cd 1cai-public
 ```
 
 **Вариант B: Без Git:**
-1. Идите на https://github.com/your-username/1c-ai-assistant
+1. Идите на https://github.com/DmitrL-dev/1cai-public
 2. Нажмите зеленую кнопку "Code"
 3. Выберите "Download ZIP"
 4. Распакуйте архив
@@ -343,7 +343,7 @@ python src/telegram/bot_minimal.py
 **Не получается?**
 1. Перечитайте инструкцию внимательно
 2. Проверьте что сделали все шаги
-3. Создайте [Issue на GitHub](https://github.com/your-repo/issues)
+3. Создайте [Issue на GitHub](https://github.com/DmitrL-dev/1cai-public/issues)
 
 **В Issue опишите:**
 - Какой шаг не получается

@@ -268,8 +268,8 @@ Freemium модель:
 ### Как помочь проекту?
 
 1. ⭐ Поставьте звезду на GitHub
-2. 🐛 Сообщайте о багах ([Issues](https://github.com/your-repo/issues))
-3. 💡 Предлагайте идеи ([Discussions](https://github.com/your-repo/discussions))
+2. 🐛 Сообщайте о багах ([Issues](https://github.com/DmitrL-dev/1cai-public/issues))
+3. 💡 Предлагайте идеи ([Discussions](https://github.com/DmitrL-dev/1cai-public/discussions))
 4. 📝 Улучшайте документацию (Pull Requests)
 5. 🔧 Пишите код (см. [CONTRIBUTING.md](CONTRIBUTING.md))
 
@@ -286,7 +286,7 @@ Freemium модель:
 
 ### Где исходный код?
 
-GitHub: https://github.com/your-username/1c-ai-assistant
+GitHub: https://github.com/DmitrL-dev/1cai-public
 
 ### Есть ли тесты?
 
@@ -366,8 +366,8 @@ GitHub: https://github.com/your-username/1c-ai-assistant
 
 - 💬 [Telegram чат](https://t.me/ai1c_chat) - общий чат
 - 📢 [Telegram канал](https://t.me/ai1c_news) - новости
-- 🐛 [GitHub Issues](https://github.com/your-repo/issues) - баги
-- 💡 [GitHub Discussions](https://github.com/your-repo/discussions) - идеи
+- 🐛 [GitHub Issues](https://github.com/DmitrL-dev/1cai-public/issues) - баги
+- 💡 [GitHub Discussions](https://github.com/DmitrL-dev/1cai-public/discussions) - идеи
 
 ### Есть ли roadmap?
 
@@ -397,7 +397,7 @@ Open Source проект, созданный для 1С сообщества.
 ## ❓ Не нашли ответ?
 
 **Задайте вопрос:**
-1. [GitHub Discussions](https://github.com/your-repo/discussions/new)
+1. [GitHub Discussions](https://github.com/DmitrL-dev/1cai-public/discussions/new)
 2. [Telegram чат](https://t.me/ai1c_chat)
 3. [Email](mailto:support@your-domain.com)
 

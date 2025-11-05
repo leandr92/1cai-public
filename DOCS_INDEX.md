@@ -316,7 +316,7 @@ START HERE
 ## ❓ Не нашли нужный документ?
 
 1. **Поиск по репозиторию:** GitHub search или Ctrl+F в этом файле
-2. **Спросите:** [GitHub Discussions](https://github.com/your-repo/discussions)
+2. **Спросите:** [GitHub Discussions](https://github.com/DmitrL-dev/1cai-public/discussions)
 3. **Предложите:** Если документа не хватает - создайте Issue!
 
 ---
