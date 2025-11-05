@@ -162,7 +162,7 @@
 
 ## 📞 КОНТАКТЫ
 
-**GitHub:** https://github.com/DmitrL-dev/1cai  
+**GitHub:** https://github.com/DmitrL-dev/1cai-public  
 **Status:** ✅ Production Ready  
 **Ready to:** 🚀 Launch
 

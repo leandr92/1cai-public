@@ -6,7 +6,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Python 3.11+](https://img.shields.io/badge/python-3.11+-blue.svg)](https://www.python.org/downloads/)
-[![GitHub](https://img.shields.io/badge/GitHub-DmitrL--dev%2F1cai-blue)](https://github.com/DmitrL-dev/1cai)
+[![GitHub](https://img.shields.io/badge/GitHub-DmitrL--dev%2F1cai--public-blue)](https://github.com/DmitrL-dev/1cai-public)
 
 > **Статус:** Production Ready (99% готовности) | **Версия:** 5.0
 
@@ -106,8 +106,8 @@ EN: "find function..."
 ```bash
 # 1. Установите Python 3.11+
 # 2. Клонируйте проект
-git clone https://github.com/DmitrL-dev/1cai.git
-cd 1cai
+git clone https://github.com/DmitrL-dev/1cai-public.git
+cd 1cai-public
 
 # 3. Установите зависимости
 pip install -r requirements-telegram.txt
@@ -131,8 +131,8 @@ python src/telegram/bot_minimal.py
 # 1. Установите Docker и Docker Compose
 
 # 2. Клонируйте проект
-git clone https://github.com/DmitrL-dev/1cai.git
-cd 1cai
+git clone https://github.com/DmitrL-dev/1cai-public.git
+cd 1cai-public
 
 # 3. Настройте окружение
 cp env.example .env
@@ -459,8 +459,8 @@ python src/telegram/bot_minimal.py
 Contributions приветствуются!
 
 **Как помочь:**
-- 🐛 Сообщайте о багах ([Issues](https://github.com/DmitrL-dev/1cai/issues))
-- 💡 Предлагайте идеи ([Discussions](https://github.com/DmitrL-dev/1cai/discussions))
+- 🐛 Сообщайте о багах ([Issues](https://github.com/DmitrL-dev/1cai-public/issues))
+- 💡 Предлагайте идеи ([Discussions](https://github.com/DmitrL-dev/1cai-public/discussions))
 - 📝 Улучшайте документацию
 - 🌍 Добавляйте переводы
 - 🔌 Создавайте плагины
@@ -618,9 +618,9 @@ Contributions приветствуются!
 
 ## 📞 Контакты
 
-- 💬 [GitHub Discussions](https://github.com/DmitrL-dev/1cai/discussions) - Вопросы и обсуждения
-- 🐛 [Issues](https://github.com/DmitrL-dev/1cai/issues) - Баги и feature requests
-- ⭐ [GitHub](https://github.com/DmitrL-dev/1cai) - Поставьте звезду!
+- 💬 [GitHub Discussions](https://github.com/DmitrL-dev/1cai-public/discussions) - Вопросы и обсуждения
+- 🐛 [Issues](https://github.com/DmitrL-dev/1cai-public/issues) - Баги и feature requests
+- ⭐ [GitHub](https://github.com/DmitrL-dev/1cai-public) - Поставьте звезду!
 
 ---
 

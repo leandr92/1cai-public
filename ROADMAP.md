@@ -339,7 +339,7 @@
 **Что вы хотите видеть в приоритете?**
 
 - 👍 Upvote issues на GitHub
-- 💡 Предлагайте идеи в [Discussions](https://github.com/DmitrL-dev/1cai/discussions)
+- 💡 Предлагайте идеи в [Discussions](https://github.com/DmitrL-dev/1cai-public/discussions)
 - 📧 Напишите: Issues на GitHub
 
 **Топ-5 requested features идут в следующий milestone!**
