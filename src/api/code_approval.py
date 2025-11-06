@@ -2,15 +2,18 @@
 Code Approval API - для human-in-the-loop approval process
 """
 
-from fastapi import APIRouter, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends, Request
 from pydantic import BaseModel
 from typing import List, Optional
+from slowapi import Limiter
+from slowapi.util import get_remote_address
 
 from src.ai.agents.developer_agent_secure import DeveloperAISecure
 from src.database import get_pool
 
 
 router = APIRouter(prefix="/api/code-approval", tags=["Code Approval"])
+limiter = Limiter(key_func=get_remote_address)
 
 
 class CodeGenerationRequest(BaseModel):
@@ -41,7 +44,9 @@ def get_developer_ai() -> DeveloperAISecure:
 
 
 @router.post("/generate")
+@limiter.limit("10/minute")  # Rate limit: 10 requests per minute
 async def generate_code(
+    api_request: Request,
     request: CodeGenerationRequest,
     agent: DeveloperAISecure = Depends(get_developer_ai)
 ):

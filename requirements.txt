@@ -25,6 +25,7 @@ httpx==0.25.2
 fastapi==0.104.1
 uvicorn[standard]==0.24.0
 python-multipart==0.0.6
+slowapi>=0.1.9  # Rate limiting for API endpoints
 
 # 1C Parsing (current)
 lxml==4.9.3
