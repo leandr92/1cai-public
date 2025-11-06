@@ -5,6 +5,22 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 🔴 Breaking Changes & Migration Notes
+
+> **Important:** This section documents breaking changes and migration paths between versions.
+
+### Version 5.x → Future 6.x (When Released)
+
+**Planned breaking changes:**
+- Database schema updates (migration script will be provided)
+- API endpoint restructuring (detailed migration guide)
+
+**Migration:** 
+- Migration scripts will be provided in release notes
+- Estimated downtime: <5 minutes
+
+---
+
 ## [5.1.0] - 2025-11-06
 
 ### 🎉 Major Features Added

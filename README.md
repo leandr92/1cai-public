@@ -336,15 +336,22 @@ curl -X POST http://localhost:8000/generate \
 
 ### Для начинающих:
 - 📗 [Getting Started](docs/01-getting-started/README.md) - введение
+- 📦 [Installation Guide](docs/01-getting-started/installation.md) - полная установка
 - ⚡ [Quick Start](docs/01-getting-started/quickstart.md) - быстрый старт
 - 📱 [Telegram Setup](docs/01-getting-started/telegram-setup.md) - настройка бота
+- ❓ [FAQ](FAQ.md) - часто задаваемые вопросы
+- 🔧 [Troubleshooting](TROUBLESHOOTING.md) - решение проблем
 
 ### Для продвинутых:
 - 🏗️ [Architecture](docs/02-architecture/ARCHITECTURE_OVERVIEW.md) - архитектура системы
 - 🛠️ [Technology Stack](docs/02-architecture/TECHNOLOGY_STACK.md) - полный стек
+- ⚙️ [Configuration Guide](CONFIGURATION.md) - настройка системы
+- 📡 [API Reference](docs/API_REFERENCE.md) - REST API документация
 - 🤖 [AI Agents](docs/03-ai-agents/FINAL_PROJECT_SUMMARY.md) - €309K/год ROI
 - ⚡ [Code Execution](docs/08-code-execution/) - NEW! 98.7% token savings
 - 📋 [ITIL Analysis](docs/07-itil-analysis/) - NEW! Enterprise ITSM
+- 📊 [Monitoring Guide](docs/MONITORING_GUIDE.md) - мониторинг и observability
+- 🔐 [Security Guide](SECURITY.md) - безопасность и best practices
 
 ### Специальные возможности:
 - 🎁 [All Features](docs/06-features/) - index всех фич
