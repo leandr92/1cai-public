@@ -24,6 +24,9 @@ docker-compose up -d
 # 2. Запустить Stage 1 сервисы
 docker-compose -f docker-compose.yml -f docker-compose.stage1.yml up -d
 
+# 2.1. Однократно применить миграции БД (создаёт таблицы Marketplace/RBAC)
+docker-compose run --rm migrations
+
 # Добавляются:
 # ✓ neo4j (Graph Database)
 # ✓ qdrant (Vector Search)

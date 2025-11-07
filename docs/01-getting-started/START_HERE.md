@@ -28,6 +28,9 @@ docker-compose -f docker-compose.yml -f docker-compose.stage1.yml up -d
 # Подождать ~60 секунд
 # Проверить статус
 docker-compose ps
+
+# Применить миграции БД (обязательно при первом запуске)
+docker-compose run --rm migrations
 ```
 
 **Должно быть запущено:** postgres, redis, nginx, neo4j, qdrant, elasticsearch, ollama
