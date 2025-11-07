@@ -215,6 +215,45 @@ services:
     profiles:
       - telegram
 
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # MinIO - S3 совместимое хранилище 🟡 ОПЦИОНАЛЬНО
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  minio:
+    image: minio/minio:RELEASE.2024-10-13T22-08-55Z
+    container_name: 1c-ai-minio
+    command: server /data --console-address ":9001"
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+    networks:
+      - 1c-ai-network
+    restart: unless-stopped
+
+  minio-setup:
+    image: minio/mc:RELEASE.2024-10-14T21-43-55Z
+    container_name: 1c-ai-minio-setup
+    depends_on:
+      - minio
+    environment:
+      MINIO_ROOT_USER: ${MINIO_ROOT_USER:-minioadmin}
+      MINIO_ROOT_PASSWORD: ${MINIO_ROOT_PASSWORD:-minioadmin}
+      MINIO_DEFAULT_BUCKET: ${MINIO_DEFAULT_BUCKET:-onecai-artifacts}
+    entrypoint: ["/bin/sh", "-c"]
+    command: >
+      mc alias set local http://minio:9000 "$MINIO_ROOT_USER" "$MINIO_ROOT_PASSWORD" &&
+      mc mb -p local/"$MINIO_DEFAULT_BUCKET" &&
+      mc anonymous set download local/"$MINIO_DEFAULT_BUCKET"
+    networks:
+      - 1c-ai-network
+    restart: "no"
+    profiles:
+      - minio-init
+
 volumes:
   neo4j_data:
     name: 1c-ai-neo4j-data
@@ -228,6 +267,8 @@ volumes:
     name: 1c-ai-elasticsearch-data
   ollama_models:
     name: 1c-ai-ollama-models
+  minio_data:
+    name: 1c-ai-minio-data
 
 networks:
   1c-ai-network:

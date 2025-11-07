@@ -272,6 +272,7 @@ AUDIT_LOG_PATH=logs/security_audit.log
 - При активном подключении к БД дополнительно записываются в таблицу `security_audit_log`
 - Содержат `timestamp`, `actor`, `action`, `target`, `metadata`
 - Раздел `logs/` добавлен в `.gitignore`, но при развёртывании убедитесь, что каталог существует или прописан volume
+- Для локального S3 используйте сервис MinIO из `docker-compose.stage1.yml`
 
 ### Object Storage (S3 / MinIO)
 

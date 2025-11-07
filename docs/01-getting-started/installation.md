@@ -175,6 +175,21 @@ uvicorn src.main:app --reload  # FastAPI
 python src/ai/mcp_server.py    # MCP Server  
 python src/telegram/bot_minimal.py  # Telegram Bot
 
+### Опционально: S3/MinIO для артефактов
+
+```bash
+# Запустить MinIO (локальное s3-хранилище)
+docker-compose -f docker-compose.yml -f docker-compose.stage1.yml up -d minio
+
+# Создать бакет по умолчанию (onecai-artifacts)
+docker-compose -f docker-compose.yml -f docker-compose.stage1.yml run --rm minio-setup
+
+# Консоль: http://localhost:9001 (логин/пароль в .env)
+# API endpoint: http://localhost:9000
+```
+
+После запуска задайте `AWS_S3_ENDPOINT=http://localhost:9000` и креды `MINIO_ROOT_USER/MINIO_ROOT_PASSWORD` в `.env`.
+
 # Доступно:
 # - Telegram Bot
 # - MCP Server: http://localhost:6001

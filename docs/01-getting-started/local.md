@@ -126,6 +126,19 @@ uvicorn src.main:app --reload --host 0.0.0.0 --port 8000
 
 ---
 
+### **Опционально: MinIO (локальное S3)**
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.stage1.yml up -d minio
+docker-compose -f docker-compose.yml -f docker-compose.stage1.yml run --rm minio-setup
+```
+
+- Консоль: http://localhost:9001  
+- Endpoint для `.env`: `AWS_S3_ENDPOINT=http://localhost:9000`  
+- Креды: `MINIO_ROOT_USER` / `MINIO_ROOT_PASSWORD` (по умолчанию `minioadmin`)
+
+---
+
 ### **Шаг 3: Frontend (React Portal)**
 
 #### **3.1. Установка зависимостей:**

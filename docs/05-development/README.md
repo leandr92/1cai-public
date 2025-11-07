@@ -51,7 +51,7 @@ python run_full_audit.py --stop-on-failure
 
 Опционально добавьте `--include-cleanup`, чтобы удалить временные отчёты из корня.
 
-## 🗄️ Database Migrations
+## 🗄️ Database & Storage
 
 ```bash
 python scripts/run_migrations.py
@@ -61,6 +61,14 @@ python scripts/run_migrations.py
 - Учитывает `DATABASE_URL` из `.env`
 - Запускайте перед стартом backend и при деплое
 - Для интеграционных тестов задайте `TEST_DATABASE_URL` (например, на тестовую PostgreSQL), чтобы `pytest -m integration` мог проверить `MarketplaceRepository`
+
+```bash
+docker-compose -f docker-compose.yml -f docker-compose.stage1.yml up -d minio
+```
+
+- Запускает локальное S3-хранилище (MinIO)
+- Консоль: http://localhost:9001 (креды в `.env`)
+- Endpoint: `AWS_S3_ENDPOINT=http://localhost:9000`, `MINIO_ROOT_USER`, `MINIO_ROOT_PASSWORD`
 
 ### Управление ролями
 
