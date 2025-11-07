@@ -109,6 +109,21 @@ services:
     profiles:
       - dev
 
+  migrations:
+    image: python:3.11-slim
+    container_name: 1c-ai-migrations
+    working_dir: /app
+    command: ["python", "scripts/run_migrations.py"]
+    environment:
+      DATABASE_URL: ${DATABASE_URL:-postgresql://admin:${POSTGRES_PASSWORD:-changeme}@postgres:5432/knowledge_base}
+    volumes:
+      - ./:/app
+    depends_on:
+      - postgres
+    restart: "no"
+    profiles:
+      - migrations
+
 volumes:
   postgres_data:
     name: 1c-ai-postgres-data

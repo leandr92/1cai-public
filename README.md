@@ -244,6 +244,11 @@ docker-compose up -d
 # - MCP Server (для Cursor/VSCode)
 # - PostgreSQL, Neo4j, Qdrant, Elasticsearch, Redis
 # - Prometheus, Grafana (monitoring)
+
+# 5. Примените миграции
+docker-compose run --rm migrations
+
+# 💡 Миграции запускают Alembic и создают все таблицы (marketplace, роли, аудит)
 ```
 
 **Доступно:**
