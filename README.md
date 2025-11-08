@@ -539,6 +539,7 @@ curl -X POST http://localhost:8000/generate \
 - Integrations
 - Themes
 - 🔐 JWT + per-user rate limiting (Redis)
+- 📤 Upload артефактов через API (S3/MinIO)
 - ☁️ Presigned downloads через S3/MinIO (beta)
 - ⚡ Кэширование витрин (Redis + APScheduler)
 
