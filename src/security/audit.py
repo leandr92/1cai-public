@@ -5,7 +5,7 @@ from __future__ import annotations
 import asyncio
 import json
 import os
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from threading import Lock
 from typing import Any, Dict, Optional
@@ -31,9 +31,9 @@ class AuditLogger:
         target: Optional[str] = None,
         metadata: Optional[Dict[str, Any]] = None,
     ) -> None:
-        timestamp = datetime.utcnow()
+        timestamp = datetime.now(timezone.utc)
         entry = {
-            "timestamp": timestamp.isoformat(timespec="seconds") + "Z",
+            "timestamp": timestamp.isoformat(timespec="seconds"),
             "actor": actor,
             "action": action,
             "target": target,

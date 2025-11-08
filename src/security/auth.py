@@ -5,7 +5,7 @@ import json
 import logging
 import os
 import secrets
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from functools import lru_cache
 from typing import Dict, List, Optional
 
@@ -183,7 +183,7 @@ class AuthService:
         if expires_delta is None:
             expires_delta = timedelta(minutes=self.settings.access_token_expire_minutes)
 
-        now = datetime.utcnow()
+        now = datetime.now(timezone.utc)
         payload = {
             "sub": user.user_id,
             "username": user.username,
