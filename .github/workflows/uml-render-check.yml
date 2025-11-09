@@ -1,0 +1,32 @@
+name: PlantUML Render Check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  plantuml:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install PlantUML
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y plantuml graphviz
+
+      - name: Render UML diagrams
+        run: |
+          mkdir -p docs/architecture/uml/png
+          plantuml -tpng docs/architecture/uml/*.puml -o png
+
+      - name: Ensure diagrams are committed
+        run: |
+          if ! git diff --quiet; then
+            echo "::error ::UML PNG outputs are outdated. Please run 'plantuml -tpng docs/architecture/uml/*.puml -o png' locally and commit the generated files."
+            git status
+            exit 1
+          fi
+
