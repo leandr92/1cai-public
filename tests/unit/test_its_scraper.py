@@ -1,4 +1,5 @@
 import json
+from datetime import datetime, timezone
 from pathlib import Path
 
 import httpx
@@ -9,6 +10,7 @@ pytest.importorskip("markdownify")
 
 from integrations.its_scraper import OutputFormat, ScrapeConfig
 from integrations.its_scraper.scraper import ITSScraper
+from integrations.its_scraper.types import Article
 from integrations.its_scraper.writers import persist_article, slugify
 
 
@@ -58,11 +60,11 @@ async def test_scraper_fetches_and_persists(tmp_path: Path) -> None:
     transport = httpx.MockTransport(_mock_handler)
     async with httpx.AsyncClient(transport=transport) as client:
         async with ITSScraper(config, client=client) as scraper:
-            articles = await scraper.scrape()
+            results = await scraper.scrape()
 
-        assert len(articles) == 1
-        article = articles[0]
-        paths = list(persist_article(article, config))
+        assert len(results) == 1
+        article, existing_meta = results[0]
+        paths = list(persist_article(article, config, existing_meta=existing_meta))
 
     slug = slugify("https://example.com/article-1")
     article_dir = tmp_path / slug
@@ -83,4 +85,54 @@ async def test_scraper_fetches_and_persists(tmp_path: Path) -> None:
 
 def test_slugify_handles_unicode() -> None:
     assert slugify("Пример статьи 1") == "пример-статьи-1"
+
+
+def test_persist_article_creates_versions(tmp_path: Path) -> None:
+    config = ScrapeConfig(
+        start_url="https://example.com/list",
+        output_directory=tmp_path,
+        formats=[OutputFormat.json],
+        update_only=True,
+    )
+
+    first_article = Article(
+        url="https://example.com/article-1",
+        title="Article One",
+        content_html="<p>Hello</p>",
+        content_text="Hello",
+        fetched_at=datetime.now(timezone.utc),
+        content_hash="hash1",
+        word_count=1,
+        excerpt="Hello",
+        meta={"canonical": "https://example.com/article-1"},
+    )
+
+    persisted = list(persist_article(first_article, config, existing_meta=None))
+    assert persisted
+
+    metadata_path = tmp_path / slugify("https://example.com/article-1") / config.metadata_filename
+    existing_meta = json.loads(metadata_path.read_text(encoding="utf-8"))
+
+    second_article = Article(
+        url="https://example.com/article-1",
+        title="Article One",
+        content_html="<p>Hello World!</p>",
+        content_text="Hello World!",
+        fetched_at=datetime.now(timezone.utc),
+        content_hash="hash2",
+        word_count=2,
+        excerpt="Hello World!",
+        meta={"canonical": "https://example.com/article-1"},
+    )
+
+    persisted_second = list(
+        persist_article(second_article, config, existing_meta=existing_meta)
+    )
+    assert persisted_second
+
+    versions_dir = metadata_path.parent / "versions"
+    assert versions_dir.exists()
+    assert any(versions_dir.iterdir())
+    new_meta = json.loads(metadata_path.read_text(encoding="utf-8"))
+    assert new_meta["meta"]["previous_version"] == existing_meta.get("fetched_at")
 

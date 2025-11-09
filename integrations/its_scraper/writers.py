@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import json
+import shutil
+from datetime import datetime
 from pathlib import Path
-from typing import Iterable
+from typing import Dict, Iterable, Optional
 
 from markdownify import markdownify as html_to_markdown
 
@@ -51,12 +53,20 @@ def write_txt(article: Article, base_dir: Path) -> Path:
     return target
 
 
-def write_metadata(article: Article, base_dir: Path, config: ScrapeConfig) -> Path:
+def write_metadata(
+    article: Article,
+    base_dir: Path,
+    config: ScrapeConfig,
+    existing_meta: Optional[Dict[str, object]] = None,
+) -> Path:
     target = base_dir / config.metadata_filename
     data = article.to_dict()
     if not config.rag_metadata:
         data.pop("breadcrumbs", None)
         data.pop("tags", None)
+    if existing_meta and existing_meta.get("content_hash") != article.content_hash:
+        data.setdefault("meta", {})
+        data["meta"]["previous_version"] = existing_meta.get("fetched_at")
     target.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
     return target
 
@@ -64,14 +74,33 @@ def write_metadata(article: Article, base_dir: Path, config: ScrapeConfig) -> Pa
 def persist_article(
     article: Article,
     config: ScrapeConfig,
+    *,
+    existing_meta: Optional[Dict[str, object]] = None,
 ) -> Iterable[Path]:
     slug_source = article.meta.get("canonical") or article.url or article.title
     slug = slugify(slug_source)
     article_dir = Path(config.output_directory) / slug
     metadata_path = article_dir / config.metadata_filename
 
-    if config.update_only and metadata_path.exists():
-        return []
+    if config.update_only and existing_meta:
+        if existing_meta.get("content_hash") == article.content_hash:
+            return []
+
+    if metadata_path.exists() and not existing_meta:
+        try:
+            existing_meta = json.loads(metadata_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            existing_meta = None
+
+    if existing_meta and existing_meta.get("content_hash") != article.content_hash:
+        version_stamp = str(existing_meta.get("fetched_at", "previous"))
+        version_stamp = version_stamp.replace(":", "-")
+        version_dir = article_dir / "versions" / version_stamp
+        _ensure_dir(version_dir)
+        for candidate in ["article.json", "article.md", "article.txt", config.metadata_filename]:
+            src = article_dir / candidate
+            if src.exists():
+                shutil.move(str(src), version_dir / candidate)
 
     persisted = []
     for fmt in config.formats:
@@ -81,7 +110,9 @@ def persist_article(
             persisted.append(write_markdown(article, article_dir))
         elif fmt == OutputFormat.txt:
             persisted.append(write_txt(article, article_dir))
-    persisted.append(write_metadata(article, article_dir, config))
+    persisted.append(
+        write_metadata(article, article_dir, config, existing_meta=existing_meta)
+    )
     return persisted
 
 
@@ -90,7 +121,7 @@ def slugify(value: str) -> str:
     for char in value.lower():
         if char.isalnum():
             allowed.append(char)
-        elif char in {" ", "-", "_", "/", ":", "."}:
+        elif char in {" ", "-", "_", "/", ":", ".", "?", "="}:
             allowed.append("-")
     slug = "".join(allowed).strip("-")
     return slug or "article"

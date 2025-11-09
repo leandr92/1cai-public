@@ -12,6 +12,8 @@ ITS_OUTPUT ?= output/its-scraper
 ITS_FORMATS ?= json markdown
 ITS_CONCURRENCY ?=
 ITS_SLEEP ?=
+ITS_PROXY ?=
+ITS_USER_AGENT_FILE ?=
 
 help:
 	@echo "Enterprise 1C AI Development Stack - Commands:"
@@ -67,7 +69,7 @@ help:
 	@echo "Utilities:"
 	@echo "  make status           - Show project status"
 	@echo "  make clean            - Clean temporary files"
-	@echo "  make scrape-its       - Run ITS scraper (ITS_START_URL, ITS_OUTPUT, ITS_FORMATS)"
+	@echo "  make scrape-its       - Run ITS scraper (ITS_START_URL, ITS_OUTPUT, ITS_FORMATS, ITS_CONCURRENCY, ITS_SLEEP, ITS_PROXY, ITS_USER_AGENT_FILE)"
 
 # Installation
 install:
@@ -187,7 +189,7 @@ clean:
 	@echo "✓ Cleaned temporary files"
 
 scrape-its:
-	python -m integrations.its_scraper scrape $(ITS_START_URL) --output $(ITS_OUTPUT) $(foreach fmt,$(ITS_FORMATS), --format $(fmt)) $(if $(ITS_CONCURRENCY), --concurrency $(ITS_CONCURRENCY),) $(if $(ITS_SLEEP), --sleep $(ITS_SLEEP),)
+	python -m integrations.its_scraper scrape $(ITS_START_URL) --output $(ITS_OUTPUT) $(foreach fmt,$(ITS_FORMATS), --format $(fmt)) $(if $(ITS_CONCURRENCY), --concurrency $(ITS_CONCURRENCY),) $(if $(ITS_SLEEP), --sleep $(ITS_SLEEP),) $(if $(ITS_PROXY), --proxy $(ITS_PROXY),) $(if $(ITS_USER_AGENT_FILE), --user-agent-file $(ITS_USER_AGENT_FILE),)
 
 train-ml:
 	@python scripts/ml/config_utils.py --info $(CONFIG)

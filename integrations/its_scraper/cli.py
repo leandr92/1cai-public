@@ -3,7 +3,7 @@ from __future__ import annotations
 import asyncio
 import logging
 from pathlib import Path
-from typing import Optional
+from typing import List, Optional
 
 import typer
 
@@ -65,6 +65,21 @@ def scrape(
         "-o",
         help="Directory for scraped files.",
     ),
+    user_agent: Optional[List[str]] = typer.Option(
+        None,
+        "--user-agent",
+        help="Override default user agent (can be specified multiple times for rotation).",
+    ),
+    user_agent_file: Optional[Path] = typer.Option(
+        None,
+        "--user-agent-file",
+        help="Path to a file with user agents (one per line) for rotation.",
+    ),
+    proxy: Optional[str] = typer.Option(
+        None,
+        "--proxy",
+        help="HTTP(S) proxy URL (e.g. http://user:pass@host:port).",
+    ),
 ) -> None:
     """
     Scrape ITS documentation starting from START_URL and produce the selected formats.
@@ -81,6 +96,16 @@ def scrape(
         config.delay_between_requests = sleep
     config.update_only = update_only
     config.output_directory = output_dir
+    if user_agent:
+        config.user_agents = list(user_agent)
+    if user_agent_file and user_agent_file.exists():
+        config.user_agents.extend(
+            ua.strip()
+            for ua in user_agent_file.read_text(encoding="utf-8").splitlines()
+            if ua.strip()
+        )
+    if proxy:
+        config.proxy = proxy
 
     if config.verbose:
         logging.basicConfig(level=logging.DEBUG)
@@ -89,9 +114,9 @@ def scrape(
 
     async def _runner() -> None:
         async with ITSScraper(config) as scraper:
-            articles = await scraper.scrape()
-            for article in articles:
-                files = list(persist_article(article, config))
+            results = await scraper.scrape()
+            for article, existing_meta in results:
+                files = list(persist_article(article, config, existing_meta=existing_meta))
                 if not files and config.update_only:
                     scraper.stats.skipped += 1
             typer.echo(

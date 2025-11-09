@@ -68,7 +68,11 @@ class ScrapeConfig(BaseModel):
     )
     user_agent: str = Field(
         "1C-AI-ITS-Scraper/1.0 (+https://github.com/DmitrL-dev/1cai-public)",
-        description="User agent string used for HTTP requests.",
+        description="Fallback user agent string used for HTTP requests.",
+    )
+    user_agents: List[str] = Field(
+        default_factory=list,
+        description="List of user agents for rotation; overrides user_agent if not empty.",
     )
     output_directory: Path = Field(
         Path("output/its-scraper"),
@@ -95,6 +99,10 @@ class ScrapeConfig(BaseModel):
         ge=0.0,
         description="Delay (seconds) between HTTP requests to reduce load on ITS.",
     )
+    proxy: Optional[str] = Field(
+        None,
+        description="Optional HTTP(S) proxy URL (e.g. http://user:pass@host:port).",
+    )
 
     @field_validator("formats", mode="before")
     def _normalize_formats(cls, value: Iterable[str]) -> List[OutputFormat]:
@@ -110,6 +118,10 @@ class ScrapeConfig(BaseModel):
         if not formats:
             raise ValueError("At least one format must be specified")
         return formats
+
+    @field_validator("user_agents")
+    def _strip_user_agents(cls, value: List[str]) -> List[str]:
+        return [ua.strip() for ua in value if ua.strip()]
 
     @classmethod
     def from_json(cls, path: Path) -> "ScrapeConfig":

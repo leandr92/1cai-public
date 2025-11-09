@@ -363,8 +363,9 @@ docker-compose run --rm migrations
 **Подготовка корпусов документации**
 
 - `python -m integrations.its_scraper scrape <URL>` — выгрузка статей (JSON/Markdown/TXT)
-- RAG-метаданные (`metadata.json`) с SHA256, word count и excerpt для `output/<slug>/`
-- Параметры `ITS_START_URL`, `ITS_OUTPUT`, `ITS_FORMATS`, `ITS_CONCURRENCY`, `ITS_SLEEP` для `make scrape-its`
+- RAG-метаданные (`metadata.json`) с SHA256, word count, excerpt и ссылкой на предыдущую версию
+- Параметры `ITS_START_URL`, `ITS_OUTPUT`, `ITS_FORMATS`, `ITS_CONCURRENCY`, `ITS_SLEEP`, `ITS_PROXY`, `ITS_USER_AGENT_FILE` для `make scrape-its`
+- User-Agent rotation, proxy support и версионирование (`versions/<timestamp>/`) при обновлении статей
 - База взята из [hawkxtreme/scraping_its](https://github.com/hawkxtreme/scraping_its). Благодарим автора за открытый проект!
 
 ### REST API

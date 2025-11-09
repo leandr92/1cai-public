@@ -11,9 +11,9 @@
 
 - ✅ Асинхронный загрузчик (`httpx.AsyncClient`) + семафор для ограничения параллелизма.
 - ✅ Экспоненциальные ретраи (`tenacity`), настраиваемое число попыток, таймауты и задержка между запросами.
-- ✅ Гибкая конфигурация (CSS-селекторы, лимиты, user-agent, concurrency, sleep) через JSON.
-- ✅ Генерация нескольких форматов: JSON/Markdown/TXT + RAG-метаданные (`output/<slug>/metadata.json`) с `content_hash`, `word_count`, `excerpt`.
-- ✅ Возможность пропускать уже загруженные статьи (`--update`, slug по canonical URL).
+- ✅ Гибкая конфигурация (CSS-селекторы, лимиты, user-agent rotation, concurrency, sleep, proxy) через JSON.
+- ✅ Генерация нескольких форматов: JSON/Markdown/TXT + RAG-метаданные (`output/<slug>/metadata.json`) с `content_hash`, `word_count`, `excerpt`, `previous_version`.
+- ✅ Возможность пропускать уже загруженные статьи (`--update`), версионирование и архив предыдущих ревизий (`versions/<timestamp>/`).
 - ✅ Простое подключение в пайплайны (Typer CLI, Python API, Makefile-таргет).
 
 ## 🧩 Установка зависимостей
@@ -45,6 +45,9 @@ python -m integrations.its_scraper scrape \
 | `--update`       | Пропустить статьи с уже существующим `metadata.json` в папке статьи       |
 | `--concurrency, -n` | Переопределить параллелизм                                             |
 | `--sleep, -s`    | Задержка между HTTP-запросами (секунды)                                   |
+| `--user-agent`   | Переопределить User-Agent (можно указать несколько раз)                   |
+| `--user-agent-file` | Файл со списком User-Agent для ротации                               |
+| `--proxy`        | Прокси для доступа к ИТС                                                 |
 | `--output, -o`   | Директория для сохранения                                                 |
 
 Сгенерировать конфиг:
@@ -69,13 +72,19 @@ python -m integrations.its_scraper generate-config ./its.config.json
   "retry_attempts": 4,
   "request_timeout": 45,
   "output_directory": "output/its-scraper",
-  "rag_metadata": true
+  "rag_metadata": true,
+  "user_agents": [
+    "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123 Safari/537.36",
+    "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Firefox/125.0"
+  ],
+  "proxy": null,
+  "delay_between_requests": 0.5
 }
 ```
 
 ## 🔄 Интеграция с пайплайнами
 
-- **Makefile**: добавлен таргет `make scrape-its` (см. корневой `Makefile`, переменные `ITS_START_URL`, `ITS_OUTPUT`, `ITS_FORMATS`, `ITS_CONCURRENCY`, `ITS_SLEEP`).
+- **Makefile**: добавлен таргет `make scrape-its` (см. корневой `Makefile`, переменные `ITS_START_URL`, `ITS_OUTPUT`, `ITS_FORMATS`, `ITS_CONCURRENCY`, `ITS_SLEEP`, `ITS_PROXY`, `ITS_USER_AGENT_FILE`).
 - **Orchestrator**: модуль можно дергать как Python API:
 
 ```python

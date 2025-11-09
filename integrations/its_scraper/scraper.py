@@ -4,11 +4,12 @@ import asyncio
 import hashlib
 import json
 import logging
+import random
 from collections import deque
 from dataclasses import dataclass
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Deque, Iterable, List, Optional, Set
+from typing import Deque, Dict, Iterable, List, Optional, Set, Tuple
 
 import httpx
 from bs4 import BeautifulSoup
@@ -45,14 +46,15 @@ class ITSScraper:
         self._semaphore = asyncio.Semaphore(config.concurrency)
         self._visited: Set[str] = set()
         self.stats = ScrapeStatistics()
-        self._existing_sources: Set[str] = set()
+        self._existing_metadata: Dict[str, Dict[str, object]] = {}
 
     async def __aenter__(self) -> "ITSScraper":
         if self._client is None:
             self._client = httpx.AsyncClient(
-                headers={"User-Agent": self.config.user_agent},
+                headers={"User-Agent": self._pick_user_agent()},
                 timeout=self.config.request_timeout,
                 follow_redirects=True,
+                proxies=self.config.proxy,
             )
         if self.config.update_only:
             self._load_existing_sources()
@@ -75,7 +77,9 @@ class ITSScraper:
                 async with self._semaphore:
                     if self.config.delay_between_requests:
                         await asyncio.sleep(self.config.delay_between_requests)
-                    response = await self._client.get(url)
+                    response = await self._client.get(
+                        url, headers={"User-Agent": self._pick_user_agent()}
+                    )
                     response.raise_for_status()
                     return response.text
 
@@ -121,11 +125,9 @@ class ITSScraper:
                         if next_url not in seen_pages:
                             to_visit.append(next_url)
 
-    async def _scrape_article(self, url: str) -> Optional[Article]:
-        if self.config.update_only and url in self._existing_sources:
-            logger.debug("Skipping %s (already present)", url)
-            self.stats.skipped += 1
-            return None
+    async def _scrape_article(
+        self, url: str
+    ) -> Optional[Tuple[Article, Optional[Dict[str, object]]]]:
         try:
             html = await self.fetch_html(url)
         except (httpx.HTTPError, RetryError) as exc:
@@ -167,14 +169,23 @@ class ITSScraper:
         )
 
         self.stats.fetched += 1
-        return article
+        existing_meta = self._existing_metadata.get(url)
+        if self.config.update_only and existing_meta:
+            previous_hash = existing_meta.get("content_hash")
+            if previous_hash == content_hash:
+                logger.debug("Skipping %s (content unchanged)", url)
+                self.stats.skipped += 1
+                return None
+        return article, existing_meta
 
-    async def scrape(self) -> List[Article]:
-        articles: List[Article] = []
+    async def scrape(self) -> List[Tuple[Article, Optional[Dict[str, object]]]]:
+        articles: List[Tuple[Article, Optional[Dict[str, object]]]] = []
         async for url in self._iter_article_urls():
-            article = await self._scrape_article(url)
-            if article:
-                articles.append(article)
+            result = await self._scrape_article(url)
+            if not result:
+                continue
+            article, existing_meta = result
+            articles.append((article, existing_meta))
         return articles
 
     @staticmethod
@@ -200,5 +211,10 @@ class ITSScraper:
                 or data.get("url")
             )
             if isinstance(source, str):
-                self._existing_sources.add(source)
+                self._existing_metadata[source] = data
+
+    def _pick_user_agent(self) -> str:
+        if self.config.user_agents:
+            return random.choice(self.config.user_agents)
+        return self.config.user_agent
 
