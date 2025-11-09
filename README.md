@@ -95,8 +95,8 @@
 
 - **Семантический поиск и оптимизация кода:**  
   1. Запустите API (`docker-compose up -d`)  
-  2. Выполните `python examples/query_semantic_search.py "как рассчитать налог"`  
-  3. Сгенерируйте новый модуль через [`examples/generate_bsl_code.py`](examples/generate_bsl_code.py)
+  2. Выполните `python examples/semantic_search_demo.py "как рассчитать налог"`  
+  3. Сгенерируйте новый модуль через [`examples/code_execution_examples.py`](examples/code_execution_examples.py)
 
 - **Визуализация зависимости в EDT:**  
   1. Установите плагин из `edt-plugin/`  

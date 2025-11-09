@@ -6,7 +6,7 @@
 
 ## 📋 Доступные Features
 
-### 🔒 [Security Agent Framework](../security/agent_framework/README.md)
+### 🔒 [Security Agent Framework](../../security/agent_framework/README.md)
 **Автоматизированные security-проверки**
 
 - CLI для проверки веб-API, репозиториев, n8n workflow и BSL-кода
@@ -123,7 +123,7 @@
 
 ## 🎯 Quick Links
 
-- [Security Agent Framework](../security/agent_framework/README.md)
+- [Security Agent Framework](../../security/agent_framework/README.md)
 - [Voice Queries Guide](./VOICE_QUERIES.md)
 - [OCR Integration](./OCR_INTEGRATION.md)
 - [i18n Guide](./I18N_GUIDE.md)
