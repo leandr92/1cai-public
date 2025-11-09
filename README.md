@@ -14,7 +14,7 @@
 
 ### 🔄 ITS Documentation Scraper (Nov 9, 2025)
 - Построен модуль `integrations/its_scraper`: асинхронный сбор статей ИТС (ретраи, адаптивный rate-limit, прокси, user-agent rotation, Prometheus-метрики, stream JSONL)
-- Версионирование артефактов (`versions/<ts>/`), расширенные метаданные (`content_hash`, `word_count`, `excerpt`, `previous_version`)
+- Версионирование артефактов (`versions/<ts>/`), расширенные метаданные (`content_hash`, `word_count`, `excerpt`, `previous_version`), queue-based producer/consumer с резюмированием (`--state-file`, `--resume`)
 - CLI `python -m integrations.its_scraper scrape …`, Make-таргет `make scrape-its` (переменные `ITS_CONCURRENCY`, `ITS_SLEEP`, `ITS_PROXY`, `ITS_USER_AGENT_FILE`)
 - Поддержка plug-in writers (stdout JSONL, S3/MinIO), документация: [`docs/03-integrations/ITS_SCRAPER.md`](docs/03-integrations/ITS_SCRAPER.md)
 - Источник: [hawkxtreme/scraping_its](https://github.com/hawkxtreme/scraping_its) — благодарим автора проекта за основу

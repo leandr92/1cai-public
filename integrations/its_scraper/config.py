@@ -107,6 +107,19 @@ class ScrapeConfig(BaseModel):
         False,
         description="Expose Prometheus metrics on /metrics (when running as service).",
     )
+    queue_size: int = Field(
+        50,
+        ge=1,
+        description="Number of pending article URLs kept in memory for producer/consumer pipeline.",
+    )
+    state_file: Optional[Path] = Field(
+        None,
+        description="Optional path to JSON state file to resume unfinished queues.",
+    )
+    resume: bool = Field(
+        False,
+        description="If True, resume from previous state file (requires state_file).",
+    )
 
     @field_validator("formats", mode="before")
     def _normalize_formats(cls, value: Iterable[str]) -> List[OutputFormat]:

@@ -49,6 +49,8 @@ class ITSScraper:
         self._existing_metadata: Dict[str, Dict[str, object]] = {}
         self._base_delay = config.delay_between_requests
         self._adaptive_delay = self._base_delay
+        self._queue: asyncio.Queue[str] = asyncio.Queue(maxsize=config.queue_size)
+        self._state_path = config.state_file
 
     async def __aenter__(self) -> "ITSScraper":
         if self._client is None:
@@ -60,11 +62,14 @@ class ITSScraper:
             )
         if self.config.update_only:
             self._load_existing_sources()
+        if self.config.resume and self._state_path and self._state_path.exists():
+            self._load_state()
         return self
 
     async def __aexit__(self, exc_type, exc, tb) -> None:
         if self._client and not self._external_client:
             await self._client.aclose()
+        self._save_state()
 
     async def fetch_html(self, url: str, metrics=None) -> str:
         assert self._client is not None, "Scraper must be used as async context manager"
@@ -96,7 +101,10 @@ class ITSScraper:
 
         raise ScraperError(f"Unable to fetch {url}")
 
-    async def _iter_article_urls(self, metrics=None) -> Iterable[str]:
+    async def _producer(self, metrics=None) -> None:
+        if self.config.resume and not self._queue.empty():
+            return
+
         to_visit: Deque[str] = deque([self.config.start_url])
         seen_pages: Set[str] = set()
 
@@ -118,12 +126,10 @@ class ITSScraper:
                 if not target:
                     continue
                 if target.startswith("/"):
-                    # Resolve relative paths
                     target = str(httpx.URL(page_url).join(target))
-
                 if target not in self._visited:
                     self._visited.add(target)
-                    yield target
+                    await self._queue.put(target)
                     if self.config.limit and len(self._visited) >= self.config.limit:
                         return
 
@@ -195,12 +201,21 @@ class ITSScraper:
         self, metrics=None
     ) -> List[Tuple[Article, Optional[Dict[str, object]]]]:
         articles: List[Tuple[Article, Optional[Dict[str, object]]]] = []
-        async for url in self._iter_article_urls(metrics=metrics):
+        producer = asyncio.create_task(self._producer(metrics=metrics))
+        while True:
+            if producer.done() and self._queue.empty():
+                break
+            try:
+                url = await asyncio.wait_for(self._queue.get(), timeout=1)
+            except asyncio.TimeoutError:
+                continue
             result = await self._scrape_article(url, metrics=metrics)
+            self._queue.task_done()
             if not result:
                 continue
             article, existing_meta = result
             articles.append((article, existing_meta))
+        await producer
         return articles
 
     @staticmethod
@@ -243,4 +258,29 @@ class ITSScraper:
             self._adaptive_delay = min(
                 self._base_delay + 5, self._adaptive_delay * 1.5 + 0.5
             )
+
+    def _save_state(self) -> None:
+        if not self._state_path:
+            return
+        remaining = list(self._queue._queue)  # type: ignore[attr-defined]
+        if not remaining:
+            if self._state_path.exists():
+                self._state_path.unlink()
+            return
+        payload = {
+            "remaining": remaining,
+            "visited": list(self._visited),
+        }
+        self._state_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+
+    def _load_state(self) -> None:
+        if not self._state_path or not self._state_path.exists():
+            return
+        try:
+            payload = json.loads(self._state_path.read_text(encoding="utf-8"))
+        except (OSError, json.JSONDecodeError):
+            return
+        for url in payload.get("remaining", []):
+            self._queue.put_nowait(url)
+        self._visited.update(payload.get("visited", []))
 
