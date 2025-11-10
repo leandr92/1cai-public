@@ -9,8 +9,10 @@ from typing import Dict, List, Any, Optional
 from fastapi import FastAPI, Request
 from fastapi.responses import StreamingResponse, JSONResponse
 import asyncio
+import httpx
 
 from src.ai.orchestrator import AIOrchestrator
+from src.config import settings
 
 logger = logging.getLogger(__name__)
 
@@ -132,6 +134,48 @@ TOOLS = [
             },
             "required": ["module_name", "function_name"]
         }
+    ),
+
+    MCPTool(
+        name="bsl_platform_context",
+        description="Прокси к внешнему MCP (alkoleft/mcp-bsl-platform-context) для получения платформенного контекста 1С.",
+        input_schema={
+            "type": "object",
+            "properties": {
+                "query": {
+                    "type": "string",
+                    "description": "Что нужно найти (например, 'Документ Продажи, реквизиты, табличные части')"
+                },
+                "scope": {
+                    "type": "object",
+                    "description": "Дополнительные параметры запроса (см. документацию внешнего MCP сервера)"
+                }
+            },
+            "required": ["query"]
+        }
+    ),
+
+    MCPTool(
+        name="bsl_test_runner",
+        description="Прокси к внешнему MCP (alkoleft/mcp-onec-test-runner) для запуска BSL/Vanessa тестов.",
+        input_schema={
+            "type": "object",
+            "properties": {
+                "workspace": {
+                    "type": "string",
+                    "description": "Путь к проекту или workspace, который должен запускать тесты"
+                },
+                "testPlan": {
+                    "type": "string",
+                    "description": "Опциональный путь к testplan для запуска (см. документацию внешнего runner)"
+                },
+                "arguments": {
+                    "type": "object",
+                    "description": "Дополнительные параметры запуска"
+                }
+            },
+            "required": ["workspace"]
+        }
     )
 ]
 
@@ -183,6 +227,12 @@ async def call_tool(request: Request):
         
         elif tool_name == "analyze_dependencies":
             result = await handle_analyze_dependencies(arguments)
+
+        elif tool_name == "bsl_platform_context":
+            result = await handle_bsl_platform_context(arguments)
+
+        elif tool_name == "bsl_test_runner":
+            result = await handle_bsl_test_runner(arguments)
         
         else:
             return JSONResponse(
@@ -248,6 +298,68 @@ async def handle_analyze_dependencies(args: Dict) -> Dict:
     )
     
     return response
+
+
+async def call_external_mcp(base_url: str, tool_name: str, args: Dict, auth_token: Optional[str] = None) -> Dict:
+    """Invoke an external MCP-compatible server and return its result."""
+    endpoint = base_url.rstrip("/") + "/mcp/tools/call"
+    headers = {"Content-Type": "application/json"}
+    if auth_token:
+        headers["Authorization"] = f"Bearer {auth_token}"
+
+    async with httpx.AsyncClient(timeout=30.0) as client:
+        response = await client.post(
+            endpoint,
+            json={"name": tool_name, "arguments": args},
+            headers=headers,
+        )
+        response.raise_for_status()
+        payload = response.json()
+        return payload.get("result", payload)
+
+
+async def handle_bsl_platform_context(args: Dict) -> Dict:
+    """Proxy to external MCP server providing platform context."""
+    base_url = settings.mcp_bsl_context_base_url
+    if not base_url:
+        return {
+            "error": "MCP_BSL_CONTEXT_BASE_URL is not configured. "
+                     "Install and run alkoleft/mcp-bsl-platform-context, then set the environment variable.",
+            "configured": False,
+        }
+
+    try:
+        return await call_external_mcp(
+            base_url=base_url,
+            tool_name=settings.mcp_bsl_context_tool_name,
+            args=args,
+            auth_token=settings.mcp_bsl_context_auth_token,
+        )
+    except httpx.HTTPError as exc:
+        logger.error("External MCP (platform context) call failed: %s", exc)
+        return {"error": f"External MCP platform context call failed: {exc}"}
+
+
+async def handle_bsl_test_runner(args: Dict) -> Dict:
+    """Proxy to external MCP test runner."""
+    base_url = settings.mcp_bsl_test_runner_base_url
+    if not base_url:
+        return {
+            "error": "MCP_BSL_TEST_RUNNER_BASE_URL is not configured. "
+                     "Install and run alkoleft/mcp-onec-test-runner, then set the environment variable.",
+            "configured": False,
+        }
+
+    try:
+        return await call_external_mcp(
+            base_url=base_url,
+            tool_name=settings.mcp_bsl_test_runner_tool_name,
+            args=args,
+            auth_token=settings.mcp_bsl_test_runner_auth_token,
+        )
+    except httpx.HTTPError as exc:
+        logger.error("External MCP (test runner) call failed: %s", exc)
+        return {"error": f"External MCP test runner call failed: {exc}"}
 
 
 if __name__ == "__main__":

@@ -1,0 +1,82 @@
+@startuml
+title Data Lifecycle - Knowledge to Insight
+
+skinparam backgroundColor #FFFFFF
+skinparam componentStyle rectangle
+
+rectangle "Ingestion Layer" as Ingestion {
+  component "ITS Scraper" as Scraper
+  component "Webhook Connector" as Webhook
+  component "Manual Upload CLI" as Manual
+}
+
+rectangle "Landing Zone\n(Object Storage)" as Landing {
+  database "MinIO Bucket\nraw/its" as Raw
+  database "MinIO Bucket\nraw/uploads" as RawUploads
+}
+
+rectangle "Processing Layer" as Processing {
+  component "Normalization\n(HTML -> Markdown/JSON)" as Normalize
+  component "Deduplication\nHashing + Versioning" as Dedup
+  component "Metadata Enrichment\n(Topic, language, tags)" as Enrich
+}
+
+rectangle "Storage Layer" as Storage {
+  database "PostgreSQL\nmetadata.articles" as Metadata
+  database "Neo4j\nGraph relationships" as GraphDB
+  database "Qdrant\nEmbeddings" as VectorDB
+}
+
+rectangle "Serving Layer" as Serving {
+  component "Graph API\nKnowledge endpoints" as KnowledgeAPI
+  component "Semantic Search" as SemanticSearch
+  component "Prompt Library\nContext builder" as PromptLib
+}
+
+rectangle "Consumption Layer" as Consumption {
+  component "EDT Plugin" as EDT
+  component "n8n Workflows" as n8n
+  component "Documentation Portal" as Portal
+  component "AI Assistants" as Assist
+}
+
+rectangle "Governance & Observability" as Governance {
+  component "Data Catalog\n(ml_datasets.json)" as Catalog
+  component "Metrics & Quality Checks" as DataQuality
+  component "Retention Policies\n(Minio lifecycle)" as Retention
+  component "Security Controls\nAccess policies" as Security
+}
+
+Scraper --> Raw : Store HTML, metadata
+Webhook --> RawUploads
+Manual --> RawUploads
+
+Raw --> Normalize : Async workers
+Normalize --> Dedup
+Dedup --> Enrich
+
+Enrich --> Metadata
+Enrich --> GraphDB
+Enrich --> VectorDB
+
+Metadata --> KnowledgeAPI
+GraphDB --> KnowledgeAPI
+VectorDB --> SemanticSearch
+Metadata --> PromptLib
+VectorDB --> PromptLib
+
+KnowledgeAPI --> EDT
+KnowledgeAPI --> Portal
+SemanticSearch --> EDT
+SemanticSearch --> Assist
+PromptLib --> Assist
+n8n --> KnowledgeAPI
+n8n --> SemanticSearch
+
+Catalog --> Processing : Dataset definitions
+DataQuality --> Processing : Assertions, tests
+Retention --> Raw : Lifecycle rules
+Security --> Storage : IAM, tokens
+
+@enduml
+

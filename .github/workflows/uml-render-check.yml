@@ -12,20 +12,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Install PlantUML
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install Java runtime
         run: |
           sudo apt-get update
-          sudo apt-get install -y plantuml graphviz
+          sudo apt-get install -y openjdk-17-jre-headless
 
       - name: Render UML diagrams
         run: |
-          mkdir -p docs/architecture/uml/png
-          plantuml -tpng docs/architecture/uml/*.puml -o png
+          python scripts/docs/render_uml.py --fail-on-missing
 
       - name: Ensure diagrams are committed
         run: |
           if ! git diff --quiet; then
-            echo "::error ::UML PNG outputs are outdated. Please run 'plantuml -tpng docs/architecture/uml/*.puml -o png' locally and commit the generated files."
+            echo "::error ::UML assets are outdated. Run 'make render-uml' locally and commit the regenerated files (png + checksums)."
             git status
             exit 1
           fi

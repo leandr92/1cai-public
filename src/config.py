@@ -166,6 +166,32 @@ class Settings(BaseSettings):
     
     # Режим разработки (для development можно разрешить небезопасные настройки)
     environment: str = Field(default="production", description="Режим работы: development/production")
+
+    # Внешние MCP-инструменты
+    mcp_bsl_context_base_url: Optional[str] = Field(
+        default=None,
+        description="Базовый URL MCP сервера платформенного контекста (например, alkoleft/mcp-bsl-platform-context)",
+    )
+    mcp_bsl_context_tool_name: str = Field(
+        default="platform_context",
+        description="Название инструмента на внешнем MCP сервере для получения платформенного контекста",
+    )
+    mcp_bsl_context_auth_token: Optional[str] = Field(
+        default=None,
+        description="Bearer-токен для аутентификации на MCP сервере платформенного контекста (опционально)",
+    )
+    mcp_bsl_test_runner_base_url: Optional[str] = Field(
+        default=None,
+        description="Базовый URL MCP сервера тест-раннера (например, alkoleft/mcp-onec-test-runner)",
+    )
+    mcp_bsl_test_runner_tool_name: str = Field(
+        default="run_tests",
+        description="Название инструмента на MCP сервере тест-раннера",
+    )
+    mcp_bsl_test_runner_auth_token: Optional[str] = Field(
+        default=None,
+        description="Bearer-токен для аутентификации на MCP сервере тест-раннера (опционально)",
+    )
     
     model_config = SettingsConfigDict(
         env_file=".env",

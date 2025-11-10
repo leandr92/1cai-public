@@ -1,0 +1,69 @@
+@startuml
+title Model Lineage - From Source to Serving
+
+skinparam backgroundColor #FFFFFF
+skinparam defaultTextAlignment center
+
+skinparam componentStyle rectangle
+
+package "Source Systems" {
+  component "ITS Articles\n(raw HTML)" as SourceITS
+  component "Repository Snapshots\n(Git projects)" as SourceCode
+  component "Telemetry Metrics\n(Prometheus)" as SourceMetrics
+}
+
+package "Ingestion Jobs" {
+  component "ITS Scraper\n(etl.its_scraper)" as JobITS
+  component "Repo Sync\n(etl.repo_sync)" as JobRepo
+  component "Metrics Exporter\n(etl.metrics)" as JobMetrics
+}
+
+package "Bronze Layer" {
+  database "MinIO\nbronze/its" as BronzeITS
+  database "MinIO\nbronze/repos" as BronzeRepo
+  database "PostgreSQL\nbronze.metrics" as BronzeMetrics
+}
+
+package "Silver Layer" {
+  database "PostgreSQL\nsilver.articles" as SilverArticles
+  database "Neo4j\nsilver.graph" as SilverGraph
+  database "Qdrant\nsilver.embeddings" as SilverEmbeddings
+}
+
+package "Gold Layer" {
+  component "Feature Views\n(features.*)" as FeatureViews
+  component "Training Sets\n(datasets.*)" as TrainingSets
+  component "Evaluation Suites\n(eval.*)" as Evaluation
+}
+
+package "Model Ops" {
+  component "Model Registry\n(models.yaml)" as Registry
+  component "Serving Endpoint\n(API inference)" as Serving
+  component "Monitoring Dashboards\n(Grafana ML)" as Monitoring
+}
+
+SourceITS --> JobITS
+SourceCode --> JobRepo
+SourceMetrics --> JobMetrics
+
+JobITS --> BronzeITS
+JobRepo --> BronzeRepo
+JobMetrics --> BronzeMetrics
+
+BronzeITS --> SilverArticles
+BronzeRepo --> SilverGraph
+BronzeMetrics --> SilverEmbeddings
+SilverArticles --> SilverGraph
+SilverArticles --> SilverEmbeddings
+
+SilverGraph --> FeatureViews
+SilverEmbeddings --> FeatureViews
+FeatureViews --> TrainingSets
+TrainingSets --> Evaluation
+Evaluation --> Registry
+Registry --> Serving
+Serving --> Monitoring
+Monitoring --> Registry : Drift feedback
+
+@enduml
+

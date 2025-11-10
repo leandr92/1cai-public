@@ -8,8 +8,11 @@ from __future__ import annotations
 import argparse
 import json
 import sys
+from collections import Counter
 from pathlib import Path
-from typing import Any, Dict, Tuple
+from typing import Any, Dict, Tuple, List
+
+from scripts.analysis.tree_sitter_adapter import ensure_parser, extract_calls
 
 
 def load_parse_results(parse_path: Path) -> Dict[str, Any]:
@@ -43,15 +46,19 @@ def analyze_module_distribution(data: Dict[str, Any]) -> Dict[str, Any]:
     }
 
     for catalog in data.get("catalogs", []):
-        if catalog.get("manager_module"):
+        manager_module = catalog.get("manager_module")
+        if manager_module:
             stats["catalog_managers"] += 1
-        if catalog.get("object_module"):
+        object_module = catalog.get("object_module")
+        if object_module:
             stats["catalog_objects"] += 1
 
     for doc in data.get("documents", []):
-        if doc.get("manager_module"):
+        manager_module = doc.get("manager_module")
+        if manager_module:
             stats["document_managers"] += 1
-        if doc.get("object_module"):
+        object_module = doc.get("object_module")
+        if object_module:
             stats["document_objects"] += 1
 
     total_modules = (
@@ -72,6 +79,28 @@ def analyze_module_distribution(data: Dict[str, Any]) -> Dict[str, Any]:
     print(f"\nВСЕГО МОДУЛЕЙ С КОДОМ: {total_modules:,}")
 
     return stats
+
+
+def _collect_code_chunks(modules: List[Dict[str, Any]]) -> List[str]:
+    chunks: List[str] = []
+    for module in modules:
+        if not module:
+            continue
+        if code := module.get("code"):
+            chunks.append(code)
+        for func in module.get("functions", []) or []:
+            if not func:
+                continue
+            body = func.get("body")
+            if body:
+                chunks.append(body)
+        for proc in module.get("procedures", []) or []:
+            if not proc:
+                continue
+            body = proc.get("body")
+            if body:
+                chunks.append(body)
+    return chunks
 
 
 def analyze_code_volume(data: Dict[str, Any]) -> Dict[str, Any]:
@@ -132,6 +161,48 @@ def analyze_code_volume(data: Dict[str, Any]) -> Dict[str, Any]:
         + volumes["documents"]["total"]
     )
 
+    parser_available = ensure_parser()
+    total_calls = 0
+    unique_calls = set()
+    if parser_available:
+        call_stats: Counter[str] = Counter()
+
+        def _process_chunk(text: str) -> None:
+            if not text:
+                return
+            calls = extract_calls(text)
+            call_stats.update(calls)
+
+        for module in data.get("common_modules", []):
+            if isinstance(module, dict):
+                for chunk in _collect_code_chunks([module]):
+                    _process_chunk(chunk)
+
+        for catalog in data.get("catalogs", []):
+            if not isinstance(catalog, dict):
+                continue
+            for chunk in _collect_code_chunks(
+                [
+                    catalog.get("manager_module", {}) or {},
+                    catalog.get("object_module", {}) or {},
+                ]
+            ):
+                _process_chunk(chunk)
+
+        for doc in data.get("documents", []):
+            if not isinstance(doc, dict):
+                continue
+            for chunk in _collect_code_chunks(
+                [
+                    doc.get("manager_module", {}) or {},
+                    doc.get("object_module", {}) or {},
+                ]
+            ):
+                _process_chunk(chunk)
+
+        total_calls = sum(call_stats.values())
+        unique_calls = set(call_stats.keys())
+
     print("\nОбщие модули:")
     print(f"  Всего символов: {volumes['common_modules']['total']:,}")
     print(f"  Средний размер: {volumes['common_modules']['avg']:,.0f} символов")
@@ -162,7 +233,16 @@ def analyze_code_volume(data: Dict[str, Any]) -> Dict[str, Any]:
     print(f"\nВСЕГО СИМВОЛОВ КОДА: {total_code:,}")
     print(f"Примерно страниц текста: {total_code / 4000:,.0f}")
     print(f"Примерно книг по 300 страниц: {total_code / 4000 / 300:,.0f}")
+    if parser_available:
+        print(f"Всего вызовов функций/процедур: {total_calls:,} (уникальных: {len(unique_calls):,})")
+    else:
+        print("Вызовы функций/процедур: пропущены (tree-sitter-bsl не настроен)")
 
+    volumes["call_stats"] = {
+        "collected": bool(parser_available),
+        "total_calls": total_calls,
+        "unique_calls": len(unique_calls),
+    }
     return volumes
 
 

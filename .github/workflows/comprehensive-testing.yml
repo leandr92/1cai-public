@@ -194,6 +194,29 @@ jobs:
     - name: Run acceptance tests
       run: pytest tests/acceptance/ -v
 
+  bsl-tests:
+    name: BSL Tests
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Run BSL manifest
+      run: python scripts/tests/run_bsl_tests.py --manifest tests/bsl/testplan.json --artifacts-dir output/bsl-tests
+
+    - name: Upload BSL test logs
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: bsl-test-artifacts
+        path: output/bsl-tests
+        if-no-files-found: ignore
+
   whitebox-analysis:
     name: White-box Analysis
     runs-on: ubuntu-latest

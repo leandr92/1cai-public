@@ -11,7 +11,9 @@ import re
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
-from typing import Any, Dict, Iterable, List, Set
+from typing import Any, Dict, Iterable, List, Set, Tuple
+
+from scripts.analysis.tree_sitter_adapter import extract_calls, ensure_parser
 
 CATALOG_PATTERNS = [
     r"Справочники\.(\w+)",
@@ -67,11 +69,14 @@ def analyze_module_dependencies(module: Dict[str, Any], module_name: str) -> Dic
             code_parts.append(body)
 
     full_code = "\n".join(code_parts)
+    calls = extract_calls(full_code) if ensure_parser() else {}
+
     return {
         "module_name": module_name,
         "catalogs": list(_extract(CATALOG_PATTERNS, full_code)),
         "documents": list(_extract(DOCUMENT_PATTERNS, full_code)),
         "registers": list(_extract(REGISTER_PATTERNS, full_code)),
+        "calls": calls,
     }
 
 
@@ -80,7 +85,12 @@ def analyze_object_dependencies(obj: Dict[str, Any], obj_name: str, obj_type: st
         "object_name": obj_name,
         "object_type": obj_type,
         "metadata_refs": {"catalogs": [], "documents": []},
-        "code_refs": {"catalogs": [], "documents": [], "registers": []},
+        "code_refs": {
+            "catalogs": [],
+            "documents": [],
+            "registers": [],
+            "calls": {},
+        },
     }
 
     metadata = obj.get("metadata")
@@ -125,9 +135,14 @@ def analyze_object_dependencies(obj: Dict[str, Any], obj_name: str, obj_type: st
 
     if code_parts:
         full_code = "\n".join(code_parts)
+        parser_available = ensure_parser()
         dependencies["code_refs"]["catalogs"] = list(_extract(CATALOG_PATTERNS, full_code))
         dependencies["code_refs"]["documents"] = list(_extract(DOCUMENT_PATTERNS, full_code))
         dependencies["code_refs"]["registers"] = list(_extract(REGISTER_PATTERNS, full_code))
+        if parser_available:
+            dependencies["code_refs"]["calls"] = extract_calls(full_code)
+        else:
+            dependencies["code_refs"]["calls"] = {}
 
     return dependencies
 
@@ -150,13 +165,21 @@ def build_dependency_graph(
 
     print("\nАнализ общих модулей...")
     for module in modules:
-        deps = analyze_module_dependencies(module, module.get("name", ""))
+        if not module or not isinstance(module, dict):
+            continue
+        module_name = module.get("name", "")
+        deps = analyze_module_dependencies(module, module_name)
         all_deps.append(deps)
-        graph["nodes"].append({"name": module.get("name", ""), "type": "CommonModule"})
+        graph["nodes"].append({"name": module_name, "type": "CommonModule"})
         for catalog in deps["catalogs"]:
-            graph["edges"].append({"source": module.get("name", ""), "target": catalog, "type": "catalog"})
+            graph["edges"].append({"source": module_name, "target": catalog, "type": "catalog"})
         for document in deps["documents"]:
-            graph["edges"].append({"source": module.get("name", ""), "target": document, "type": "document"})
+            graph["edges"].append({"source": module_name, "target": document, "type": "document"})
+        if deps.get("calls"):
+            for callee, count in deps["calls"].items():
+                graph["edges"].append(
+                    {"source": module_name, "target": callee, "type": "call", "weight": count}
+                )
 
     objects = []
     for catalog in data.get("catalogs", []):
@@ -168,6 +191,8 @@ def build_dependency_graph(
         objects = objects[:limit_objects]
 
     for obj, obj_type in objects:
+        if not obj or not isinstance(obj, dict):
+            continue
         deps = analyze_object_dependencies(obj, obj.get("name", ""), obj_type)
         graph["nodes"].append({"name": obj.get("name", ""), "type": obj_type})
         all_deps.append(deps)
@@ -178,6 +203,11 @@ def build_dependency_graph(
             graph["edges"].append({"source": obj.get("name", ""), "target": document, "type": "document"})
         for register in deps["code_refs"]["registers"]:
             graph["edges"].append({"source": obj.get("name", ""), "target": register, "type": "register"})
+        calls = deps["code_refs"].get("calls") or {}
+        for callee, count in calls.items():
+            graph["edges"].append(
+                {"source": obj.get("name", ""), "target": callee, "type": "call", "weight": count}
+            )
 
     return {"graph": graph, "dependencies": all_deps}
 

@@ -26,7 +26,9 @@
 
 ## 2. Системный контекст
 
-![System Context](uml/system-context.puml)
+![C4 System Context](uml/c4/png/context.png)
+
+Источник: `docs/architecture/uml/c4/context.puml`
 
 **Внешние участники:**
 1. **1C Developers / Analysts** — работают в EDT, используют плагин и AI ассистентов.
@@ -39,166 +41,202 @@
 
 ---
 
-## 3. Обзор подсистем
+## 3. Подсистемы и C4 представления
 
-### 3.1 API слой
-- `src/api/*.py`: Graph API, Auth, Admin, Test Generation, Marketplace.
-- Интерфейсы:
-  - REST/OAS3 (FastAPI)
-  - WebSocket (реальный тайм для IDE)
-  - MCP (Model Context Protocol) — универсальная интеграция с IDE (Cursor, VSCode).
+### 3.1 Обзор подсистем
+- **API слой** (`src/api/*`): Graph API, Auth, Admin, Test Generation, Marketplace. Интерфейсы — REST/OAS3, GraphQL, WebSocket, MCP.
+- **Фоновые воркеры** (`src/workers`, `scripts/analysis/*`, `scripts/audit/*`): анализ конфигураций, архитектурный аудит, обновление графа зависимостей, генерация метрик.
+- **ML/AI сервисы** (`src/ml/*`, `scripts/ml/*`): подготовка датасетов, тренировка, оценка, публикация моделей, управление конфигурациями через `config/ml_datasets.json` и `Makefile`.
+- **Интеграции** (EDT Plugin, ITS Scraper, n8n, Telegram Bot, Marketplace): разные точки входа для команд разработки и поддержки.
+- **Хранилища** (PostgreSQL, Neo4j, Qdrant, MinIO/S3, Redis, ClickHouse): обеспечивают долговечность, поиск и кеширование.
+- **Observability/Operations** (Prometheus, Grafana, Alertmanager, Loki/Tempo, GitHub Actions): телеметрия, инцидент-менеджмент, CI/CD, IaC.
 
-### 3.2 Фоновые воркеры
-- `src/workers`, `scripts/analysis/*`, `scripts/audit/*`
-- Выполняют:
-  - Анализ кода/архитектуры (BSL, EDT проекты).
-  - Обновления знаний (Neo4j, Qdrant).
-  - ML-пайплайны (обучение моделей, генерация датасетов).
+### 3.2 Контейнерный ландшафт
 
-### 3.3 Интеграции
-- **EDT Plugin** (`edt-plugin/`): View + Actions (`QuickAnalysis`, `ShowCallGraph`, `AnalysisDashboard`).
-- **ITS Scraper** (`integrations/its_scraper/`): асинхронный сбор статей, адаптивный rate-limit, stream JSONL, Prometheus-метрики, S3 writers, stateful queue/resume.
-- **n8n Node** (`integrations/n8n/`): кастомный коннектор к AI Stack API (credentials, smoke-test, Workflows).
-- **Telegram Bot**, **Marketplace** (пакеты/расширения 1С).
+![C4 Container Landscape](uml/c4/png/container_overview.png)
 
-### 3.4 Хранилища
-- **PostgreSQL** — основная РСУБД (конфигурация, MFA, журналы).
-- **Neo4j** — граф зависимостей 1С объектов/функций.
-- **Qdrant** — векторные представления кода/документов для семантического поиска.
-- **MinIO/S3** — артефакты, бэкапы, выгрузки ITS Scraper.
-- **Redis** — кеш, очереди, rate-limiter.
+Источник: `docs/architecture/uml/c4/container-overview.puml`
 
-### 3.5 ML/AI сервисы
-- `src/ml/*`: тренировка, inference (torch, transformers).
-- `scripts/ml/config_utils.py`, `Makefile` — запуск тренировок и оценок.
-- Поддержка Qwen, GPT, локальных моделей; pipeline orchestrator.
+Диаграмма показывает контейнеры платформы, основные взаимодействия и классы хранилищ. Контейнеры сгруппированы по доменам (Core, Integration, Store, Ops), выделены внешние потребители и инструменты публикации.
 
-### 3.6 Observability
-- GitHub Actions — CI (lint/test/build, seguridad, модельные проверки).
-- Prometheus + Grafana (`monitoring/grafana`): system, business, celery, scraper, etc.
-- Loki / Sentry (опционально) — логирование и алертинг.
+### 3.3 Компонентные представления
+
+| Подсистема | Диаграмма | Ключевые элементы |
+|------------|-----------|-------------------|
+| Graph API / анализ | ![Component Analysis](uml/c4/png/component_analysis.png) | Роутеры, GraphQL resolvers, Rate Limiter, Audit Service, клиенты Neo4j/Qdrant, метрики |
+| ML Platform | ![Component ML](uml/c4/png/component_ml.png) | Оркестратор, preprocessing, feature store, тренер, регистратор, публикация, алертинг |
+| Integrations Hub | ![Component Integrations](uml/c4/png/component_integrations.png) | EDT actions, n8n node, Telegram bot, Marketplace publisher, ITS writer SDK |
+| Observability & Ops | ![Component Ops](uml/c4/png/component_ops.png) | Prometheus/Agent, Grafana, Alertmanager, CI/CD, IaC, Notification fanout |
+
+Каждый компонент описывает внутреннюю структуру контейнера и связи с провайдерами данных/метрик. Диаграммы синхронизируются с `workspace.dsl`.
+
+### 3.4 Bounded Context Map
+
+![Bounded Context Map](uml/c4/png/bounded_context.png)
+
+Источник: `docs/architecture/uml/c4/bounded-context.puml`
+
+Карта показывает домены DDD (Knowledge Ingestion, Analysis, AI Assist, Integrations, Operations) и потоки между ними. Каждому домену сопоставлена команда и набор артефактов (кодовые базы, пайплайны, политики). Используется для планирования roadmap и командной ответственности.
 
 ---
 
-## 4. Компонентная диаграмма
+## 4. Потоки данных и жизненный цикл
 
-![Component Overview](uml/component-overview.puml)
+### 4.1 Основные платформенные сценарии
 
-Основные кластеры:
-1. **API Gateway** (FastAPI) → Слой авторизации, маршрутизации, API/Graph/MCP.
-2. **Workers/Analyzer** → Celery/Async jobs, ML pipelines, audits.
-3. **Integrations** → EDT Plugin, ITS Scraper, n8n, Telegram.
-4. **Data Stores** → Postgres, Neo4j, Qdrant, MinIO, Redis.
-5. **Monitoring** → Prometheus, Grafana, Alertmanager.
+![Core Data Flows](uml/dynamics/png/core-data-flow.png)
 
----
+Источник: `docs/architecture/uml/dynamics/core-data-flow.puml`
 
-## 5. Потоки данных
+- **Analysis Request** — IDE инициирует анализ; результаты возвращаются через Graph API и стриминг.
+- **Knowledge Search** — ITS Scraper и MinIO формируют корпус знаний, Qdrant обеспечивает семантический поиск.
+- **AI Assisted Development** — API взаимодействует с моделями, сохраняет разговоры и метрики.
 
-### 5.1 Обновление знаний из ITS
+### 4.2 Ingestion: ITS Scraper
 
-![ITS Scraper Sequence](uml/its-scraper-sequence.puml)
+![ITS Scraper Sequence](uml/dynamics/png/its-scraper-sequence.png)
 
-1. Периодический запуск (`cron` / GitHub Actions / CLI).
-2. ITS Scraper собирает статьи (адаптивный rate-limit, очередь).
-3. Локальное сохранение + stream → S3, JSONL (если включено).
-4. ML-инженеры/воркеры используют новые данные (embeddings → Qdrant, facts → Neo4j).
-5. Мониторинг публикует метрики (`its_scraper_*`).
+- Асинхронная очередь с адаптивным rate-limit.
+- Состояние (state.json) сохраняет очередь и метаданные.
+- Писатели (writters) отправляют данные в локальное хранилище, S3/MinIO, Postgres, Qdrant.
 
-### 5.2 Анализ кода / Audit pipeline
+### 4.3 Жизненный цикл данных
 
-![Data Flow](uml/data-flow.puml)
+![Data Lifecycle](uml/data/png/lifecycle.png)
 
-1. EDT Plugin инициирует анализ → API → Orchestrator.
-2. Workers парсят EDT XML → Neo4j/Qdrant/Postgres.
-3. Результаты отправляются в Dashboard (Grafana) и в AI ассистента.
-4. Telegram/Bot уведомляет заинтересованных лиц (опционально).
+Источник: `docs/architecture/uml/data/lifecycle.puml`
 
----
+Диаграмма показывает путь от источников (ITS, вебхуки, ручные загрузки) до потребителей (IDE, n8n, AI ассистенты) и контроль качества (каталог датасетов, метрики, retention, политики доступа).
 
-## 6. Деплоймент
+- `make export-context` → `scripts/context/export_platform_context.py` вызывает [alkoleft/platform-context-exporter](https://github.com/alkoleft/platform-context-exporter) (спасибо @alkoleft) и сохраняет экспорт платформенного контекста в `output/context/`. Эти данные включаются в RAG, документацию и MCP-инструменты.
+- `make generate-docs` → `scripts/context/generate_docs.py` вызывает [alkoleft/ones_doc_gen](https://github.com/alkoleft/ones_doc_gen) и формирует ReST/Markdown документацию в `output/docs/generated/`. Благодарим @alkoleft за генератор.
+- Инструкция по сборке tree-sitter грамматики размещена в `docs/research/alkoleft_inventory.md`; бинарник `tree-sitter-bsl.*` помещается в `tools/`.
 
-![Deployment](uml/deployment.puml)
+### 4.4 Model Lineage
 
-### 6.1 Dev/Stage
-- Docker Compose (`docker-compose.stage1.yml`)
-- Локальные контейнеры: API, Workers, Redis, Postgres, Neo4j, Qdrant, Prometheus, Grafana, MinIO.
-- Hot-reload для API, воркеров, интеграций.
+![Model Lineage](uml/data/png/lineage.png)
 
-### 6.2 Production
-- Kubernetes (или Nomad) кластеры.
-- Gateway под балансировкой (Nginx/Ingress).
-- Autoscaling для workers + ML pods.
-- Statefull сервисы (Postgres, Neo4j, Qdrant) — управляются через Helm, с бэкапами и мониторингом.
-- Секреты в Vault/Secrets Manager.
+- Bronze → Silver → Gold слои для данных и фич.
+- Автоматическое логирование экспериментов и публикация моделей.
+- Monitoring → Registry фидбек по дрейфу и деградации.
 
 ---
 
-## 7. Безопасность и соответствие
+## 5. Доставка и эксплуатационные процессы
 
-- RBAC + SCIM: роли, permission матрица (`admin`, `security_officer`, `developer`, `analyst`, `read_only`).
-- OAuth2/JWT + Service-to-Service tokens (`X-Service-Token`).
-- Аудит действий (базы + JSONL), Security Agent Framework для статического и динамического тестирования.
-- Сканирование секретов, large files, политика `.gitignore`.
-- Мониторинг CORS, rate limiting (`slowapi`, `Redis`), CSRF для админских функций.
-- ITS Scraper уважает robots.txt, rate limit, хранит лог метрик.
+### 5.1 CI/CD Pipeline
 
----
+![CI/CD Sequence](uml/dynamics/png/ci-cd-sequence.png)
 
-## 8. Эксплуатация и поддержка
+- PR пайплайн: тесты, аудиты, статусы.
+- Main пайплайн: сборка артефактов, деплой, синтетические проверки, канареечная валидация.
+- Rollback при нарушении SLO.
 
-- `docs/MONITORING_GUIDE.md` — описание всех Grafana dashboard (system, business, celery, scraper).
-- `Makefile` — универсальный entrypoint (install/test/lint/train/scraper).
-- `run_full_audit.py` — комплексные проверки перед релизом.
-- CI/CD:
-  - PR → линтеры + тесты + security scans.
-  - main → интеграционные тесты, публикация артефактов, деплой.
-  - public/main → синхронизация документации/примеров.
-- Incident Response — Alertmanager → Telegram/Email, fallback процедуры.
+### 5.2 User Journey и релизы
 
----
+![Quick Analysis BPMN](uml/dynamics/png/quick-analysis-bpmn.png)
 
-## 9. Процедуры обновления документации
+- Показывает последовательность действий разработчика и платформы.
+- Бизнес-ценность: быстрый фидбек, минимизация контекста.
 
-1. **При функциональных изменениях**:
-   - Обновить соответствующие разделы HLD (компонент, data flow, deployment).
-   - Дополнить блок «Что нового» в `README.md` и `CHANGELOG.md`.
-   - Если добавлены/изменены интеграции — обновить `docs/03-integrations/*`.
-2. **Диаграммы**:
-   - Обновить `.puml` файлы в `uml/`.
-   - Сгенерировать PNG/SVG при необходимости (`plantuml uml/*.puml`).
-3. **Мониторинг**:
-   - При добавлении дашборда — описать в `docs/MONITORING_GUIDE.md`.
-4. **ITS Scraper**:
-   - Любые изменения в pipeline должны отражаться в секции 5.1 и соответствующей PlantUML диаграмме.
-5. **Версии документа** — фиксировать дату/версию в верхней части файла (как в шапке).
+![Release Workflow BPMN](uml/dynamics/png/release-bpmn.png)
+
+- Интеграция разработчиков, лидов, CI/CD и Ops.
+- Параллельность потоков: ревью, автоматизация, мониторинг.
+
+### 5.3 Инциденты и runbook-и
+
+![Incident Response Flow](uml/dynamics/png/incident-response-activity.png)
+
+![Runbook Automation Flow](uml/operations/png/runbook-flow.png)
+
+- Runbook-автоматизация через GitHub Actions и IaC.
+- Постмортемы и backlog задач оформляются автоматически.
 
 ---
 
-## 10. План дальнейшего развития
+## 6. Безопасность и Zero Trust
 
-- CI smoke-tests с использованием mock-сервера для ITS Scraper, n8n, EDT плагина.
-- Расширение plug-in writers (BigQuery, Elasticsearch, Kafka).
-- Добавление Sequence диаграмм для Marketplace/ML pipelines.
-- Автоматический генератор HLD (сбор данных из сервисов → doc update).
-- Расширение документации по продуктам (EDT Plugin, Security Framework, ML Ops, Integrations).
+![Threat Model](uml/security/png/threat-model.png)
+![Zero Trust Map](uml/security/png/zero-trust.png)
+
+Политики:
+- OAuth2/OIDC для внешних пользователей, SPIFFE + mTLS для сервисов.
+- OPA принимает решения на основе RBAC матрицы, секреты выдаёт Vault.
+- Security Agent Framework сканирует Graph API, воркеры и пайплайны (STRIDE покрытие).
+- Rate limiting и WAF на периметре, аудит действий в Postgres и объектном хранилище.
 
 ---
 
-## 11. Ссылки
+## 7. Observability и производительность
+
+![Observability Map](uml/operations/png/observability-map.png)
+![Latency Budget](uml/performance/png/latency-budget.png)
+
+- Prometheus Agent собирает метрики со всех workloads, Tempo/Loki обеспечивают трассировку и логи.
+- Latency budget фиксирует p95 цели для каждого сегмента запроса Quick Analysis.
+- Capacity reports строятся на основе `SLO Calculator` и weekly обзоров.
+
+---
+
+## 8. Интеграции и продуктовые каналы
+
+![Integration Portfolio](uml/integrations/png/portfolio.png)
+
+- Таблица каналов с целями, аутентификацией, статусом.
+- Используется для планирования roadmap, покрытия команд и SLA.
+- В HLD каждый канал ссылается на подробную документацию: `docs/03-integrations/*`, `docs/SUPPORT.md`, `docs/CASE_STUDIES.md`.
+- MCP инструменты: `bsl_platform_context` и `bsl_test_runner` проксируют внешние MCP-сервисы ([alkoleft/mcp-bsl-platform-context](https://github.com/alkoleft/mcp-bsl-platform-context), [alkoleft/mcp-onec-test-runner](https://github.com/alkoleft/mcp-onec-test-runner)) через наш сервер (`/mcp`). Настройки задаются переменными окружения `MCP_BSL_CONTEXT_*`, `MCP_BSL_TEST_RUNNER_*`. Благодарим @alkoleft за открытые инструменты.
+
+---
+
+## 9. Аналитика кода и AST
+
+- `scripts/analysis/tree_sitter_adapter.py` подключает [tree-sitter-bsl](https://github.com/alkoleft/tree-sitter-bsl); при наличии библиотеки (`tools/tree-sitter-bsl.so`) анализаторы строят AST.
+- `analyze_dependencies.py` добавляет ребра `"type": "call"` с весами (количество вызовов), `analyze_architecture.py` считает суммарные и уникальные вызовы. Если tree-sitter недоступен, скрипты возвращаются к прежнему regex-анализу.
+- Благодарим @alkoleft за открытый парсер и инструкции по интеграции.
+
+---
+
+## 10. Эксплуатация и поддержка
+
+- `docs/MONITORING_GUIDE.md` — описание Grafana dashboard (system, business, celery, scraper, ML, observability).
+- `Makefile` — единая точка входа (install/test/lint/train/render-uml/adr-new/scrape-its/test-bsl).
+- `run_full_audit.py` — комплексные проверки перед релизом (структура, лицензии, архитектура, качество, git safety).
+- `make test-bsl` → `scripts/tests/run_bsl_tests.py` — единый запуск BSL тестов (YAxUnit/Vanessa), результаты попадают в CI и отчёты.
+- CI/CD: `comprehensive-testing.yml` содержит job `bsl-tests` (Windows runner) — прогоняет манифест `tests/bsl/testplan.json`, публикует отчёты (лог, JUnit, покрытия). Благодарность: [alkoleft/yaxunit](https://github.com/alkoleft/yaxunit) и @alkoleft за предоставленный фреймворк и примеры интеграции.
+- Incident Response — Alertmanager → Telegram/Email, runbook automation, постмортемы в ADR.
+- Публикации: GitHub Actions синхронизирует `origin/main` ↔ `public/main`, рендерит диаграммы и артефакты.
+
+---
+
+## 11. Процедуры обновления документации
+
+1. **Функциональные изменения** — обновите релевантные разделы HLD, диаграммы, README и CHANGELOG.
+2. **Structurizr DSL** — при изменении контейнеров/компонентов сначала обновите `c4/workspace.dsl`, затем пересоберите PlantUML (`make render-uml`).
+3. **Диаграммы** — все `.puml` располагаются в соответствующих подпапках; используйте `make render-uml` или `python scripts/docs/render_uml.py --fail-on-missing` для генерации PNG/SVG и хэшей.
+4. **Верификация CI** — workflow `uml-render-check` должен проходить без диффов; запускайте локально перед пушем.
+5. **ADR** — фиксируйте архитектурные решения (`make adr-new SLUG=...`), обновляйте ссылки в документации.
+6. **Мониторинг** — при добавлении дашборда или метрик обновляйте `docs/MONITORING_GUIDE.md` и соответствующие диаграммы наблюдаемости.
+7. **Публикация** — после мержа убедитесь, что изменения доставлены в `origin/main` и `public/main`, а секция «Что нового» описывает новые артефакты.
+
+---
+
+## 12. План дальнейшего развития
+
+- Автоматизировать генерацию Structurizr → PlantUML → PNG в CI (Nightly build + GitHub Pages).
+- Добавить `to-be` версии диаграмм для мульти-регионального деплоя и on-prem сценариев.
+- Расширить Threat Model (LINDDUN, Data privacy) и добавить диаграммы DFD для внутренних API.
+- Сгенерировать class/sequence диаграммы автоматически из кода (pylint AST / javaparser) и связать с ADR.
+- Подготовить интерактивный портал (MkDocs/GitHub Pages) с SVG, фильтрами и связью с runbooks.
+
+---
+
+## 13. Ссылки
 
 - [docs/03-integrations/ITS_SCRAPER.md](../03-integrations/ITS_SCRAPER.md)
 - [docs/MONITORING_GUIDE.md](../MONITORING_GUIDE.md)
 - [docs/CASE_STUDIES.md](../CASE_STUDIES.md)
 - [docs/SUPPORT.md](../SUPPORT.md)
 - [README.md](../../README.md)
-
----
-
-## Примечание
-
-Документ должен оставаться актуальным. Перед релизами выполняйте аудит:
-1. Сверка реальных сервисов ↔ диаграммы.
-2. Проверка валидности ссылок.
-3. Обновление PlantUML и описание потоков при появлении новых сценариев.
 
