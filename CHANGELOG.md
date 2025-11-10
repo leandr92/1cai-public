@@ -27,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Локальная интеграция `bsl-language-server`: docker-compose сервис, make-таргеты для управления и скрипт `scripts/parsers/check_bsl_language_server.py` для health/AST проверки.
 - `BSLASTParser` теперь читает `BSL_LANGUAGE_SERVER_URL`, валидирует доступность LSP и корректно откатывается на regex-парсер.
 - Документация обновлена планом интеграции и рекомендациями по локальному тестированию.
+- README полностью реструктурирован: навигация, Quick Start, Documentation Hub, ссылки на подробные гайды.
 
 ---
 

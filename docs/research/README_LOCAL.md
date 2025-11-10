@@ -7,6 +7,9 @@
    - Добавлен сервис `bsl-language-server` в `docker-compose.dev.yml`, make-таргеты `bsl-ls-*`, а парсер теперь читает `BSL_LANGUAGE_SERVER_URL` и честно откатывается на regex при недоступности сервиса.  
    - Есть скрипт `scripts/parsers/check_bsl_language_server.py` (`make bsl-ls-check`) для проверки health/parse.
    - ⚠️ Перед публикацией предупредить пользователей: обязательно протестировать локально (`make bsl-ls-up`, запрос `/actuator/health`). Если не работает — сначала проверить конфигурацию и логи, а уже после этого просить помощь.
+2. **Главная страница и Documentation Hub**  
+   - README переписан: добавлены быстрый обзор, навигация, Quick Start, Documentation Hub.  
+   - Все новые гайды и исследования обязаны добавляться в соответствующие секции README/Documentation Hub.
 
 2. **План подготовки Marketplace-пакетов** (`onec-markdown-viewer`, `VAEditor`)  
    - Новый документ: `docs/research/marketplace_integration_plan.md`.  
