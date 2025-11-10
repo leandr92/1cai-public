@@ -24,16 +24,26 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
-        pip install pytest pytest-asyncio pytest-cov pytest-mock
+        pip install pytest pytest-asyncio pytest-cov pytest-mock pytest-html
     
     - name: Run unit tests
-      run: pytest tests/unit/ -v --cov=src --cov-report=xml
+      run: |
+        mkdir -p output/test-results
+        pytest tests/unit/ -v --cov=src --cov-report=xml --junitxml=output/test-results/unit-junit.xml --html=output/test-results/unit-report.html --self-contained-html
     
     - name: Upload coverage
       uses: codecov/codecov-action@v3
       with:
         files: ./coverage.xml
         flags: unittests
+
+    - name: Upload unit test artifacts
+      if: always()
+      uses: actions/upload-artifact@v3
+      with:
+        name: unit-test-results
+        path: output/test-results
+        if-no-files-found: warn
 
   integration-tests:
     name: Integration Tests
@@ -262,6 +272,24 @@ jobs:
 
     - name: Validate features
       run: make feature-validate
+
+  smoke-tests:
+    name: Smoke Tests
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: pip install -r requirements.txt
+
+    - name: Run smoke checks
+      run: make smoke-tests
 
   full-project-audit:
     name: Full Project Audit

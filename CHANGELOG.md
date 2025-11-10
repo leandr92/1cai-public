@@ -39,6 +39,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Скрипт релиза `scripts/release/create_release.py`, make-таргеты `release-*`, workflow `release.yml` и плейбук [`docs/research/release_playbook.md`](docs/research/release_playbook.md).
 - Workflow `secret-scan.yml` (Gitleaks) для проверки утечек секретов; конституция дополнится требованиями least privilege.
 - Скрипт `scripts/metrics/collect_dora.py` и workflow `dora-metrics.yml` — автоматический сбор еженедельных DORA метрик.
+- Добавлен smoke workflow (`smoke-tests` + `scripts/testing/smoke_healthcheck.py`) и HTML/JUnit артефакты для unit-тестов.
 
 ---
 

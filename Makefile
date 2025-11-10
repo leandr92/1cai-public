@@ -1,7 +1,7 @@
 # Makefile for Enterprise 1C AI Development Stack
 # Quick commands for common tasks
 
-.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push
+.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push smoke-tests
 
 CONFIG ?= ERPCPM
 EPOCHS ?=
@@ -82,6 +82,7 @@ help:
 	@echo "  make release-notes VERSION=vX.Y.Z - Generate release notes"
 	@echo "  make release-tag VERSION=vX.Y.Z   - Generate notes and create tag"
 	@echo "  make release-push VERSION=vX.Y.Z  - Generate notes, tag and push"
+	@echo "  make smoke-tests         - Run smoke checks (compile, spec validation)"
 	@echo "  make test-bsl         - Run BSL/YAxUnit test suites (see tests/bsl/testplan.json)"
 feature-init:
 ifndef FEATURE
@@ -107,8 +108,9 @@ release-tag: release-notes
 
 release-push: release-notes
 	python scripts/release/create_release.py --version $(VERSION) --tag --push
-	@echo "  make export-context   - Export platform context via platform-context-exporter (see ADR-0005)"
-	@echo "  make generate-docs    - Generate documentation via ones_doc_gen (see ADR-0005)"
+
+smoke-tests:
+	python scripts/testing/smoke_healthcheck.py
 
 # Installation
 install:

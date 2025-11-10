@@ -1,0 +1,57 @@
+#!/usr/bin/env python3
+"""
+Lightweight smoke checks to validate core tooling without full deployment.
+
+Steps performed:
+    1. Compile critical Python modules (`src/main.py`, `src/ai/mcp_server.py`).
+    2. Run spec-driven validation (`scripts/research/check_feature.py`).
+    3. Ensure release automation script imports successfully.
+
+Return codes:
+    0 - success, all checks passed.
+    1 - failure.
+"""
+
+from __future__ import annotations
+
+import subprocess
+import sys
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
+
+
+def run(cmd: list[str], cwd: Path | None = None) -> None:
+    result = subprocess.run(cmd, cwd=cwd or ROOT, check=False, capture_output=True, text=True)
+    if result.returncode != 0:
+        print("[smoke] Command failed:", " ".join(cmd))
+        print(result.stdout)
+        print(result.stderr, file=sys.stderr)
+        raise SystemExit(result.returncode)
+
+
+def check_compile() -> None:
+    run([sys.executable, "-m", "compileall", "src/main.py", "src/ai/mcp_server.py"])
+    print("[smoke] Python modules compiled successfully")
+
+
+def check_spec_workflow() -> None:
+    run([sys.executable, "scripts/research/check_feature.py"])
+    print("[smoke] Spec-driven documents validated")
+
+
+def check_release_script() -> None:
+    run([sys.executable, "-m", "compileall", "scripts/release/create_release.py"])
+    print("[smoke] Release script import check passed")
+
+
+def main() -> int:
+    check_compile()
+    check_spec_workflow()
+    check_release_script()
+    print("[smoke] All smoke checks completed successfully")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

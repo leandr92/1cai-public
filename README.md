@@ -98,6 +98,7 @@
 - Статический анализ, best practices, проверка зависимостей.
 - Сторожевые скрипты: `scripts/audit/*`, `scripts/analysis/*`.
 - Справочник по тестам: [`docs/06-features/TESTING_GUIDE.md`](docs/06-features/TESTING_GUIDE.md).
+- Smoke проверки: `make smoke-tests`, CI job `smoke-tests`, артефакты pytest (`output/test-results`).
 
 ---
 

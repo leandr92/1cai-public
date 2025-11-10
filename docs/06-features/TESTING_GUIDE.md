@@ -16,6 +16,7 @@
 | Performance & Load | `tests/performance/`, `tests/load/` | `pytest tests/performance/ -v -s`; `k6 run tests/load/k6_load_test.js` | `performance-tests` |
 | Security | `tests/security/` | `pytest tests/security/ -v`; `bandit -r src/` | `security-tests` |
 | White-box | `tests/whitebox/` | `pytest tests/whitebox/ -v -s` | `whitebox-analysis` |
+| Smoke | `scripts/testing/smoke_healthcheck.py` | `make smoke-tests` | `smoke-tests` |
 | BSL / YAxUnit | `tests/bsl/` | `make test-bsl` / `python scripts/tests/run_bsl_tests.py` | `bsl-tests` |
 | Full audit | скрипты и отчёты в корне | `python run_full_audit.py --stop-on-failure` | `full-project-audit` |
 
@@ -66,11 +67,18 @@ pytest --cov=src --cov-report=html --cov-report=term
 
 ## 6. CI интеграция
 
-Файл `.github/workflows/comprehensive-testing.yml` запускает 10 параллельных джоб:
-- `unit-tests`, `integration-tests`, `system-tests`, `performance-tests`, `security-tests`, `acceptance-tests`, `whitebox-analysis`, `spec-driven-validation`, `full-project-audit`, `bsl-tests`.
+Файл `.github/workflows/comprehensive-testing.yml` запускает 11 параллельных джоб:
+- `unit-tests`, `integration-tests`, `system-tests`, `performance-tests`, `security-tests`, `acceptance-tests`, `whitebox-analysis`, `smoke-tests`, `spec-driven-validation`, `full-project-audit`, `bsl-tests`.
 - Каждая job использует Python 3.11 и устанавливает необходимые пакеты.
+- `smoke-tests` выполняет `make smoke-tests` (компиляция ключевых модулей, spec validation, release tooling).
+- `unit-tests` публикует артефакты (`output/test-results/unit-*.{xml,html}`) и позволяет анализировать отчёты `pytest-html`.
 - BSL-джоб работает на `windows-latest`, загружает артефакты из `output/bsl-tests`.
 - `spec-driven-validation` гарантирует, что документы в `docs/research/features/<slug>/` заполнены — если job падает, удалите шаблонные маркеры и снова запустите `make feature-validate`.
+
+Дополнительные workflow:
+- `.github/workflows/docs-lint.yml` — проверка Markdown/link.
+- `.github/workflows/dora-metrics.yml` — еженедельный сбор DORA метрик.
+- `.github/workflows/secret-scan.yml` — поиск возможных утечек секретов.
 
 Дополнительный workflow `.github/workflows/docs-lint.yml` проверяет оформление (`markdownlint`) и ссылки (`lychee`). Перед PR прогоните `markdownlint` и `lychee` локально, чтобы избежать падения CI.
 
@@ -81,11 +89,13 @@ pytest --cov=src --cov-report=html --cov-report=term
 | Тип | Путь |
 |-----|------|
 | Pytest HTML coverage | `htmlcov/index.html` |
+| Pytest unit reports | `output/test-results/unit-report.html`, `output/test-results/unit-junit.xml` |
 | BSL логи | `output/bsl-tests/*.log` |
 | Audit отчёты | `BROKEN_LINKS_REPORT.txt`, `COMPREHENSIVE_AUDIT_FINAL.txt`, `SECURITY_AUDIT_REPORT.txt`, `README_CODE_VERIFICATION.txt` |
 | Performance | Вывод `pytest -s` + `tests/load/k6_load_test.js` (stdout, экспортируйте вручную) |
 | Feature validation | Лог job `spec-driven-validation` (содержит перечень незаполненных файлов) |
 | Docs lint | Отчёты `markdownlint` и `lychee` (см. вкладку Actions → Documentation Quality) |
+| DORA metrics | `output/metrics/dora_latest.json`, `output/metrics/dora_summary.md` (артефакт, сохраняется workflow `dora-metrics`) |
 
 Рекомендуется сохранять значимые артефакты в CI (используйте `actions/upload-artifact`).
 
@@ -99,6 +109,7 @@ pytest --cov=src --cov-report=html --cov-report=term
 | `Manifest ... not found` | нет `tests/bsl/testplan.json` | Создать файл, даже если пустой массив `[]` |
 | `k6` не установлен | пакет не поставлен локально | Установите k6 (Linux: репозиторий k6; Windows: Chocolatey) |
 | `spec-driven-validation` падает | остались шаблонные маркеры/ TODO | Заполните файлы фичи и запустите `make feature-validate` |
+| `smoke-tests` падает | Нарушена компиляция или spec workflow | Прогоните `make smoke-tests` локально, исправьте ошибки |
 | `docs-lint` → markdownlint | форматирование Markdown | Запустите `markdownlint "**/*.md"` и исправьте подсказки |
 | `docs-lint` → lychee | битая ссылка / 429 | Проверьте URL, добавьте в `.lychee.toml` (только при необходимости) |
 
