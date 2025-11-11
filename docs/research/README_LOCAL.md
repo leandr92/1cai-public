@@ -133,3 +133,8 @@
 
 31. **DR Rehearsal**  
     - План `docs/runbooks/dr_rehearsal_plan.md`, скрипт `scripts/runbooks/dr_rehearsal_runner.py`, workflow `dr-rehearsal.yml`.
+
+33. **Security & Policy-as-Code**  
+    - Rego `policy/kubernetes/`, `policy/terraform/`.  
+    - Скрипт `scripts/security/run_policy_checks.sh` (Helm + Terraform plan + Semgrep + Checkov).  
+    - Скрипты `scripts/secrets/rotate_vault_secret.sh`, `test_vault_sync.sh`.

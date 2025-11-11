@@ -13,17 +13,12 @@
 - **Semgrep** — статический анализ Python кода (hardcoded secrets, небезопасные API).
 
 ## 3. Реализация
-- Каталог `policy/kubernetes/` содержит правила:
-  - `deployment.rego` — ресурсы, probes, image tags (`namespace=1cai`).
-  - `service.rego` — запрет NodePort.
-  - `security.rego` — `runAsNonRoot`.
-- Скрипт `scripts/security/run_policy_checks.sh`:
-  1. Рендерит Helm-шаблоны.
-  2. Запускает Conftest на Kubernetes ресурсах и kind-кластере.
-  3. Проверяет `terraform fmt` (без backend).
-  4. Запускает Semgrep по `security/semgrep.yml`.
-- Make-цель: `make policy-check`.
-- Jenkins (`infrastructure/jenkins/Jenkinsfile`) и GitLab CI (`infrastructure/gitlab/.gitlab-ci.yml`) включают шаги `run_policy_checks.sh`.
+- Каталог `policy/kubernetes/` (темы: ресурсы, probes, securityContext), `policy/terraform/` (AWS/Azure/общие требования: теги, публичный доступ, purge protection).
+- Скрипт `scripts/security/run_policy_checks.sh`: Helm → Conftest, Terraform plan → Conftest (`policy/terraform`), Semgrep, Checkov/Trivy.
+- Make `policy-check`.
+- Jenkins/GitLab pipeline обновлены (stage Security Scan).
+- Скрипты `scripts/secrets/rotate_vault_secret.sh`, `scripts/secrets/test_vault_sync.sh` — ротация и проверка.
+- Документ `docs/security/policy_as_code.md`.
 
 ## 4. Требования к окружению
 - `helm`, `conftest >= 0.46`, `semgrep`, `terraform` (для fmt).

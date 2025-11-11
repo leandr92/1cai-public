@@ -58,7 +58,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Добавлены Istio service mesh артефакты (`infrastructure/service-mesh/istio`, документ `docs/ops/service_mesh.md`, make `mesh-istio-apply`) и Litmus chaos сценарий (`infrastructure/chaos/litmus`, скрипт `scripts/chaos/run_litmus.sh`, документ `docs/ops/chaos_engineering.md`). Добавлен network latency эксперимент.
 - Vault best practices: политики/скрипты (`infrastructure/vault/`), SecretProviderClass для CSI, документ [`docs/ops/vault.md`](docs/ops/vault.md), скрипты синхронизации AWS/Azure (`scripts/secrets/aws_sync_to_vault.py`, `scripts/secrets/azure_sync_to_vault.py`), опция Vault Agent sidecar в Helm, тест `scripts/secrets/test_vault_sync.sh`, Terraform модуль `infrastructure/terraform/azure-keyvault`.
 - FinOps: AWS/Azure Cost Explorer скрипты (`scripts/finops/aws_cost_to_slack.py`, `azure_cost_to_slack.py`, `aws_budget_check.py`, `azure_budget_check.py`, `teams_notify.py`), workflow [`finops-report.yml`](.github/workflows/finops-report.yml), make `finops-slack` (Slack/Teams).
-- Service Mesh: Linkerd blueprint (`infrastructure/service-mesh/linkerd`, ArgoCD application/ApplicationSet, `make linkerd-install`, скрипт `scripts/service_mesh/linkerd/bootstrap_certs.sh`), Litmus network latency сценарий (`pod-network-latency.yaml`, `chaos-engine-network.yaml`), workflow `chaos-validate.yml`.
+- Service Mesh: Linkerd blueprint (`infrastructure/service-mesh/linkerd`, ArgoCD application/ApplicationSet, `make linkerd-install`, скрипты сертификатов/managed identity/CI smoke `ci_smoke.sh`, workflow `linkerd-smoke.yml`), Litmus network latency сценарий (`pod-network-latency.yaml`, `chaos-engine-network.yaml`), workflow `chaos-validate.yml`.
+- Security: Terraform Conftest политики (`policy/terraform/**`), OPA в `run_policy_checks.sh`, Vault rotation/test скрипты.
+- Resilience: DR rehearsal автоматизирован (скрипт `scripts/runbooks/dr_rehearsal_runner.py`, workflow `dr-rehearsal.yml`).
 
 ---
 
