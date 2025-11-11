@@ -1,6 +1,6 @@
 # Конституция 1C AI Stack
 
-> Обновлено: 2025-11-10
+> Обновлено: 2025-11-11
 
 ## Критические правила проверки
 
@@ -31,9 +31,10 @@
 25. **Pydantic строки → `max_length`** (и другие ограничения).
 26. **Проверять скрытые папки (`.foo`)** — возможны sensitive данные.
 27. **Запуск скриптов под минимальными правами** — никакого `sudo`/admin без необходимости; PowerShell/Unix скрипты выполняем от ограниченного пользователя.
-28. **Secret scanning** — workflow `secret-scan.yml` (Gitleaks) и `docs-lint.yml` должны быть зелёными перед merge/release.
+28. **Secret scanning** — workflows `secret-scan.yml` (Gitleaks), `trufflehog.yml` и `docs-lint.yml` должны быть зелёными перед merge/release.
 29. **Release-only через automation** — релизы создаём `scripts/release/create_release.py` + workflow `release.yml`; никаких ручных GitHub Releases.
 30. **DORA и наблюдаемость** — workflow `dora-metrics.yml` не должен пропускаться; анализ метрик фиксируется в weekly summary.
+31. **Python runtime** — перед запуском сервисов выполняем `make check-runtime`; Python 3.11.x обязателен для API/MCP.
 
 ## Процесс
 

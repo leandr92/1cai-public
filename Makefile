@@ -1,7 +1,7 @@
 # Makefile for Enterprise 1C AI Development Stack
 # Quick commands for common tasks
 
-.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push smoke-tests
+.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push smoke-tests check-runtime
 
 CONFIG ?= ERPCPM
 EPOCHS ?=
@@ -21,6 +21,7 @@ help:
 	@echo "Setup:"
 	@echo "  make install          - Install Python dependencies"
 	@echo "  make install-dev      - Install dev dependencies + main"
+	@echo "  make check-runtime    - Ensure Python 3.11 runtime is available"
 	@echo ""
 	@echo "Docker:"
 	@echo "  make docker-up        - Start all Docker services"
@@ -299,3 +300,6 @@ train-ml-demo:
 
 eval-ml-demo:
 	$(MAKE) eval-ml CONFIG=DEMO LIMIT=10
+
+check-runtime:
+	python scripts/setup/check_runtime.py

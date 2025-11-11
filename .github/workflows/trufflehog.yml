@@ -1,0 +1,23 @@
+name: Trufflehog Secret Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+  schedule:
+    - cron: "0 6 * * 1" # еженедельный запуск по понедельникам
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Run Trufflehog
+        uses: trufflesecurity/trufflehog@v3.65.2
+        with:
+          scan: git
+          extra_args: "--only-verified --fail"

@@ -23,6 +23,21 @@ services:
       - "9090:9090"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - ./alerts.yml:/etc/prometheus/alerts.yml:ro
+    networks:
+      - observability-net
+
+  alertmanager:
+    image: prom/alertmanager:latest
+    depends_on:
+      - prometheus
+    ports:
+      - "9093:9093"
+    volumes:
+      - ./alertmanager.yml:/etc/alertmanager/alertmanager.yml:ro
+    environment:
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+      - TELEGRAM_CHAT_ID=${TELEGRAM_CHAT_ID:-}
     networks:
       - observability-net
 
@@ -30,6 +45,7 @@ services:
     image: grafana/grafana:latest
     depends_on:
       - prometheus
+      - alertmanager
     ports:
       - "3000:3000"
     environment:

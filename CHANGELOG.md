@@ -46,6 +46,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Добавлен стек Prometheus/Grafana для локальной проверки SLO (`observability/docker-compose.observability.yml`, `make observability-up`, workflow `observability.yml`).
 - Workflow `observability-test.yml` проверяет docker-compose стек (smoke-api + Prometheus + Grafana) в CI.
 - Workflow `telegram-alert.yaml` отправляет уведомления в Telegram при падении Observability/DORA workflow.
+- `make check-runtime` + скрипт `scripts/setup/check_runtime.py` проверяют наличие Python 3.11; добавлено руководство [`docs/setup/python_311.md`](docs/setup/python_311.md).
+- Alertmanager и правила алертов для observability-стека (`observability/alertmanager.yml`, `observability/alerts.yml`, порт 9093, Telegram-конфигурация).
+- Workflow `trufflehog.yml` выполняет дополнительное сканирование секретов (trufflesecurity/trufflehog) на push/PR и по расписанию.
 
 ---
 

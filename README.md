@@ -24,8 +24,9 @@
 
 ## 🚀 Quick Start
 1. **Установите зависимости**
-   - Python 3.11 (обязательно)
+   - Python 3.11 (обязательно) — инструкция: [`docs/setup/python_311.md`](docs/setup/python_311.md)
    - Docker + Docker Compose (для dev окружения)
+   - Проверка среды: `make check-runtime`
 2. **Клонируйте репозиторий**
 3. **Запустите инфраструктуру**
 ```bash
@@ -100,6 +101,8 @@
 - Справочник по тестам: [`docs/06-features/TESTING_GUIDE.md`](docs/06-features/TESTING_GUIDE.md).
 - Smoke проверки: `make smoke-tests`, CI job `smoke-tests`, артефакты pytest (`output/test-results`).
 - Наблюдаемость: `/metrics` (Prometheus), SLO/Runbooks (`docs/observability/SLO.md`, `docs/runbooks/alert_slo_runbook.md`), автоматические отчёты DORA.
+- **Secret scanning & Security**
+  - Workflows `secret-scan.yml` (Gitleaks) и `trufflehog.yml` (Trufflehog) — регулярное сканирование репозитория на утечки токенов.
 
 ---
 
@@ -112,6 +115,9 @@
 ---
 
 ## 📚 Documentation Hub
+- **Setup & Runtime**
+  - [`docs/setup/python_311.md`](docs/setup/python_311.md) — установка Python 3.11 и проверка среды.
+  - `scripts/setup/check_runtime.py` + `make check-runtime` — автоматическая проверка версии Python.
 - **Feature Guides**
   - [`docs/06-features/AST_TOOLING_BSL_LANGUAGE_SERVER.md`](docs/06-features/AST_TOOLING_BSL_LANGUAGE_SERVER.md) — запуск и диагностика bsl-language-server, fallback сценарии.
   - [`docs/06-features/MCP_SERVER_GUIDE.md`](docs/06-features/MCP_SERVER_GUIDE.md) — эндпоинты MCP, переменные окружения, troubleshooting.
@@ -125,7 +131,8 @@
   - [`docs/runbooks/alert_slo_runbook.md`](docs/runbooks/alert_slo_runbook.md) — действия при нарушении SLO.
   - [`docs/status/dora_history.md`](docs/status/dora_history.md) — автоматическая история DORA метрик (weekly).
   - Workflow `observability.yml` — напоминание об интеграции SLO/метрик.
-  - `make observability-up` → локальный Prometheus/Grafana стек (см. `observability/docker-compose.observability.yml`), проверяется CI (`observability-test.yml`).
+  - `make observability-up` → локальный Prometheus/Grafana/Alertmanager стек (см. `observability/docker-compose.observability.yml`), проверяется CI (`observability-test.yml`).
+  - Alertmanager конфигурация: `observability/alertmanager.yml` + правила `observability/alerts.yml` (Telegram; требуются `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`).
   - Telegram оповещения: workflow `telegram-alert.yaml` (требует `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`).
 - **Architecture**
   - [`docs/architecture/README.md`](docs/architecture/README.md) — обзор C4, операции и ссылки на ADR.

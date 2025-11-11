@@ -1,0 +1,23 @@
+groups:
+  - name: smoke-api
+    rules:
+      - alert: SmokeApiDown
+        expr: up{job="smoke-api"} == 0
+        for: 1m
+        labels:
+          severity: critical
+        annotations:
+          summary: "smoke-api недоступен"
+          description: "Prometheus не может получить метрики с smoke-api более 1 минуты. Проверьте сервис и перезапустите его." 
+          runbook_url: "https://github.com/DmitrL-dev/1cai/blob/main/docs/runbooks/alert_slo_runbook.md"
+      - alert: SmokeApiHighErrorRate
+        expr: |
+          sum(rate(http_requests_total{job="smoke-api",status=~"5.."}[5m])) /
+          sum(rate(http_requests_total{job="smoke-api"}[5m])) > 0.05
+        for: 5m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Высокая доля 5xx ответов"
+          description: "Более 5% запросов возвращают 5xx за последние 5 минут. Проверить логи FastAPI и зависимых сервисов."
+          runbook_url: "https://github.com/DmitrL-dev/1cai/blob/main/docs/runbooks/alert_slo_runbook.md"

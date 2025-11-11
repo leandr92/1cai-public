@@ -68,9 +68,14 @@
     - Документ `docs/observability/SLO.md` (SLO/SLI/Error Budget).  
     - Runbook `docs/runbooks/alert_slo_runbook.md` + `docs/runbooks/postmortem_template.md`.  
     - История DORA: `docs/status/dora_history.md` (обновляется автоматически workflow `dora-metrics`).  
-    - `make observability-up` поднимает локальный стек Prometheus/Grafana (`observability/docker-compose.observability.yml`).  
+    - `make observability-up` поднимает локальный стек Prometheus/Grafana/Alertmanager (`observability/docker-compose.observability.yml`).  
     - CI проверка compose стека: `observability-test.yml`.  
-    - Telegram алерты: `telegram-alert.yaml` (потребуются secrets `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`).
+    - Telegram алерты: `telegram-alert.yaml` (потребуются secrets `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`).  
+    - Alertmanager правила: `observability/alerts.yml`, конфиг `observability/alertmanager.yml` (помнить про env).  
+17. **Runtime & Secrets**  
+    - Скрипт `scripts/setup/check_runtime.py` + make-цель `check-runtime`.  
+    - Инструкция по установке Python 3.11: `docs/setup/python_311.md`.  
+    - Secret scanning: `secret-scan.yml` (Gitleaks) + новый workflow `trufflehog.yml` (TODO: проверить в CI).  
 
-16. **Обновлён мастер-лист TODO**  
+18. **Обновлён мастер-лист TODO**  
     - `docs/research/alkoleft_todo.md` теперь с приоритетами и ссылками на соответствующие планы.

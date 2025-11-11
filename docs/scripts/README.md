@@ -1,6 +1,6 @@
 # Scripts Overview
 
-> Обновлено: 10 ноября 2025  •  Основано на Python 3.11 и сопутствующих CLI из `scripts/`
+> Обновлено: 11 ноября 2025  •  Основано на Python 3.11 и сопутствующих CLI из `scripts/`
 
 ## 1. Назначение
 
@@ -23,10 +23,11 @@
 | Release & Metrics | `scripts/release/`, `scripts/metrics/` | `create_release.py`, `collect_dora.py` | Подготовка релизов, генерация нотесов, сбор DORA-показателей |
 | Observability | `docs/observability/`, `docs/runbooks/` | SLO, runbooks, postmortem template | Мониторинг, Error Budget, реакции |
 | ML & Benchmarks | `scripts/dataset/`, `scripts/ml/`, `benchmark_*.py` | `create_ml_dataset.py`, `massive_ast_dataset_builder.py`, `benchmark_performance.py` | Подготовка датасетов, измерение производительности |
+| Setup | `scripts/setup/` | `check_runtime.py` | Проверка наличия Python 3.11, подготовка окружения |
 
 ## 3. Зависимости и подготовка
 
-- Python 3.11.x — установите системно или через `pyenv`. Скрипты проверяют версию.
+- Python 3.11.x — установите системно или через `pyenv`. Скрипты проверяют версию (см. `make check-runtime`).
 - Виртуальное окружение + `make install` (или соответствующие `pip install -r requirements*.txt`).
 - Docker Compose: требуется для миграций и анализа (PostgreSQL, Neo4j, Qdrant, Redis).
 - **Внешние инструменты**: 
@@ -95,7 +96,11 @@
 - Allure отчёты (`output/test-results/allure/`) доступны после job `unit-tests`; открываются `allure serve ...`.
 - `observability/docker-compose.observability.yml` запускает стек Prometheus+Grafana (`make observability-up`). Проверяется в CI (`observability-test.yml`).
 
-### 4.11 ML и экспериментальные утилиты
+### 4.11 Настройка окружения (`scripts/setup/`)
+- `check_runtime.py` — проверяет доступность Python 3.11 (`make check-runtime`). При отсутствии выводит инструкцию `docs/setup/python_311.md`.
+- Дополнительно: используйте PowerShell/WSL скрипты из `scripts/windows/` для установки зависимостей.
+
+### 4.12 ML и экспериментальные утилиты
 - `dataset/create_ml_dataset.py`, `prepare_neural_training_data.py` — подготовка выборок для моделей.
 - `finetune_qwen_smoltalk.py`, `train_copilot_model.py` — эксперименты с дообучением ассистента.
 - `benchmark_performance.py`, `profile_full_parser.py` — измерение скорости анализа/парсинга.
@@ -113,6 +118,7 @@
 | `make quality` | пакет формата/линта + `pytest` | см. `Makefile` |
 | `make release-notes/tag/push` | `scripts/release/create_release.py` | раздел 4.10 |
 | `make observability-up/down` | `observability/docker-compose.observability.yml` | раздел 4.11 |
+| `make check-runtime` | `scripts/setup/check_runtime.py` | раздел 4.11 |
 | GitHub Actions | `observability-test.yml` | автоматическая проверка compose стека |
 
 Всегда сверяйтесь с `

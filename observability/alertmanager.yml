@@ -1,0 +1,21 @@
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: "telegram"
+  group_by: ["alertname"]
+
+receivers:
+  - name: "telegram"
+    telegram_configs:
+      - bot_token: '{{ env "TELEGRAM_BOT_TOKEN" }}'
+        chat_id: '{{ env "TELEGRAM_CHAT_ID" }}'
+        api_url: https://api.telegram.org
+        parse_mode: HTML
+        disable_notifications: false
+        message: |
+          🛎 <b>{{ .Status | title }}</b>: {{ .CommonLabels.alertname }}
+          <b>Severity:</b> {{ .CommonLabels.severity }}
+          <b>Summary:</b> {{ .CommonAnnotations.summary }}
+          <b>Description:</b> {{ .CommonAnnotations.description }}
+          <b>Runbook:</b> {{ .CommonAnnotations.runbook_url }}

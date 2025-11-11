@@ -11,9 +11,13 @@
 - [ ] (Средний) Release automation и репортинг
   - ✅ `scripts/release/create_release.py`, make `release-*`, workflow `release.yml`, `docs/research/release_playbook.md`.
 - [ ] (Средний) Secret scanning и политика безопасности
-  - ✅ Workflow `secret-scan.yml` (Gitleaks); расширить конституцию пунктами по least privilege.
+  - ✅ Workflows `secret-scan.yml` (Gitleaks) и `trufflehog.yml` (Trufflehog); расширить конституцию пунктами по least privilege.
 - [ ] (Низкий) Сбор и публикация DORA-метрик
   - ✅ `scripts/metrics/collect_dora.py`, workflow `dora-metrics.yml`; настроить визуализацию (следующий шаг).
 - [ ] (Средний) Observability & Runbooks
   - ✅ `docs/observability/SLO.md`, `docs/runbooks/alert_slo_runbook.md`, `docs/runbooks/postmortem_template.md`; внедрить автоматический экспорт метрик и alert канал.
-  - TODO: Интеграция с Prometheus/Grafana (`observability/docker-compose.observability.yml`, `observability.yml`) и Telegram (workflow `telegram-alert.yaml`).
+  - ✅ Инфраструктура: `observability/docker-compose.observability.yml` (Prometheus/Grafana/Alertmanager), правила `observability/alerts.yml`, конфиг `observability/alertmanager.yml`.
+  - TODO: Интеграция с Prometheus/Grafana (`observability.yml`) и Telegram (workflow `telegram-alert.yaml`) + секреты в CI/CD.
+- [ ] (Высокий) Runtime & Compliance
+  - ✅ `scripts/setup/check_runtime.py`, make `check-runtime`, инструкция `docs/setup/python_311.md`.
+  - TODO: Обновить конституцию правилами по установленной версии Python; автоматизировать проверку наличия `make`, `docker compose`.
