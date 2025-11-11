@@ -31,14 +31,17 @@
   - TODO: Terraform backend (S3/DynamoDB, Azure Storage), Managed Identity для Vault.
 - [ ] (Средний) Secret management
   - ✅ Vault политика/скрипт (`infrastructure/vault/`, `docs/ops/vault.md`).
-  - TODO: HashiCorp Vault CSI driver, AWS Secrets Manager sync, Azure Key Vault пример.
+  - ✅ CSI: SecretProviderClass (`infrastructure/vault/csi`), пример deployment, `make vault-csi-apply`.
+  - ✅ AWS sync → Vault (`scripts/secrets/aws_sync_to_vault.py`).
+  - TODO: Azure Key Vault пример, Vault Agent sidecar, автоматическое обновление секретов.
+- [ ] (Средний) FinOps
+  - ✅ Скрипты `scripts/finops/aws_cost_report.py`, `aws_cost_to_slack.py`, `azure_cost_to_slack.py`; workflow `finops-report.yml`; make `finops-slack`.
+  - TODO: Budget alerts (AWS Budgets/Azure), Teams интеграция, Grafana dashboards.
 - [ ] (Средний) Service Mesh & Chaos
   - ✅ Istio профиль (`infrastructure/service-mesh/istio`), make `mesh-istio-apply`, документ `docs/ops/service_mesh.md`.
-  - ✅ Litmus pod-delete сценарий (`infrastructure/chaos/litmus`, `make chaos-litmus-run`), документ `docs/ops/chaos_engineering.md`.
-  - TODO: Linkerd альтернатива, Litmus network chaos, Istio mTLS policies.
-- [ ] (Средний) FinOps
-  - ✅ Скрипт `scripts/finops/aws_cost_report.py`, документ `docs/ops/finops.md`.
-  - TODO: Slack/Teams оповещения, бюджетные алерты, Azure/GCP поддержка.
+  - ✅ Linkerd blueprint (`infrastructure/service-mesh/linkerd`), make `linkerd-install`.
+  - ✅ Litmus pod-delete + network latency (`infrastructure/chaos/litmus`, `make chaos-litmus-run`).
+  - TODO: Linkerd Helm chart, Istio mTLS policies, chaos в CI.
 - [ ] (Высокий) Runtime & Compliance
   - ✅ `scripts/setup/check_runtime.py`, make `check-runtime`, инструкция `docs/setup/python_311.md`.
   - TODO: Обновить конституцию правилами по установленной версии Python; автоматизировать проверку наличия `make`, `docker compose`.

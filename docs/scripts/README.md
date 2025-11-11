@@ -130,6 +130,7 @@
 
 ### 4.17 Secrets (`scripts/secrets/`)
 - `aws_sync_to_vault.py` — перенос Secrets Manager в Vault.
+- `apply_vault_csi.sh` — разворачивает SecretProviderClass и пример Deployment.
 
 ### 4.18 ML и экспериментальные утилиты
 - `dataset/create_ml_dataset.py`, `prepare_neural_training_data.py` — подготовка выборок для моделей.

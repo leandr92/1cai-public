@@ -16,6 +16,8 @@
    ```
 3. Наблюдать результат:
    ```bash
+   make chaos-litmus-run                # pod-delete
+   make chaos-litmus-run EXPERIMENT=network  # latency
    kubectl describe chaosengine api-pod-delete -n 1cai
    kubectl get chaosresults -n 1cai
    ```

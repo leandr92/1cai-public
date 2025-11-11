@@ -7,7 +7,8 @@
 
 ## 2. Структура
 - `infrastructure/service-mesh/istio/` — IstioOperator профиль (`profile-default.yaml`) + README.
-- Make цель `mesh-istio-apply` — применяет Kustomize (создаёт `istio-system`, установку выполняет IstioOperator).
+- `infrastructure/service-mesh/linkerd/` — альтернативный mesh с CLI установкой.
+- Make цели: `mesh-istio-apply`, `linkerd-install`.
 
 ## 3. После установки
 ```bash

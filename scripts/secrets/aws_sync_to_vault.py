@@ -6,7 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
-from typing import List
+from typing import Dict
 
 import boto3
 import hvac
@@ -15,7 +15,11 @@ import hvac
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Sync AWS secrets to Vault")
     parser.add_argument("secrets", nargs="+", help="AWS Secrets Manager ARNs or names")
-    parser.add_argument("--vault-path", required=True, help="Vault KV path prefix (e.g. secret/data/1cai/aws)")
+    parser.add_argument(
+        "--vault-path",
+        required=True,
+        help="Vault KV path prefix (e.g. secret/data/1cai/aws)",
+    )
     return parser.parse_args()
 
 

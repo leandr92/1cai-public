@@ -11,7 +11,10 @@
 ## 3. Kubernetes интеграция
 1. Настроить `vault auth enable kubernetes` (скрипт выше).
 2. Создать service account `1cai-app` в namespace `1cai`.
-3. В Deployment добавить sidecar Vault Agent или CSI driver (TODO).
+3. Использовать Secrets Store CSI Driver:
+   - `infrastructure/vault/csi/secret-provider-class.yaml` — описывает, какие данные из Vault попадут в K8s Secret `db-credentials`.
+   - `infrastructure/vault/csi/deployment-example.yaml` — пример Deployment, подключающий volume `vault-secrets`.
+   - Скрипт `scripts/secrets/apply_vault_csi.sh` / `make vault-csi-apply` — быстрый запуск.
 
 ## 4. AWS Secrets Manager / Azure Key Vault
 - AWS: Terraform пример (см. `infrastructure/terraform/aws-eks`) + IAM policy для чтения `secretsmanager:GetSecretValue` (TODO).

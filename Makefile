@@ -34,6 +34,9 @@ help:
 	@echo "  make mesh-istio-apply - Apply IstioOperator profile via kubectl"
 	@echo "  make chaos-litmus-run - Apply Litmus chaos experiment (pod-delete, EXPERIMENT=network для latency)"
 	@echo "  make preflight        - Run self-control checklist before deploy"
+	@echo "  make vault-csi-apply  - Apply Vault CSI SecretProviderClass + example"
+	@echo "  make linkerd-install  - Install Linkerd control plane"
+	@echo "  make finops-slack     - Send AWS/Azure cost reports to Slack"
 	@echo ""
 	@echo "Docker:"
 	@echo "  make docker-up        - Start all Docker services"
@@ -185,6 +188,23 @@ chaos-litmus-run:
 
 preflight:
 	bash scripts/checklists/preflight.sh
+
+vault-csi-apply:
+	bash scripts/secrets/apply_vault_csi.sh
+
+linkerd-install:
+	linkerd install | kubectl apply -f -
+	linkerd viz install | kubectl apply -f -
+
+finops-slack:
+	pip install --quiet boto3 requests azure-identity azure-mgmt-costmanagement >/dev/null
+	SLACK_WEBHOOK_URL=$(SLACK_WEBHOOK_URL) python scripts/finops/aws_cost_to_slack.py || true
+	SLACK_WEBHOOK_URL=$(SLACK_WEBHOOK_URL) \
+	AZURE_TENANT_ID=$(AZURE_TENANT_ID) \
+	AZURE_CLIENT_ID=$(AZURE_CLIENT_ID) \
+	AZURE_CLIENT_SECRET=$(AZURE_CLIENT_SECRET) \
+	AZURE_SUBSCRIPTION_ID=$(AZURE_SUBSCRIPTION_ID) \
+	python scripts/finops/azure_cost_to_slack.py || true
 
 # Installation
 install:

@@ -102,29 +102,26 @@
     - Документ `docs/research/job_market_devops_analysis.md` — топовые требования (AWS, Ansible, GitOps, Service Mesh, Vault).  
     - Используется для приоритизации задач (обновляет `docs/research/alkoleft_todo.md`).  
 
-22. **Service Mesh (Istio)**  
-    - Кастомный профиль: `infrastructure/service-mesh/istio/`.  
-    - Make `mesh-istio-apply`, namespace label + README `docs/ops/service_mesh.md`.  
+22. **Service Mesh (Istio & Linkerd)**  
+    - Кастомный профиль: `infrastructure/service-mesh/istio/` (make `mesh-istio-apply`).  
+    - Linkerd CLI blueprint: `infrastructure/service-mesh/linkerd/`, make `linkerd-install`.  
     - Интеграция с observability stack.  
 
 23. **Chaos Engineering (Litmus)**  
     - Эксперимент pod-delete: `infrastructure/chaos/litmus/`.  
-    - Скрипт `scripts/chaos/run_litmus.sh`, make `chaos-litmus-run`.  
+    - Сетевой latency: `chaos-engine-network.yaml`, запуск `make chaos-litmus-run EXPERIMENT=network`.  
     - Документ `docs/ops/chaos_engineering.md`.  
 
 24. **Vault & Secret Management**  
     - Политика `infrastructure/vault/policies/1cai-app.hcl`, скрипт `infrastructure/vault/scripts/configure.sh`.  
-    - Документ `docs/ops/vault.md`.  
+    - CSI пример `infrastructure/vault/csi/*`, Make `vault-csi-apply`, скрипты `scripts/secrets/*`.  
 
-25. **Azure DevOps & AKS**  
-    - Terraform модуль `infrastructure/terraform/azure-aks`.  
-    - Azure pipeline `infrastructure/azure/azure-pipelines.yml`, документ `docs/ops/azure_devops.md`.  
+25. **FinOps & Cost Reports**  
+    - Скрипты `scripts/finops/aws_cost_to_slack.py`, `scripts/finops/azure_cost_to_slack.py`, Make `finops-slack`.  
+    - Workflow `.github/workflows/finops-report.yml`.  
 
-26. **FinOps**  
-    - Скрипт `scripts/finops/aws_cost_report.py`, документ `docs/ops/finops.md`.  
-
-27. **Self-control checklist**  
+26. **Self-control checklist**  
     - Скрипт `scripts/checklists/preflight.sh`, make `preflight`, документ `docs/ops/self_control.md`.  
 
-28. **Обновлён мастер-лист TODO**  
+27. **Обновлён мастер-лист TODO**  
     - `docs/research/alkoleft_todo.md` теперь с приоритетами и ссылками на соответствующие планы.
