@@ -19,7 +19,7 @@
 ## 3. Architecture & Research
 - High-level дизайн, C4: [`docs/architecture/README.md`](architecture/README.md).
 - ADR: [`docs/architecture/adr/`](architecture/adr/).
-- Исследования и планы: [`docs/research/README_LOCAL.md`](research/README_LOCAL.md), [`docs/research/spec_kit_analysis.md`](research/spec_kit_analysis.md), [`docs/research/alkoleft_todo.md`](research/alkoleft_todo.md).
+- Исследования и планы: [`docs/research/README_LOCAL.md`](research/README_LOCAL.md), [`docs/research/spec_kit_analysis.md`](research/spec_kit_analysis.md), [`docs/research/job_market_business_analyst.md`](research/job_market_business_analyst.md), [`docs/research/ba_agent_roadmap.md`](research/ba_agent_roadmap.md), [`docs/research/alkoleft_todo.md`](research/alkoleft_todo.md).
 
 ## 4. Feature Guides
 - MCP сервер и AI tooling: [`docs/06-features/MCP_SERVER_GUIDE.md`](06-features/MCP_SERVER_GUIDE.md).

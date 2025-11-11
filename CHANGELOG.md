@@ -61,6 +61,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Service Mesh: Linkerd blueprint (`infrastructure/service-mesh/linkerd`, ArgoCD application/ApplicationSet, `make linkerd-install`, скрипты сертификатов/managed identity/rotate (`rotate_certs.sh`), CI smoke `ci_smoke.sh` (`linkerd-smoke.yml`), chaos `chaos_ci.sh` (`linkerd-chaos.yml`)), Litmus network latency сценарий (`pod-network-latency.yaml`, `chaos-engine-network.yaml`), workflow `chaos-validate.yml`.
 - Security: Terraform Conftest политики (`policy/terraform/**`), OPA в `run_policy_checks.sh`, Vault rotation/test скрипты.
 - Resilience: DR rehearsal автоматизирован (скрипт `scripts/runbooks/dr_rehearsal_runner.py`, workflow `dr-rehearsal.yml`).
+- Research: Business Analyst market study (`docs/research/job_market_business_analyst.md`) и roadmap (`docs/research/ba_agent_roadmap.md`); обновлены `docs/03-ai-agents/MULTI_ROLE_AI_SYSTEM.md`, `docs/research/alkoleft_todo.md`, `docs/README.md`.
 - Docs: обновлён `README.md` (TL;DR, Quick Start, CI/ops обзор), создан индекс [`docs/README.md`](docs/README.md), актуализированы ссылки в документации.
 
 ---

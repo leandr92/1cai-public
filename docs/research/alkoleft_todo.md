@@ -42,6 +42,15 @@
   - ✅ Linkerd blueprint (`infrastructure/service-mesh/linkerd`), ArgoCD application/ApplicationSet, make `linkerd-install`, серты `bootstrap_certs.sh`/`rotate_certs.sh`, Managed Identity, smoke `ci_smoke.sh` + `linkerd-smoke.yml`, chaos `chaos_ci.sh` + `linkerd-chaos.yml`.
   - ✅ Litmus pod-delete + network latency (`infrastructure/chaos/litmus`, `make chaos-litmus-run`).
   - TODO: Linkerd trust anchors автоматизация через external secrets/Key Vault, Istio mTLS policies enforcement.
+- [ ] (Средний) Business Analyst Agent
+  - ✅ Исследование рынка вакансий (RU/EU/US) → `docs/research/job_market_business_analyst.md`.
+  - ✅ Подготовлен roadmap → `docs/research/ba_agent_roadmap.md`.
+  - 🔜 BA-02 Requirements Intelligence (LLM/NLP, CLI `ba-extract`, тесты).
+  - ☐ BA-03 Process & Journey Modelling (BPMN 2.0, CJM, экспорт).
+  - ☐ BA-04 Analytics & KPI Toolkit (SQL/BI, OKR/ROI, Observability).
+  - ☐ BA-05 Traceability & Compliance (risk register, heatmap).
+  - ☐ BA-06 Integrations & Collaboration (Jira/Confluence/ServiceNow).
+  - ☐ BA-07 Documentation & Enablement (guides, примеры, дашборды).
 - [ ] (Высокий) Runtime & Compliance
   - ✅ `scripts/setup/check_runtime.py`, make `check-runtime`, инструкция `docs/setup/python_311.md`.
   - TODO: Обновить конституцию правилами по установленной версии Python; автоматизировать проверку наличия `make`, `docker compose`.
