@@ -1,8 +1,9 @@
 # TODO: Интеграция экосистемы @alkoleft
 
-- [ ] (Высокий) DevOps платформа (K8s/IaC/CI)
+- [ ] (Высокий) DevOps платформа (K8s/IaC/CI/GitOps)
   - ✅ Kind кластер, Helm chart, Terraform шаблон, Jenkins/GitLab pipeline.
-  - TODO: Argo CD/Flux, Terraform для managed Kubernetes, Vault policies.
+  - ✅ GitOps: Argo CD manifests (`infrastructure/argocd`), скрипты `scripts/gitops/*`, make `gitops-*`.
+  - TODO: Argo CD ApplicationSet для multi-env, Terraform модуль Argo CD, Vault интеграция.
 - [ ] (Высокий) Реализация плана по `bsl-language-server` и `metadata.js` ([детали](./bsl_language_server_plan.md))
   - 👣 План сформирован, далее — выполнение шагов 1–6
 - [ ] (Средний) Подготовка Marketplace-пакетов (`onec-markdown-viewer`, `VAEditor`) — требования и публикация ([план](./marketplace_integration_plan.md))

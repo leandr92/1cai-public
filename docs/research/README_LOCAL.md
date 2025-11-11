@@ -92,5 +92,11 @@
     - Документ `docs/security/policy_as_code.md`.  
     - Jenkins/GitLab pipeline обновлены (stage Security Scan).  
 
-20. **Обновлён мастер-лист TODO**  
+20. **GitOps (Argo CD)**  
+    - Манифесты `infrastructure/argocd/` (namespace, проект, приложения).  
+    - Скрипты `scripts/gitops/apply.sh`, `scripts/gitops/sync.sh`, make `gitops-apply`, `gitops-sync`.  
+    - Документ [`docs/ops/gitops.md`](../ops/gitops.md).  
+    - Applications: `1cai-stack` (Helm), `observability-stack` (Helm).  
+
+21. **Обновлён мастер-лист TODO**  
     - `docs/research/alkoleft_todo.md` теперь с приоритетами и ссылками на соответствующие планы.

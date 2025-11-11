@@ -1,7 +1,7 @@
 # Makefile for Enterprise 1C AI Development Stack
 # Quick commands for common tasks
 
-.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push smoke-tests check-runtime kind-up kind-down helm-deploy terraform-apply terraform-destroy policy-check
+.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push smoke-tests check-runtime kind-up kind-down helm-deploy terraform-apply terraform-destroy policy-check gitops-apply gitops-sync
 
 CONFIG ?= ERPCPM
 EPOCHS ?=
@@ -29,6 +29,8 @@ help:
 	@echo "  make terraform-apply  - Apply Terraform stack (namespace + Helm release)"
 	@echo "  make terraform-destroy - Destroy Terraform resources"
 	@echo "  make policy-check     - Run policy-as-code checks (Conftest + Semgrep)"
+	@echo "  make gitops-apply     - Apply Argo CD manifests (Kustomize)"
+	@echo "  make gitops-sync      - Trigger Argo CD sync (requires argocd CLI/token)"
 	@echo ""
 	@echo "Docker:"
 	@echo "  make docker-up        - Start all Docker services"
@@ -165,6 +167,12 @@ terraform-destroy:
 
 policy-check:
 	bash scripts/security/run_policy_checks.sh
+
+gitops-apply:
+	bash scripts/gitops/apply.sh
+
+gitops-sync:
+	bash scripts/gitops/sync.sh
 
 # Installation
 install:

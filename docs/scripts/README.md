@@ -25,6 +25,7 @@
 | ML & Benchmarks | `scripts/dataset/`, `scripts/ml/`, `benchmark_*.py` | `create_ml_dataset.py`, `massive_ast_dataset_builder.py`, `benchmark_performance.py` | Подготовка датасетов, измерение производительности |
 | Setup | `scripts/setup/` | `check_runtime.py` | Проверка наличия Python 3.11, подготовка окружения |
 | Security | `scripts/security/` | `run_security_scans.sh` | Запуск bandit/pip-audit/safety в CI |
+| GitOps | `scripts/gitops/` | `apply.sh`, `sync.sh` | Применение Argo CD manifest’ов и инициирование sync |
 
 ## 3. Зависимости и подготовка
 
@@ -105,7 +106,12 @@
 - `run_security_scans.sh` — единая точка запуска bandit/pip-audit/safety. Используется в Jenkins/GitLab pipeline.
 - `run_policy_checks.sh` — рендер Helm-чартов, Conftest (Rego-политики из `policy/`), Semgrep (`security/semgrep.yml`). Требуются утилиты `helm`, `conftest`, `semgrep`, `terraform`.
 
-### 4.13 ML и экспериментальные утилиты
+### 4.13 GitOps (`scripts/gitops/`)
+- `apply.sh` — `kubectl apply -k infrastructure/argocd` (создаёт AppProject, Applications).
+- `sync.sh` — вызывает `argocd app sync` для `1cai-stack` и `observability-stack` (требует `ARGOCD_TOKEN`, переменная `ARGOCD_SERVER`).
+- README: `scripts/gitops/README.md`.
+
+### 4.14 ML и экспериментальные утилиты
 - `dataset/create_ml_dataset.py`, `prepare_neural_training_data.py` — подготовка выборок для моделей.
 - `finetune_qwen_smoltalk.py`, `train_copilot_model.py` — эксперименты с дообучением ассистента.
 - `benchmark_performance.py`, `profile_full_parser.py` — измерение скорости анализа/парсинга.
@@ -127,5 +133,7 @@
 | `make helm-observability` | `infrastructure/helm/observability-stack` | раздел 4.3 |
 | security pipeline | `scripts/security/run_security_scans.sh` | раздел 4.12 |
 | GitHub Actions | `observability-test.yml` | автоматическая проверка compose стека |
+| `make gitops-apply` | `scripts/gitops/apply.sh` | раздел 4.13 |
+| `make gitops-sync` | `scripts/gitops/sync.sh` | раздел 4.13 |
 
 Всегда сверяйтесь с `

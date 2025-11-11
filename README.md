@@ -104,6 +104,7 @@
 - **Secret scanning & Security**
   - Workflows `secret-scan.yml` (Gitleaks) и `trufflehog.yml` (Trufflehog) — регулярное сканирование репозитория на утечки токенов.
   - Policy-as-code: `policy/` (Rego) + `scripts/security/run_policy_checks.sh` (Conftest + Semgrep) → `make policy-check` / CI стадии.
+  - GitOps: `infrastructure/argocd/`, `scripts/gitops/*.sh`, make `gitops-apply`, `gitops-sync`.
 
 ---
 
@@ -121,9 +122,11 @@
   - `scripts/setup/check_runtime.py` + `make check-runtime` — автоматическая проверка версии Python.
 - **Infrastructure & DevOps**
   - [`docs/ops/devops_platform.md`](docs/ops/devops_platform.md) — стратегия DevOps-платформы.
+  - [`docs/ops/gitops.md`](docs/ops/gitops.md) — GitOps с Argo CD.
   - `infrastructure/kind/cluster.yaml` — локальный Kubernetes.
   - `infrastructure/helm/1cai-stack` — Helm chart приложения.
   - `infrastructure/helm/observability-stack` — Prometheus/Loki/Tempo/Grafana/OTEL.
+  - `infrastructure/argocd/` — manifests для Argo CD (GitOps).
   - `infrastructure/terraform` — Terraform конфигурация для Helm релиза.
   - `infrastructure/jenkins/Jenkinsfile`, `infrastructure/gitlab/.gitlab-ci.yml` — многостадийные pipeline для Jenkins и GitLab.
   - [`docs/security/policy_as_code.md`](docs/security/policy_as_code.md) — Rego-политики, Conftest, Semgrep.
