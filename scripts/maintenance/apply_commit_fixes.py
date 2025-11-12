@@ -40,21 +40,27 @@ COMMIT_FIXES = {
 }
 
 def create_filter_script():
-    """Создать bash скрипт для git filter-branch"""
-    script_lines = ["#!/bin/bash"]
-    script_lines.append("COMMIT_HASH=\"$GIT_COMMIT\"")
+    """Создать скрипт для git filter-branch (работает на Windows и Unix)"""
+    # Используем Python скрипт вместо bash для кроссплатформенности
+    script_lines = ["#!/usr/bin/env python3"]
+    script_lines.append("import sys")
+    script_lines.append("import os")
+    script_lines.append("")
+    script_lines.append("commit_hash = os.environ.get('GIT_COMMIT', '')")
     script_lines.append("")
     
+    script_lines.append("fixes = {")
     for commit_hash, new_message in COMMIT_FIXES.items():
-        # Экранируем кавычки в сообщении
-        escaped_msg = new_message.replace('"', '\\"').replace('$', '\\$').replace('`', '\\`')
-        script_lines.append(f'if [ "$COMMIT_HASH" = "{commit_hash}" ]; then')
-        script_lines.append(f'  echo "{escaped_msg}"')
-        script_lines.append("  exit")
-        script_lines.append("fi")
-        script_lines.append("")
-    
-    script_lines.append("cat  # Для остальных коммитов оставляем как есть")
+        # Экранируем для Python строки
+        escaped_msg = new_message.replace('\\', '\\\\').replace('"', '\\"')
+        script_lines.append(f'    "{commit_hash}": "{escaped_msg}",')
+    script_lines.append("}")
+    script_lines.append("")
+    script_lines.append("if commit_hash in fixes:")
+    script_lines.append("    print(fixes[commit_hash])")
+    script_lines.append("else:")
+    script_lines.append("    # Для остальных коммитов оставляем как есть")
+    script_lines.append("    sys.stdout.write(sys.stdin.read())")
     
     return "\n".join(script_lines)
 
@@ -100,13 +106,18 @@ def main():
     # Создаем временный скрипт
     filter_script = create_filter_script()
     
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.sh', delete=False, encoding='utf-8') as f:
+    # Используем .py для Python скрипта
+    suffix = '.py' if os.name == 'nt' else '.sh'
+    with tempfile.NamedTemporaryFile(mode='w', suffix=suffix, delete=False, encoding='utf-8') as f:
         f.write(filter_script)
         script_path = f.name
     
-    # Делаем скрипт исполняемым (на Unix)
+    # Делаем скрипт исполняемым
     if os.name != 'nt':
         os.chmod(script_path, 0o755)
+    else:
+        # На Windows используем python для запуска скрипта
+        script_path = f'python {script_path}'
     
     try:
         print("\nRunning git filter-branch...")
