@@ -6,9 +6,9 @@
 Мы устали держать десятки скриптов и регламентов «в столе». 1C AI Stack собирает их в понятный сценарий: показывает архитектуру, даёт готовые пайплайны и помогает быстрее доставлять изменения в продуктив.
 
 ### Что получаете сразу
-- **То, что работает прямо сейчас.** Скрипты, сервисы и документация уже собраны — можно запускать без долгой подготовки.
-- **Понимание, как всё связано.** Диаграммы и ADR рендерятся автоматически, поэтому видно, что происходит в проде и как устроен стек.
-- **Основание для своих процессов.** Готовые контуры GitOps, FinOps и Observability, которые легко адаптировать под вашу инфраструктуру.
+- **Готовый старт.** В репозитории уже есть рабочие сценарии: скрипты, сервисы и документация связаны между собой и не требуют дополнительного «связывания». Запускаете `make` — и сразу видите результат.
+- **Зеркало архитектуры.** Визуализации, ADR и регламенты обновляются автоматически — легко понять, как устроены сервисы, какие компоненты общаются между собой и что происходит в продакшене.
+- **Опорные процессы.** GitOps, FinOps, Observability и безопасность описаны и автоматизированы; можно брать шаблоны, настраивать под себя и не тратить недели на сбор артефактов по разным папкам.
 
 ![Контейнерная схема платформы](docs/architecture/uml/c4/png/container_overview.png)
 
@@ -45,19 +45,4 @@
 - **Безопасность и FinOps** — Rego/Conftest, Checkov/Trivy, бюджетные отчёты и политики (`policy/`, `scripts/security/`, `scripts/finops/`).
 
 ## Чего ждать дальше
-- Расширение spec-driven практик и интеграции с GitHub Spec Kit — см. `docs/research/spec_kit_analysis.md`, `docs/research/constitution.md`.
-- Новые тестовые раннеры (YAxUnit, edt-test-runner) и сценарии — слежение в `docs/06-features/TESTING_GUIDE.md`, `docs/research/alkoleft_todo.md`.
-- UI/презентационный слой для быстрой навигации — наработки в `docs/09-archive/ui-ux-backup/`.
-
-## Документация и ресурсы
-- Полный индекс: [`docs/README.md`](docs/README.md).
-- Архитектура: [`docs/architecture/README.md`](docs/architecture/README.md), Structurizr DSL и PlantUML в `docs/architecture/c4/` и `docs/architecture/uml/`.
-- Практики тестирования и качества: [`docs/06-features/TESTING_GUIDE.md`](docs/06-features/TESTING_GUIDE.md), `scripts/tests/`.
-- Политики безопасности: [`docs/security/policy_as_code.md`](docs/security/policy_as_code.md), workflows `.github/workflows/secret-scan.yml`, `trufflehog.yml`.
-- Наблюдаемость и метрики: `observability/docker-compose.observability.yml`, `docs/observability/SLO.md`, `docs/status/dora_history.md`.
-
-## Как взаимодействовать
-- Бэклог и актуальные задачи — [`docs/research/alkoleft_todo.md`](docs/research/alkoleft_todo.md).
-- Issues и pull-requests приветствуются; ориентируйтесь на [recent commits](https://github.com/DmitrL-dev/1cai/commits/main) и `docs/05-development/CHANGELOG.md`.
-- Перед изменением диаграмм обязательно запускайте `make render-uml` (workflow «PlantUML Render Check» использует те же скрипты).
-- Для оперативных вопросов — внутренний канал команды (контакты описаны в приватной документации).
+- Расширение spec-driven практик и интеграции с GitHub Spec Kit — см. `
