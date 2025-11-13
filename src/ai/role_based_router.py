@@ -286,8 +286,14 @@ class RoleBasedRouter:
             
             # Requirements extraction
             if any(kw in query_lower for kw in ["требования", "извлечь", "tz", "техническое задание"]):
-                document_text = context.get("document_text", query) if context else query
-                result = await self.ba_agent.extract_requirements(document_text, "tz")
+                document_path = context.get("document_path") if context else None
+                document_type = context.get("document_type") if context else None
+                if document_path:
+                    result = await self.ba_agent.extract_requirements_from_file(document_path, document_type)
+                else:
+                    document_text = context.get("document_text", query) if context else query
+                    doc_type = document_type or "tz"
+                    result = await self.ba_agent.extract_requirements(document_text, doc_type)
                 return {
                     "role": "business_analyst",
                     "agent": "ba_agent_extended",

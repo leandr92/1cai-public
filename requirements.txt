@@ -33,6 +33,8 @@ slowapi>=0.1.9  # Rate limiting for API endpoints
 lxml==4.9.3
 beautifulsoup4==4.12.2
 markdownify==0.11.6
+python-docx==0.8.11
+pypdf==3.17.0
 
 # AI/ML
 transformers>=4.36.0  # For DeepSeek-OCR, Qwen-Coder models

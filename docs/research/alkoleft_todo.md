@@ -45,7 +45,7 @@
 - [ ] (Средний) Business Analyst Agent
   - ✅ Исследование рынка вакансий (RU/EU/US) → `docs/research/job_market_business_analyst.md`.
   - ✅ Подготовлен roadmap → `docs/research/ba_agent_roadmap.md`.
-  - 🔜 BA-02 Requirements Intelligence (LLM/NLP, CLI `ba-extract`, тесты).
+  - ✅ BA-02 Requirements Intelligence (LLM-ready extractor, docx/pdf support, CLI `ba-extract`, тесты).
   - ☐ BA-03 Process & Journey Modelling (BPMN 2.0, CJM, экспорт).
   - ☐ BA-04 Analytics & KPI Toolkit (SQL/BI, OKR/ROI, Observability).
   - ☐ BA-05 Traceability & Compliance (risk register, heatmap).

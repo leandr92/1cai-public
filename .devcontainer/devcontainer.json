@@ -1,8 +1,11 @@
 {
   "name": "Enterprise 1C AI Stack - Dev Environment",
-  "dockerComposeFile": "../docker-compose.dev.yml",
+  "dockerComposeFile": [
+    "../docker-compose.dev.yml"
+  ],
   "service": "app",
   "workspaceFolder": "/workspace",
+  "shutdownAction": "stopCompose",
   
   "customizations": {
     "vscode": {

@@ -83,12 +83,17 @@ async def test_ba_agent_requirements_extraction():
     1. Регистрировать пользователей
     2. Хранить данные о заказах
     3. Формировать отчеты
+    Как менеджер по продажам, я хочу видеть список заказов, чтобы обслуживать клиентов.
+    Критерий приемки: отчёт должен генерироваться за 5 секунд.
     """
     
     result = await agent.extract_requirements(document, "tz")
     
-    assert 'requirements' in result
-    assert len(result['requirements']) >= 3
+    assert 'functional_requirements' in result
+    assert len(result['functional_requirements']) >= 2
+    assert 'summary' in result
+    assert result['summary']['total_requirements'] >= 2
+    assert 'user_stories' in result
 
 
 @pytest.mark.asyncio

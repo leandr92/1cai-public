@@ -1,7 +1,7 @@
 # Makefile for Enterprise 1C AI Development Stack
 # Quick commands for common tasks
 
-.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push smoke-tests check-runtime kind-up kind-down helm-deploy terraform-apply terraform-destroy policy-check gitops-apply gitops-sync
+.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push smoke-tests check-runtime kind-up kind-down helm-deploy terraform-apply terraform-destroy policy-check gitops-apply gitops-sync ba-extract
 
 CONFIG ?= ERPCPM
 EPOCHS ?=
@@ -94,6 +94,7 @@ help:
 	@echo "  make scrape-its       - Run ITS scraper (ITS_START_URL, ITS_OUTPUT, ITS_FORMATS, ITS_CONCURRENCY, ITS_SLEEP, ITS_PROXY, ITS_USER_AGENT_FILE)"
 	@echo "  make render-uml       - Render all PlantUML diagrams to PNG"
 	@echo "  make render-uml-svg   - Render PlantUML diagrams to PNG + SVG"
+	@echo "  make ba-extract FILE=path [OUTPUT=out.json DOC_TYPE=tz] - Extract requirements via BA агент"
 	@echo "  make adr-new SLUG=... - Create a new Architecture Decision Record"
 	@echo "  make feature-init FEATURE=slug - Create spec-driven feature scaffold"
 	@echo "  make feature-validate [FEATURE=slug] - Validate filled spec-driven documents"
@@ -181,6 +182,12 @@ gitops-apply:
 
 gitops-sync:
 	bash scripts/gitops/sync.sh
+
+ba-extract:
+ifndef FILE
+	$(error FILE is required, e.g. make ba-extract FILE=docs/sample.docx)
+endif
+	python -m scripts.ba.requirements_cli extract $(FILE) $(if $(DOC_TYPE),--document-type $(DOC_TYPE),) $(if $(OUTPUT),--output $(OUTPUT),)
 
 mesh-istio-apply:
 	kubectl apply -k infrastructure/service-mesh/istio
