@@ -121,7 +121,7 @@ graph TB
 
 | Роль | Первое действие | Ключевые материалы |
 | ---- | ---------------- | ------------------ |
-| DevOps / SRE | Пройти `make gitops-apply`, подключить Vault/Linkerd | [`docs/ops/devops_platform.md`](docs/ops/devops_platform.md), [`docs/ops/gitops.md`](docs/ops/gitops.md), [`docs/ops/service_mesh.md`](docs/ops/service_mesh.md), [`infrastructure/helm/1cai-stack`](infrastructure/helm/1cai-stack) |
+| DevOps / SRE | Пройти `make gitops-apply`, подключить Vault/Linkerd | [`docs/ops/devops_platform.md`](docs/ops/devops_platform.md), [`docs/ops/gitops.md`](docs/ops/gitops.md), [`docs/ops/service_mesh.md`](docs/ops/service_mesh.md), [`infrastructure/helm/`](infrastructure/helm/) |
 | 1С-разработчик / архитектор | Разобрать конфигурацию и получить документацию | [`docs/06-features/EDT_PARSER_GUIDE.md`](docs/06-features/EDT_PARSER_GUIDE.md), [`scripts/analysis/generate_documentation.py`](scripts/analysis/generate_documentation.py), [`docs/architecture/README.md`](docs/architecture/README.md) |
 | ML / аналитика | Сформировать датасет и прогнать проверки качества | [`docs/06-features/ML_DATASET_GENERATOR_GUIDE.md`](docs/06-features/ML_DATASET_GENERATOR_GUIDE.md), [`docs/06-features/TESTING_GUIDE.md`](docs/06-features/TESTING_GUIDE.md), [`scripts/analysis/`](scripts/analysis/) |
 | Операционный менеджер / on-call | Подготовить регламенты и тренировки | [`docs/runbooks/dr_rehearsal_plan.md`](docs/runbooks/dr_rehearsal_plan.md), [`docs/process/oncall_rotations.md`](docs/process/oncall_rotations.md), [`docs/observability/SLO.md`](docs/observability/SLO.md) |
@@ -130,10 +130,10 @@ graph TB
 
 | Направление | Что включено | Ссылки |
 |-------------|--------------|--------|
-| **MCP & AI tooling** | Генерация кода, анализ AST, MCP-инструменты | [`src/ai/`](src/ai/), [`docs/06-features/AST_TOOLING_BSL_LANGUAGE_SERVER.md`](docs/06-features/AST_TOOLING_BSL_LANGUAGE_SERVER.md), [`docs/06-features/MCP_SERVER_GUIDE.md`](docs/06-features/MCP_SERVER_GUIDE.md) |
-| **Инфраструктура** | Helm charts, Terraform, Argo CD, Linkerd, Vault | [`infrastructure/helm/`](infrastructure/helm/), [`infrastructure/terraform/`](infrastructure/terraform/), [`infrastructure/argocd/`](infrastructure/argocd/), [`scripts/service_mesh/`](scripts/service_mesh/) |
-| **Надёжность и наблюдаемость** | Runbooks, DR, DORA, Prometheus, Alertmanager | [`docs/runbooks/`](docs/runbooks/README.md), [`docs/process/`](docs/process/README.md), [`observability/`](observability/) |
-| **Безопасность и FinOps** | Политики, проверки, отчёты, FinOps-скрипты | [`policy/`](policy/), [`scripts/security/`](scripts/security/), [`scripts/finops/`](scripts/finops/) |
+| **MCP & AI tooling** | Генерация кода, анализ AST, MCP-инструменты | [`docs/06-features/AST_TOOLING_BSL_LANGUAGE_SERVER.md`](docs/06-features/AST_TOOLING_BSL_LANGUAGE_SERVER.md), [`docs/06-features/MCP_SERVER_GUIDE.md`](docs/06-features/MCP_SERVER_GUIDE.md) |
+| **Инфраструктура** | Helm charts, Terraform, Argo CD, Linkerd, Vault | [`docs/ops/devops_platform.md`](docs/ops/devops_platform.md), [`docs/ops/gitops.md`](docs/ops/gitops.md), [`docs/ops/service_mesh.md`](docs/ops/service_mesh.md) |
+| **Надёжность и наблюдаемость** | Runbooks, DR, DORA, Prometheus, Alertmanager | [`docs/runbooks/dr_rehearsal_plan.md`](docs/runbooks/dr_rehearsal_plan.md), [`docs/process/oncall_rotations.md`](docs/process/oncall_rotations.md), [`docs/observability/SLO.md`](docs/observability/SLO.md) |
+| **Безопасность и FinOps** | Политики, проверки, отчёты, FinOps-скрипты | [`docs/security/policy_as_code.md`](docs/security/policy_as_code.md), [`docs/ops/finops.md`](docs/ops/finops.md) |
 
 ---
 
