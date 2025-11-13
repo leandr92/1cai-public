@@ -22,7 +22,11 @@
 - **Автоматизация и MCP-инструменты.** [`src/ai/mcp_server.py`](src/ai/mcp_server.py), spec-driven workflow и готовые CLI помогают создавать задачи, генерировать код и запускать тесты из IDE или CI (см. [`docs/06-features/MCP_SERVER_GUIDE.md`](docs/06-features/MCP_SERVER_GUIDE.md)).
 - **Промышленный контур.** Helm charts, Argo CD, Linkerd, Vault и Terraform-модули в [`infrastructure/`](infrastructure/) + регламенты в [`docs/ops/`](docs/ops/README.md) позволяют разворачивать и поддерживать стек в облаке без ручных «магических» шагов.
 
+## Архитектура платформы
+
 ![Контейнерная схема платформы](docs/architecture/uml/c4/png/container_overview.png)
+
+**Интерактивная версия:** [Mermaid диаграмма](docs/architecture/interactive-architecture.md) | [HTML карта](docs/architecture/interactive-architecture.html)
 
 ## За 5 минут: пробный запуск
 

@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Интерактивная карта архитектуры - 1C AI Stack</title>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.min.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1rem;
+        }
+
+        .controls {
+            background: white;
+            padding: 1rem 2rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .controls label {
+            font-weight: 600;
+            color: #555;
+        }
+
+        .controls select, .controls input {
+            padding: 0.5rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 0.9rem;
+        }
+
+        .controls select:focus, .controls input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .filter-buttons {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.5rem 1rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .filter-btn:hover {
+            background: #f0f0f0;
+        }
+
+        .filter-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .diagram-container {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            overflow-x: auto;
+        }
+
+        .info-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin-top: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .info-panel h2 {
+            color: #667eea;
+            margin-bottom: 1rem;
+        }
+
+        .component-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .component-card {
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .component-card:hover {
+            border-color: #667eea;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.2);
+        }
+
+        .component-card h3 {
+            color: #667eea;
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        .component-card p {
+            font-size: 0.85rem;
+            color: #666;
+        }
+
+        .legend {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid #333;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🏗️ Интерактивная карта архитектуры</h1>
+        <p>1C AI Stack - Визуализация компонентов и связей платформы</p>
+    </div>
+
+    <div class="controls">
+        <label>Фильтр по категориям:</label>
+        <div class="filter-buttons">
+            <button class="filter-btn active" data-filter="all">Все</button>
+            <button class="filter-btn" data-filter="core">Core Services</button>
+            <button class="filter-btn" data-filter="workers">Workers</button>
+            <button class="filter-btn" data-filter="data">Data Stores</button>
+            <button class="filter-btn" data-filter="integration">Integrations</button>
+            <button class="filter-btn" data-filter="ops">Operations</button>
+        </div>
+        <label style="margin-left: auto;">Поиск:</label>
+        <input type="text" id="search" placeholder="Название компонента..." style="flex: 1; max-width: 300px;">
+    </div>
+
+    <div class="container">
+        <div class="diagram-container">
+            <div class="mermaid" id="architecture-diagram">
+graph TB
+    subgraph Users["👥 Пользователи"]
+        Developer["👨‍💻 1C Developers<br/>Use IDE and automation"]
+        Operator["👔 Business Stakeholders<br/>Consume dashboards, reports"]
+    end
+
+    subgraph Core["🔵 Core Services"]
+        API["🌐 Graph API<br/>FastAPI<br/>GraphQL, REST, MCP endpoints"]
+        RestGateway["⚡ Realtime Gateway<br/>Starlette, WebSocket<br/>Realtime streaming, MCP sessions"]
+        Auth["🔐 Auth and RBAC<br/>OAuth2, JWT<br/>Identity, service tokens"]
+        AdminPortal["🛡️ Admin Portal<br/>React, FastAPI<br/>Security agent UI, audit management"]
+    end
+
+    subgraph Workers["⚙️ Worker Tier"]
+        Celery["🔍 Analysis Workers<br/>Celery<br/>BSL code analysis, audits"]
+        MLPipelines["🤖 ML Pipelines<br/>Prefect, PyTorch<br/>Training, evaluation, embeddings"]
+        ITSScraper["📰 ITS Scraper<br/>Async Python<br/>Stateful ingestion pipeline"]
+        Orchestrator["🎯 Task Orchestrator<br/>Bash, scripts<br/>Composite pipelines and CLI"]
+    end
+
+    subgraph DataStores["💾 Data Stores"]
+        Postgres[("🐘 PostgreSQL<br/>Aurora / RDS<br/>Relational data, audit, configs")]
+        Neo4j[("🕸️ Neo4j<br/>Graph DB<br/>Code structure and dependencies")]
+        Qdrant[("🔍 Qdrant<br/>Vector DB<br/>Embeddings for semantic search")]
+        Redis[("⚡ Redis<br/>In-memory<br/>Cache, rate limit, queues")]
+        Minio[("📦 MinIO<br/>Object Storage<br/>Datasets, models, documentation dumps")]
+        ClickHouse[("📊 ClickHouse<br/>Column Store<br/>Observability long term metrics")]
+    end
+
+    subgraph Integrations["🔗 Integration Channels"]
+        EDTPlugin["🔌 EDT Plugin<br/>Java<br/>IDE assistant and dashboards"]
+        n8nNode["🔄 n8n Node<br/>TypeScript<br/>Workflow automation"]
+        TelegramBot["💬 Telegram Bot<br/>Python<br/>Alerting and chatops"]
+        Marketplace["🏪 Marketplace Extensions<br/>BSL<br/>Delivered packages and templates"]
+    end
+
+    subgraph Ops["📊 Operations"]
+        Prometheus["📈 Prometheus<br/>Monitoring<br/>Metrics scrape and alert rules"]
+        Grafana["📊 Grafana<br/>Dashboards<br/>Observability and business analytics"]
+        Alertmanager["🚨 Alertmanager<br/>Alert routing"]
+        GitHubActions["⚙️ CI/CD<br/>GitHub Actions<br/>Build, test, deploy, docs"]
+        Faro["🔍 Tracing/Logs<br/>Tempo / Loki<br/>Distributed traces and logs"]
+    end
+
+    Developer -->|Graph queries, MCP requests| API
+    Developer -->|IDE commands| EDTPlugin
+    Developer -->|Trigger automations| n8nNode
+    Operator -->|Dashboards, KPIs| Grafana
+
+    RestGateway -->|PubSub channels| Redis
+    API -->|Authenticate requests| Auth
+    API -->|Persist configs, sessions| Postgres
+    API -->|Read/write dependency graph| Neo4j
+    API -->|Vector search| Qdrant
+    API -->|Fast cache, rate limit| Redis
+    API -->|Dispatch jobs| Celery
+    API -->|Trigger ingestion| ITSScraper
+
+    Celery -->|Read/write jobs, audit| Postgres
+    Celery -->|Update graph| Neo4j
+    Celery -->|Sync embeddings| Qdrant
+    Celery -->|Store outputs| Minio
+    MLPipelines -->|Datasets, models| Minio
+    MLPipelines -->|Embeddings| Qdrant
+    MLPipelines -->|Metadata| Postgres
+    ITSScraper -->|Raw and processed dumps| Minio
+    ITSScraper -->|Article metadata| Postgres
+    ITSScraper -->|Exporter metrics| Prometheus
+
+    EDTPlugin -->|Quick analysis, call graph| API
+    n8nNode -->|Workflow actions| API
+    TelegramBot -->|Chatops, notifications| API
+    Marketplace -->|Package listing| API
+    Marketplace -->|Artifacts hosting| Minio
+
+    Prometheus -->|Scrape metrics| API
+    Prometheus -->|Scrape metrics| Celery
+    Prometheus -->|Scrape metrics| ITSScraper
+    Prometheus -->|Push alerts| Alertmanager
+    Alertmanager -->|Escalations| TelegramBot
+    GitHubActions -->|Deploy, test| API
+    GitHubActions -->|Deploy, test| Celery
+    GitHubActions -->|Mock smoke tests| ITSScraper
+    Faro -->|Traces/logs| API
+    Faro -->|Traces/logs| Celery
+    Faro -->|Logs| GitHubActions
+
+    classDef coreStyle fill:#e8f4ff,stroke:#0066cc,stroke-width:2px
+    classDef integrationStyle fill:#fff4e6,stroke:#ff9900,stroke-width:2px
+    classDef storeStyle fill:#f0f7ff,stroke:#0066cc,stroke-width:2px
+    classDef opsStyle fill:#f6fdf3,stroke:#00cc66,stroke-width:2px
+    classDef userStyle fill:#f9f9f9,stroke:#666666,stroke-width:2px
+
+    class API,RestGateway,Auth,AdminPortal coreStyle
+    class EDTPlugin,n8nNode,TelegramBot,Marketplace integrationStyle
+    class Postgres,Neo4j,Qdrant,Redis,Minio,ClickHouse storeStyle
+    class Prometheus,Grafana,Alertmanager,GitHubActions,Faro opsStyle
+    class Developer,Operator userStyle
+            </div>
+        </div>
+
+        <div class="info-panel">
+            <h2>📋 Компоненты платформы</h2>
+            <div class="legend">
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #e8f4ff; border-color: #0066cc;"></div>
+                    <span>Core Services</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #fff4e6; border-color: #ff9900;"></div>
+                    <span>Integrations</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f0f7ff; border-color: #0066cc;"></div>
+                    <span>Data Stores</span>
+                </div>
+                <div class="legend-item">
+                    <div class="legend-color" style="background: #f6fdf3; border-color: #00cc66;"></div>
+                    <span>Operations</span>
+                </div>
+            </div>
+            <div class="component-list" id="component-list">
+                <!-- Components will be populated by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <script>
+        mermaid.initialize({ 
+            startOnLoad: true,
+            theme: 'default',
+            flowchart: {
+                useMaxWidth: true,
+                htmlLabels: true,
+                curve: 'basis'
+            }
+        });
+
+        const components = [
+            { name: 'Graph API', category: 'core', description: 'FastAPI сервис с GraphQL, REST и MCP endpoints' },
+            { name: 'Realtime Gateway', category: 'core', description: 'Starlette WebSocket gateway для realtime streaming' },
+            { name: 'Auth and RBAC', category: 'core', description: 'OAuth2, JWT аутентификация и авторизация' },
+            { name: 'Admin Portal', category: 'core', description: 'React + FastAPI портал для управления безопасностью' },
+            { name: 'Analysis Workers', category: 'workers', description: 'Celery workers для анализа BSL кода' },
+            { name: 'ML Pipelines', category: 'workers', description: 'Prefect pipelines для обучения и оценки ML моделей' },
+            { name: 'ITS Scraper', category: 'workers', description: 'Асинхронный парсер статей ITS' },
+            { name: 'Task Orchestrator', category: 'workers', description: 'Bash скрипты для композитных пайплайнов' },
+            { name: 'PostgreSQL', category: 'data', description: 'Реляционная БД для конфигураций и аудита' },
+            { name: 'Neo4j', category: 'data', description: 'Графовая БД для структуры кода и зависимостей' },
+            { name: 'Qdrant', category: 'data', description: 'Векторная БД для семантического поиска' },
+            { name: 'Redis', category: 'data', description: 'In-memory кэш и очереди' },
+            { name: 'MinIO', category: 'data', description: 'Object storage для датасетов и моделей' },
+            { name: 'ClickHouse', category: 'data', description: 'Column store для долгосрочных метрик' },
+            { name: 'EDT Plugin', category: 'integration', description: 'Java плагин для IDE' },
+            { name: 'n8n Node', category: 'integration', description: 'TypeScript нода для автоматизации' },
+            { name: 'Telegram Bot', category: 'integration', description: 'Python бот для алертов и chatops' },
+            { name: 'Marketplace Extensions', category: 'integration', description: 'BSL пакеты и шаблоны' },
+            { name: 'Prometheus', category: 'ops', description: 'Мониторинг и сбор метрик' },
+            { name: 'Grafana', category: 'ops', description: 'Дашборды и аналитика' },
+            { name: 'Alertmanager', category: 'ops', description: 'Маршрутизация алертов' },
+            { name: 'CI/CD', category: 'ops', description: 'GitHub Actions для CI/CD' },
+            { name: 'Tracing/Logs', category: 'ops', description: 'Tempo/Loki для трейсинга и логов' }
+        ];
+
+        function renderComponents(filter = 'all', search = '') {
+            const list = document.getElementById('component-list');
+            list.innerHTML = '';
+
+            const filtered = components.filter(comp => {
+                const matchesFilter = filter === 'all' || comp.category === filter;
+                const matchesSearch = comp.name.toLowerCase().includes(search.toLowerCase()) ||
+                                    comp.description.toLowerCase().includes(search.toLowerCase());
+                return matchesFilter && matchesSearch;
+            });
+
+            filtered.forEach(comp => {
+                const card = document.createElement('div');
+                card.className = 'component-card';
+                card.innerHTML = `
+                    <h3>${comp.name}</h3>
+                    <p>${comp.description}</p>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                const search = document.getElementById('search').value;
+                renderComponents(filter, search);
+            });
+        });
+
+        // Search input
+        document.getElementById('search').addEventListener('input', (e) => {
+            const search = e.target.value;
+            const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
+            renderComponents(activeFilter, search);
+        });
+
+        // Initial render
+        renderComponents();
+    </script>
+</body>
+</html>
+
