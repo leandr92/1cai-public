@@ -1,31 +1,31 @@
 # Documentation Hub
 
-Быстрая навигация по основным блокам документации. Используйте этот индекс как стартовую точку (а `docs/research/README_LOCAL.md` — для ежедневных статусов).
+Быстрая навигация по основным блокам документации. Используйте этот индекс как стартовую точку (а [`research/README_LOCAL.md`](./research/README_LOCAL.md) — для ежедневных статусов).
 
 ## 1. Setup & Runtime
-- [`docs/setup/python_311.md`](setup/python_311.md) — установка Python 3.11.
+- [Установка Python 3.11](./setup/python_311.md) — установка Python 3.11.
 - `scripts/setup/check_runtime.py`, `make check-runtime` — валидация окружения.
-- [`docs/scripts/README.md`](scripts/README.md) — справочник CLI-скриптов.
+- [Справочник CLI-скриптов](./scripts/README.md) — справочник CLI-скриптов.
 - `scripts/ba/requirements_cli.py` — извлечение требований (см. `make ba-extract`).
 
 ## 2. Infrastructure & Operations
-- Стратегия DevOps: [`docs/ops/devops_platform.md`](ops/devops_platform.md).
-- GitOps/Argo CD: [`docs/ops/gitops.md`](ops/gitops.md), `infrastructure/argocd/`.
-- Vault & secrets: [`docs/ops/vault.md`](ops/vault.md), `infrastructure/vault/`, `policy/terraform/`.
-- Service Mesh & Chaos: [`docs/ops/service_mesh.md`](ops/service_mesh.md), [`docs/ops/chaos_engineering.md`](ops/chaos_engineering.md), `scripts/service_mesh/linkerd/`.
-- FinOps & Observability: [`docs/ops/finops.md`](ops/finops.md), [`docs/observability/SLO.md`](observability/SLO.md).
-- Runbooks: [`docs/runbooks/alert_slo_runbook.md`](runbooks/alert_slo_runbook.md), [`docs/runbooks/dr_rehearsal_plan.md`](runbooks/dr_rehearsal_plan.md).
-- Процессы: [`docs/process/README.md`](process/README.md) — on-call, RFC, postmortem.
+- Стратегия DevOps: [DevOps Platform](./ops/devops_platform.md).
+- GitOps/Argo CD: [GitOps Guide](./ops/gitops.md), `infrastructure/argocd/`.
+- Vault & secrets: [Vault Guide](./ops/vault.md), `infrastructure/vault/`, `policy/terraform/`.
+- Service Mesh & Chaos: [Service Mesh](./ops/service_mesh.md), [Chaos Engineering](./ops/chaos_engineering.md), `scripts/service_mesh/linkerd/`.
+- FinOps & Observability: [FinOps](./ops/finops.md), [SLO](./observability/SLO.md).
+- Runbooks: [Alert SLO Runbook](./runbooks/alert_slo_runbook.md), [DR Rehearsal Plan](./runbooks/dr_rehearsal_plan.md).
+- Процессы: [Process Guide](./process/README.md) — on-call, RFC, postmortem.
 
 ## 3. Architecture & Research
-- High-level дизайн, C4: [`docs/architecture/README.md`](architecture/README.md).
-- ADR: [`docs/architecture/adr/`](architecture/adr/).
-- Исследования и планы: [`docs/research/README_LOCAL.md`](research/README_LOCAL.md), [`docs/research/spec_kit_analysis.md`](research/spec_kit_analysis.md), [`docs/research/job_market_business_analyst.md`](research/job_market_business_analyst.md), [`docs/research/ba_agent_roadmap.md`](research/ba_agent_roadmap.md), [`docs/research/alkoleft_todo.md`](research/alkoleft_todo.md).
+- High-level дизайн, C4: [Architecture Overview](./architecture/README.md).
+- ADR: [Architecture Decision Records](./architecture/adr/).
+- Исследования и планы: [Research Local](./research/README_LOCAL.md), [Spec Kit Analysis](./research/spec_kit_analysis.md), [Job Market BA](./research/job_market_business_analyst.md), [BA Agent Roadmap](./research/ba_agent_roadmap.md), [Alkoleft Todo](./research/alkoleft_todo.md).
 
 ## 4. Feature Guides
-- MCP сервер и AI tooling: [`docs/06-features/MCP_SERVER_GUIDE.md`](06-features/MCP_SERVER_GUIDE.md).
-- AST tooling: [`docs/06-features/AST_TOOLING_BSL_LANGUAGE_SERVER.md`](06-features/AST_TOOLING_BSL_LANGUAGE_SERVER.md).
-- Парсеры, ML, интеграции: раздел `docs/06-features/`.
+- MCP сервер и AI tooling: [MCP Server Guide](./06-features/MCP_SERVER_GUIDE.md).
+- AST tooling: [AST Tooling BSL Language Server](./06-features/AST_TOOLING_BSL_LANGUAGE_SERVER.md).
+- Парсеры, ML, интеграции: раздел [`06-features/`](./06-features/).
 
 ## 5. Automation & CI
 - Workflows GitHub Actions: `.github/workflows/` (`linkerd-smoke.yml`, `linkerd-chaos.yml`, `dr-rehearsal.yml`, `finops-report.yml`, `chaos-validate.yml` и др.).
@@ -33,11 +33,11 @@
 - Jenkins/GitLab pipeline: `infrastructure/jenkins/Jenkinsfile`, `infrastructure/gitlab/.gitlab-ci.yml`.
 
 ## 6. Governance & Compliance
-- Конституция: [`docs/research/constitution.md`](research/constitution.md).
-- Policy-as-code: [`docs/security/policy_as_code.md`](security/policy_as_code.md), `policy/kubernetes/**`, `policy/terraform/**`.
+- Конституция: [Constitution](./research/constitution.md).
+- Policy-as-code: [Policy as Code](./security/policy_as_code.md), `policy/kubernetes/**`, `policy/terraform/**`.
 
 ## 7. Changelog & Releases
-- Изменения: [`CHANGELOG.md`](../CHANGELOG.md).
+- Изменения: [CHANGELOG.md](../CHANGELOG.md).
 - Release automation: `scripts/release/create_release.py`, workflow `release.yml`.
 # 📚 Документация 1C AI Stack
 

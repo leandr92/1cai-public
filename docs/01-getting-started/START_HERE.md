@@ -131,12 +131,17 @@ python -m uvicorn src.ai.mcp_server:app --host 0.0.0.0 --port 6001
 
 **Читать в таком порядке:**
 
-1. **README.md** - Обзор проекта
-2. **QUICKSTART.md** - Быстрый старт
-3. **RUN_MIGRATION.md** - Миграция данных  
-4. **DEPLOYMENT_INSTRUCTIONS.md** - Подробное развертывание
-5. **FINAL_IMPLEMENTATION_STATUS.md** - Что реализовано
-6. **IMPLEMENTATION_PLAN.md** - План на 30 недель
+1. **[README.md](../../README.md)** - Обзор проекта
+2. **[QUICK_START.md](../../QUICK_START.md)** - Быстрый старт
+3. **[quickstart.md](./quickstart.md)** - Быстрый старт (детальный)
+4. **[DEPLOYMENT_INSTRUCTIONS.md](./DEPLOYMENT_INSTRUCTIONS.md)** - Подробное развертывание
+5. **[PROJECT_SUMMARY.md](../02-architecture/PROJECT_SUMMARY.md)** - Что реализовано и роадмап
+6. **[IMPLEMENTATION_PLAN.md](../02-architecture/IMPLEMENTATION_PLAN.md)** - План на 30 недель
+
+**Дополнительно:**
+- **[Architecture Overview](../02-architecture/ARCHITECTURE_OVERVIEW.md)** - Архитектура системы
+- **[AI Agents](../03-ai-agents/README.md)** - AI агенты и их возможности
+- **[Monitoring Guide](../../monitoring/AI_SERVICES_MONITORING.md)** - Мониторинг AI сервисов
 
 ---
 
@@ -245,7 +250,7 @@ mvn clean package
    ```
 
 3. **Contribute:**
-   - См. CONTRIBUTING.md
+   - См. [CONTRIBUTING.md](./CONTRIBUTING.md)
    - Создавайте Pull Requests
 
 ### Для пользователей:
@@ -267,14 +272,14 @@ mvn clean package
 - ✅ Рабочий MVP
 - ✅ План дальнейшего развития
 
-**Начните с QUICKSTART.md и погрузитесь в мир AI-powered 1C development! 🚀**
+**Начните с [QUICK_START.md](../../QUICK_START.md) или [quickstart.md](./quickstart.md) и погрузитесь в мир AI-powered 1C development! 🚀**
 
 ---
 
 **Questions? Issues? Ideas?**  
-→ См. CONTRIBUTING.md  
+→ См. [CONTRIBUTING.md](./CONTRIBUTING.md)  
 → Create GitHub Issue  
-→ Check documentation
+→ Check [documentation](../README.md)
 
 **Let's build the future of 1C development together!** 💪
 
