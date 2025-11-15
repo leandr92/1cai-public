@@ -11,30 +11,30 @@
 ## 2. Infrastructure & Operations
 - Стратегия DevOps: [DevOps Platform](./ops/devops_platform.md).
 - **Kubernetes кластеры:**
-  - [Kind cluster (локально)](../../infrastructure/kind/cluster.yaml) — локальный Kubernetes.
+  - [Kind cluster (локально)](../infrastructure/kind/cluster.yaml) — локальный Kubernetes.
 - **Helm Charts:**
-  - [1cai-stack](../../infrastructure/helm/1cai-stack) — Helm chart приложения.
-  - [observability-stack](../../infrastructure/helm/observability-stack) — Prometheus/Loki/Tempo/Grafana/OTEL.
+  - [1cai-stack](../infrastructure/helm/1cai-stack) — Helm chart приложения.
+  - [observability-stack](../infrastructure/helm/observability-stack) — Prometheus/Loki/Tempo/Grafana/OTEL.
 - **Service Mesh:**
-  - [Istio профиль](../../infrastructure/service-mesh/istio) — IstioOperator профиль.
-  - [Linkerd скрипты](../../scripts/service_mesh/linkerd/) — bootstrap/rotate certs, managed identity, CI smoke.
-  - [Linkerd bootstrap certs](../../scripts/service_mesh/linkerd/bootstrap_certs.sh) — генерация trust anchors/issuer.
+  - [Istio профиль](../infrastructure/service-mesh/istio) — IstioOperator профиль.
+  - [Linkerd скрипты](../scripts/service_mesh/linkerd/) — bootstrap/rotate certs, managed identity, CI smoke.
+  - [Linkerd bootstrap certs](../scripts/service_mesh/linkerd/bootstrap_certs.sh) — генерация trust anchors/issuer.
   - Make: `linkerd-install`, `linkerd-rotate-certs`, `linkerd-smoke`.
 - **Chaos Engineering:**
-  - [Litmus эксперименты](../../infrastructure/chaos/litmus) — Litmus Chaos эксперименты.
+  - [Litmus эксперименты](../infrastructure/chaos/litmus) — Litmus Chaos эксперименты.
 - **GitOps:**
-  - GitOps/Argo CD: [GitOps Guide](./ops/gitops.md), [Argo CD manifests](../../infrastructure/argocd/).
+  - GitOps/Argo CD: [GitOps Guide](./ops/gitops.md), [Argo CD manifests](../infrastructure/argocd/).
 - **Terraform:**
-  - [Terraform конфигурация](../../infrastructure/terraform) — Terraform конфигурация для Helm релиза.
-  - [AWS EKS модуль](../../infrastructure/terraform/aws-eks) — Terraform модуль EKS (AWS).
-  - [Azure AKS модуль](../../infrastructure/terraform/azure-aks) — Terraform модуль AKS (Azure).
-  - [Azure Key Vault модуль](../../infrastructure/terraform/azure-keyvault) — Terraform модуль Key Vault.
+  - [Terraform конфигурация](../infrastructure/terraform) — Terraform конфигурация для Helm релиза.
+  - [AWS EKS модуль](../infrastructure/terraform/aws-eks) — Terraform модуль EKS (AWS).
+  - [Azure AKS модуль](../infrastructure/terraform/azure-aks) — Terraform модуль AKS (Azure).
+  - [Azure Key Vault модуль](../infrastructure/terraform/azure-keyvault) — Terraform модуль Key Vault.
 - **Secrets & Vault:**
-  - Vault & secrets: [Vault Guide](./ops/vault.md), [Vault конфигурация](../../infrastructure/vault/).
-  - [AWS Secrets sync](../../scripts/secrets/aws_sync_to_vault.py) — синхронизация AWS Secrets Manager → Vault.
+  - Vault & secrets: [Vault Guide](./ops/vault.md), [Vault конфигурация](../infrastructure/vault/).
+  - [AWS Secrets sync](../scripts/secrets/aws_sync_to_vault.py) — синхронизация AWS Secrets Manager → Vault.
 - **CI/CD:**
-  - [Azure DevOps pipeline](../../infrastructure/azure/azure-pipelines.yml) — Azure DevOps pipeline.
-  - [Jenkins pipeline](../../infrastructure/jenkins/Jenkinsfile), [GitLab CI](../../infrastructure/gitlab/.gitlab-ci.yml) — многостадийные pipeline.
+  - [Azure DevOps pipeline](../infrastructure/azure/azure-pipelines.yml) — Azure DevOps pipeline.
+  - [Jenkins pipeline](../infrastructure/jenkins/Jenkinsfile), [GitLab CI](../infrastructure/gitlab/.gitlab-ci.yml) — многостадийные pipeline.
 - FinOps & Observability: [FinOps](./ops/finops.md), [SLO](./observability/SLO.md).
 - Runbooks: [Alert SLO Runbook](./runbooks/alert_slo_runbook.md), [DR Rehearsal Plan](./runbooks/dr_rehearsal_plan.md).
 - Процессы: [Process Guide](./process/README.md) — on-call, RFC, postmortem.
@@ -50,16 +50,16 @@
 - Парсеры, ML, интеграции: раздел [`06-features/`](./06-features/).
 
 ## 5. Automation & CI
-- Workflows GitHub Actions: [`.github/workflows/`](../../.github/workflows/) (`linkerd-smoke.yml`, `linkerd-chaos.yml`, `dr-rehearsal.yml`, `finops-report.yml`, `chaos-validate.yml` и др.).
-- Make targets: см. [`Makefile`](../../Makefile) (quick filter: `make help`).
+- Workflows GitHub Actions: [`.github/workflows/`](../.github/workflows/) (`linkerd-smoke.yml`, `linkerd-chaos.yml`, `dr-rehearsal.yml`, `finops-report.yml`, `chaos-validate.yml` и др.).
+- Make targets: см. [`Makefile`](../Makefile) (quick filter: `make help`).
 - **CI/CD Pipelines:**
-  - [Jenkins pipeline](../../infrastructure/jenkins/Jenkinsfile) — многостадийный pipeline.
-  - [GitLab CI](../../infrastructure/gitlab/.gitlab-ci.yml) — многостадийный pipeline.
-  - [Azure DevOps pipeline](../../infrastructure/azure/azure-pipelines.yml) — Azure DevOps pipeline.
+  - [Jenkins pipeline](../infrastructure/jenkins/Jenkinsfile) — многостадийный pipeline.
+  - [GitLab CI](../infrastructure/gitlab/.gitlab-ci.yml) — многостадийный pipeline.
+  - [Azure DevOps pipeline](../infrastructure/azure/azure-pipelines.yml) — Azure DevOps pipeline.
 
 ## 6. Governance & Compliance
 - Конституция: [Constitution](./research/constitution.md).
-- Policy-as-code: [Policy as Code](./security/policy_as_code.md), [`policy/kubernetes/`](../../policy/kubernetes/), [`policy/terraform/`](../../policy/terraform/).
+- Policy-as-code: [Policy as Code](./security/policy_as_code.md), [`policy/kubernetes/`](../policy/kubernetes/), [`policy/terraform/`](../policy/terraform/).
 
 ## 7. Changelog & Releases
 - Изменения: [CHANGELOG.md](../CHANGELOG.md).

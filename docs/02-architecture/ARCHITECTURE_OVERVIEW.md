@@ -18,6 +18,8 @@
 - **AI/ML-First** - нативная интеграция с моделями
 - **Security-First** - sandbox, PII protection, RBAC
 
+> Компоненты, помеченные как *(Planned)*, находятся в разработке и ещё не реализованы в `src/`; остальные соответствуют актуальному коду и гайдам `docs/06-features/`.
+
 ---
 
 ## 🏛️ 8-уровневая архитектура
@@ -146,7 +148,7 @@
 
 **Документация:** [`docs/integrations/KIMI_K2_INTEGRATION.md`](../integrations/KIMI_K2_INTEGRATION.md)
 
-### Code Execution Engine
+### Code Execution Engine *(Planned)*
 
 ```
 Agent → generates TypeScript code
@@ -165,7 +167,7 @@ Results (без загрузки в model context!)
 - 70% latency reduction
 - PII protection (152-ФЗ)
 
-### ITIL/ITSM Integration (Planned)
+### ITIL/ITSM Integration *(Planned)*
 
 ```
 Service Desk (Telegram + Ticketing)

@@ -23,6 +23,10 @@
 - **Промышленный контур.** Helm charts, Argo CD, Linkerd, Vault и Terraform-модули в [`infrastructure/`](infrastructure/) + регламенты в [`docs/ops/`](docs/ops/README.md) позволяют разворачивать и поддерживать стек в облаке без ручных «магических» шагов.
 - **Блок бизнес-аналитики.** Агент BA с расширенными интеграциями (Jira/Confluence/PowerBI/Docflow) и собственным API лежит в [`src/ai/agents/business_analyst_agent_extended.py`](src/ai/agents/business_analyst_agent_extended.py), сервисы — в [`src/api/ba_sessions.py`](src/api/ba_sessions.py) и [`src/services/ba_session_manager.py`](src/services/ba_session_manager.py); документация и сценарии — в [`docs/06-features/BUSINESS_ANALYST_GUIDE.md`](docs/06-features/BUSINESS_ANALYST_GUIDE.md), [`docs/07-integrations/BA_INTEGRATION_PLAN.md`](docs/07-integrations/BA_INTEGRATION_PLAN.md), [`docs/08-e2e-tests/BA_E2E_MATRIX.md`](docs/08-e2e-tests/BA_E2E_MATRIX.md).
 - **Защита от отключения интернета и LLM-блокировок.** Конфигурация LLM Gateway, fallback-провайдеры и тестовые сценарии находятся в [`src/services/llm_gateway.py`](src/services/llm_gateway.py), [`config/llm_gateway_simulation.yaml`](config/llm_gateway_simulation.yaml) и [`scripts/tests/llm_smoke.py`](scripts/tests/llm_smoke.py); регламент и отчёты — в [`analysis/llm_blocking_resilience_plan.md`](analysis/llm_blocking_resilience_plan.md) и [`docs/templates/offline_incident_report.md`](docs/templates/offline_incident_report.md).
+- **Graph & Hybrid Search.** MATCH-запросы, семантический и гибридный поиск описаны в [`docs/06-features/GRAPH_SEARCH_GUIDE.md`](docs/06-features/GRAPH_SEARCH_GUIDE.md), покрывают `src/api/graph_api.py`, `src/services/hybrid_search.py`.
+- **Marketplace & плагины.** Полный поток upload/moderation задокументирован в [`docs/06-features/MARKETPLACE_GUIDE.md`](docs/06-features/MARKETPLACE_GUIDE.md).
+- **CursorExt / IDE telemetry.** Установка и синхронизация описаны в [`docs/06-features/CURSOR_EXT_GUIDE.md`](docs/06-features/CURSOR_EXT_GUIDE.md).
+- **Observability.** Пошаговое руководство по Prometheus/Grafana находится в [`docs/06-features/OBSERVABILITY_GUIDE.md`](docs/06-features/OBSERVABILITY_GUIDE.md).
 
 <<<<<<< HEAD
 =======
@@ -160,6 +164,10 @@ graph TB
 | **Надёжность и наблюдаемость** | Runbooks, DR, DORA, Prometheus, Alertmanager | [`docs/runbooks/dr_rehearsal_plan.md`](docs/runbooks/dr_rehearsal_plan.md), [`docs/process/oncall_rotations.md`](docs/process/oncall_rotations.md), [`docs/observability/SLO.md`](docs/observability/SLO.md) |
 | **Бизнес-аналитика** | BA агент, сессии, шаблоны, интеграции | [`docs/06-features/BUSINESS_ANALYST_GUIDE.md`](docs/06-features/BUSINESS_ANALYST_GUIDE.md), [`docs/07-integrations/BA_INTEGRATION_PLAN.md`](docs/07-integrations/BA_INTEGRATION_PLAN.md) |
 | **LLM resiliency / офлайн режим** | LLM Gateway, fallback-провайдеры, план устойчивости | [`analysis/llm_blocking_resilience_plan.md`](analysis/llm_blocking_resilience_plan.md), [`config/llm_gateway_simulation.yaml`](config/llm_gateway_simulation.yaml), [`docs/templates/offline_incident_report.md`](docs/templates/offline_incident_report.md) |
+| **Graph & Hybrid Search** | MATCH, semantic и комбинированный поиск | [`docs/06-features/GRAPH_SEARCH_GUIDE.md`](docs/06-features/GRAPH_SEARCH_GUIDE.md) |
+| **Marketplace** | Загрузка/модерация плагинов | [`docs/06-features/MARKETPLACE_GUIDE.md`](docs/06-features/MARKETPLACE_GUIDE.md) |
+| **CursorExt / IDE** | Сбор и синхронизация событий | [`docs/06-features/CURSOR_EXT_GUIDE.md`](docs/06-features/CURSOR_EXT_GUIDE.md) |
+| **Observability** | Prometheus, Grafana, алерты | [`docs/06-features/OBSERVABILITY_GUIDE.md`](docs/06-features/OBSERVABILITY_GUIDE.md) |
 | **Безопасность и FinOps** | Политики, проверки, отчёты, FinOps-скрипты | [`docs/security/policy_as_code.md`](docs/security/policy_as_code.md), [`docs/ops/finops.md`](docs/ops/finops.md) |
 
 ---
