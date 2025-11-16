@@ -521,7 +521,24 @@ class AIOrchestrator:
             else:
                 # Default: use multiple services and combine
                 response = await self._handle_multi_service(query, intent, context)
-            
+
+            # Enrich response with experimental Scenario Hub / ToolRegistry metadata
+            if isinstance(response, dict):
+                meta = response.get("_meta", {})
+                meta.update(
+                    {
+                        "intent": {
+                            "query_type": intent.query_type.value,
+                            "confidence": intent.confidence,
+                            "keywords": intent.keywords,
+                            "context_type": intent.context_type,
+                            "preferred_services": [s.value for s in intent.preferred_services],
+                        },
+                        "suggested_tools": intent.suggested_tools,
+                    }
+                )
+                response["_meta"] = meta
+
             # Cache result
             self.cache[cache_key] = response
             

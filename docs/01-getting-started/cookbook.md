@@ -119,3 +119,20 @@ python scripts/runbooks/run_playbook.py playbooks/security_audit_example.yaml --
 Скрипт не выполняет реальные действия — только печатает отчёт по шагам
 и уровню риска/автономности сценария.
 
+---
+
+## 9. Быстрый прогон synthetic performance-тестов
+
+Для проверки базовой производительности AI Orchestrator и кеша:
+
+```bash
+python -m pytest tests/unit/test_ai_orchestrator_basic.py -q
+```
+
+Для более тяжёлого нагрузочного прогона (при поднятых локальных сервисах/БД):
+
+```bash
+python -m pytest tests/performance/test_load_performance.py::test_api_latency_benchmark -q
+python -m pytest tests/performance/test_load_performance.py::test_concurrent_requests -q
+```
+

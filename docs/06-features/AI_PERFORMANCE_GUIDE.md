@@ -26,7 +26,7 @@
 
 ---
 
-## 2. Минимальный synthetic‑тест производительности
+## 2. Минимальные synthetic‑тесты производительности
 
 Для локальной проверки базовой работы кеша и оркестратора:
 
@@ -42,6 +42,17 @@ python -m pytest tests/unit/test_ai_orchestrator_basic.py -q
   - счётчик `orchestrator_cache_hits_total` увеличился.
 
 Тест `test_process_query_unknown_uses_multi_service_stub` дополнительно проверяет увеличение `orchestrator_cache_misses_total`.
+
+Для более тяжёлого synthetic‑нагруза предусмотрен набор тестов `tests/performance/test_load_performance.py`
+(RoleBasedRouter, MultiLayerCache, PostgreSQL), которые можно запускать точечно:
+
+```bash
+python -m pytest tests/performance/test_load_performance.py::test_api_latency_benchmark -q
+python -m pytest tests/performance/test_load_performance.py::test_concurrent_requests -q
+```
+
+Эти тесты предполагают поднятые локальные зависимости (PostgreSQL и сервисы),
+поэтому их рекомендуется использовать как периодический benchmark, а не как часть быстрого feedback‑цикла.
 
 ---
 

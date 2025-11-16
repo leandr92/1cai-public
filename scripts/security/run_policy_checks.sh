@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR=$(cd "$(dirname "${BASH_SOURCE[0]}")"/../.. && pwd)
 POLICY_DIR="$ROOT_DIR/policy"
 HELM_DIR="$ROOT_DIR/infrastructure/helm"
+GITOPS_DIR="$ROOT_DIR/infrastructure/argocd"
 TEMP_DIR=$(mktemp -d)
 trap 'rm -rf "$TEMP_DIR"' EXIT
 
@@ -35,6 +36,11 @@ log "running Conftest policies"
 conftest test "$TEMP_DIR/1cai-stack.yaml" --policy "$POLICY_DIR/kubernetes"
 conftest test "$TEMP_DIR/observability-stack.yaml" --policy "$POLICY_DIR/kubernetes"
 conftest test "$ROOT_DIR/infrastructure/kind/cluster.yaml" --policy "$POLICY_DIR/kubernetes"
+
+if [ -d "$GITOPS_DIR" ]; then
+  log "running Conftest on GitOps manifests (Argo CD)"
+  conftest test "$GITOPS_DIR" --policy "$POLICY_DIR/kubernetes"
+fi
 
 if [ -d "$ROOT_DIR/infrastructure/terraform" ]; then
   log "validating Terraform format"

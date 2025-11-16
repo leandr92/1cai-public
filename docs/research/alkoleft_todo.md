@@ -66,7 +66,7 @@
 - [ ] (Средний) Secret scanning и политика безопасности
   - ✅ Workflows `secret-scan.yml` (Gitleaks) и `trufflehog.yml` (Trufflehog); расширить конституцию пунктами по least privilege.
   - ✅ Policy-as-code: `policy/kubernetes/*.rego`, Semgrep (`security/semgrep.yml`), make `policy-check`, CI интеграция; Conftest для Terraform планов (`scripts/security/run_policy_checks.sh`).
-  - TODO: расширить Conftest/OPA на GitOps-манифесты (Argo CD) и формализовать список допустимых исключений (policy waivers). 
+  - ☑ Расширен Conftest/OPA на GitOps-манифесты (Argo CD) (`scripts/security/run_policy_checks.sh` теперь проверяет `infrastructure/argocd`), процесс policy waivers описан в `docs/security/policy_waivers.md`.
 - [ ] (Низкий) Сбор и публикация DORA-метрик
   - ✅ `scripts/metrics/collect_dora.py`, workflow `dora-metrics.yml`; добавлен шаблон weekly summary (`docs/status/weekly_summary_template.md`) и README (`docs/status/README.md`) для визуализации/обзора.
 - [x] (Средний) Observability & Runbooks **[ОБНОВЛЕНО: Январь 2025]**
@@ -121,4 +121,4 @@
   - ✅ Tool / Skill Registry как протокол-независимый реестр инструментов/skills (`src/ai/tool_registry.py`, `docs/architecture/TOOL_REGISTRY_REFERENCE.md`).
   - ✅ Примерные планы BA→Dev→QA и DR rehearsal + read-only API `/api/scenarios/examples` (`src/ai/scenario_examples.py`, `src/ai/orchestrator.py`).
   - ☑ YAML/JSON-плейбуки для ключевых сценариев (BA→Dev→QA, DR rehearsal, security-audit) и связка с существующими скриптами/CI (реализованы dry-run playbooks `playbooks/ba_dev_qa_example.yaml`, `playbooks/dr_vault_example.yaml`, `playbooks/security_audit_example.yaml` + CLI `scripts/runbooks/run_playbook.py`; интеграция с CI остаётся planned).
-  - TODO: интеграция Scenario Hub / ToolRegistry в Orchestrator и агентов (выбор маршрута по риску, автономности и метрикам).
+  - ☑ Интеграция Scenario Hub / ToolRegistry в Orchestrator и агентов (экспериментальный контур): read-only API `/api/scenarios/examples`, `/api/scenarios/dry-run`, рекомендации инструментов (`suggested_tools`) в `QueryClassifier` и `_meta.intent` в ответах `AIOrchestrator.process_query`.
