@@ -39,7 +39,8 @@
 - **Orchestrator & Performance**: дополнительные unit‑тесты Orchestrator (валидация, cache hits/misses, graceful‑ошибки без Kimi/Qwen), latency smoke‑тест (`scripts/testing/orchestrator_latency_smoke.py`), Kimi benchmark (`scripts/testing/kimi_benchmark.py`), гайд `docs/06-features/AI_PERFORMANCE_GUIDE.md`.  
 - **Security & Audit**: скрипты `scripts/audit/check_hidden_dirs.py`, `check_secrets.py`, составной `make security-audit` + `scripts/windows/security-audit.ps1`, обновлённые `SECURITY_IMPROVEMENTS.md` и политика `docs/research/constitution.md`.  
 - **BA & Documentation**: новые BA‑гайды (BA‑03…BA‑07), обновлён `alkoleft_todo.md`, Usage Cookbook (`docs/01-getting-started/cookbook.md`) и Windows Quickstart, шаблон DORA weekly summary (`docs/status/weekly_summary_template.md`).  
-- **DR/Resilience**: автоматизация DR rehearsal постмортемов (`scripts/runbooks/generate_dr_postmortem.py`, `docs/runbooks/postmortems/*`), актуализирован `dr_rehearsal_plan.md`.
+- **DR/Resilience**: автоматизация DR rehearsal постмортемов (`scripts/runbooks/generate_dr_postmortem.py`, `docs/runbooks/postmortems/*`), актуализирован `dr_rehearsal_plan.md`.  
+- **Scenario Hub & Tool Registry (experimental)**: добавлен reference-слой Scenario Hub/ToolRegistry (`src/ai/scenario_hub.py`, `src/ai/tool_registry.py`, `docs/architecture/AI_SCENARIO_HUB_REFERENCE.md`, `docs/architecture/TOOL_REGISTRY_REFERENCE.md`) и read-only endpoint `/api/scenarios/examples` для примерных сценариев BA→Dev→QA и DR rehearsal.
 
 #### 2025‑11‑15 — Orchestrator & AI‑контур
 

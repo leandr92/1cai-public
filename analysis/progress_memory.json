@@ -51,7 +51,8 @@
     "T46: Создан docs/architecture/AI_SCENARIO_HUB_REFERENCE.md и раздел \"Scenario Hub & Execution Plans (experimental)\" в docs/06-features/README.md.",
     "T47: Добавлен экспериментальный слой ToolRegistry (src/ai/tool_registry.py) и reference-документ docs/architecture/TOOL_REGISTRY_REFERENCE.md; docs/06-features/README.md дополнен разделом \"Tool / Skill Registry (experimental)\".",
     "T48: Добавлены примеры сценариев BA→Dev→QA и DR rehearsal в src/ai/scenario_examples.py и отражены в AI_SCENARIO_HUB_REFERENCE.md как база для будущего API / YAML-плейбуков.",
-    "T49: В src/ai/orchestrator.py добавлен экспериментальный read-only endpoint /api/scenarios/examples, отдающий примерные ScenarioPlan (BA→Dev→QA и DR rehearsal); AI_SCENARIO_HUB_REFERENCE.md обновлён."
+    "T49: В src/ai/orchestrator.py добавлен экспериментальный read-only endpoint /api/scenarios/examples, отдающий примерные ScenarioPlan (BA→Dev→QA и DR rehearsal); AI_SCENARIO_HUB_REFERENCE.md обновлён.",
+    "T50: Добавлен unit-тест tests/unit/test_scenarios_api.py для проверки формы ответа /api/scenarios/examples, CHANGELOG и README обновлены (Scenario Hub & Tool Registry)."
   ],
   "open_risks": [
     {

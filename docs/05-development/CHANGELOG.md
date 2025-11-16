@@ -48,6 +48,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### DORA / Status
 - Добавлен шаблон `docs/status/weekly_summary_template.md` и обновлён `docs/status/README.md` (weekly summary + DORA history).
 
+### Scenario Hub & Tool Registry (experimental)
+- Добавлен reference-слой Scenario Hub в `src/ai/scenario_hub.py` и документ `docs/architecture/AI_SCENARIO_HUB_REFERENCE.md` (цели/сценарии/плейбуки, уровни риска и автономности, trust-score).
+- Реализован экспериментальный реестр инструментов/skills в `src/ai/tool_registry.py` и документ `docs/architecture/TOOL_REGISTRY_REFERENCE.md` (protocol-agnostic описание инструментов, привязка к риску и категориям).
+- Добавлены примерные планы сценариев BA→Dev→QA и DR rehearsal в `src/ai/scenario_examples.py` и read-only endpoint `/api/scenarios/examples` в `src/ai/orchestrator.py` для их получения.
+
 ### Added
 - Initial project structure
 - Docker Compose infrastructure (PostgreSQL, Redis, Nginx)
