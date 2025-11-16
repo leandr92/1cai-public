@@ -31,3 +31,16 @@ def test_get_scenario_examples_basic_shape():
     assert "required_autonomy" in first
 
 
+@pytest.mark.unit
+def test_get_scenario_examples_with_autonomy():
+    """При передаче autonomy должны появляться policy_decisions."""
+    response = client.get("/api/scenarios/examples", params={"autonomy": "A2_non_prod_changes"})
+    assert response.status_code == 200
+
+    data = response.json()
+    first = data["scenarios"][0]
+    assert "policy_decisions" in first
+    assert "autonomy_evaluated" in first
+    assert isinstance(first["policy_decisions"], dict)
+
+

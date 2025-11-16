@@ -89,7 +89,7 @@ python scripts/runbooks/generate_dr_postmortem.py vault --status success
 BA→Dev→QA и DR rehearsal в виде JSON:
 
 ```bash
-curl http://localhost:8000/api/scenarios/examples | jq
+curl "http://localhost:8000/api/scenarios/examples?autonomy=A2_non_prod_changes" | jq
 ```
 
 Подробнее: `docs/architecture/AI_SCENARIO_HUB_REFERENCE.md` и `docs/architecture/TOOL_REGISTRY_REFERENCE.md`.

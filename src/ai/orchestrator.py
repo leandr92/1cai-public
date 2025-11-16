@@ -15,8 +15,10 @@ from typing import Dict, List, Any, Optional, Tuple
 from enum import Enum
 from dataclasses import dataclass, asdict
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Query
 from src.utils.structured_logging import StructuredLogger
+from src.ai.scenario_hub import AutonomyLevel
+from src.ai.scenario_policy import assess_plan_execution
 
 logger = StructuredLogger(__name__).logger
 
@@ -25,7 +27,12 @@ app = FastAPI(title="AI Orchestrator API")
 
 
 @app.get("/api/scenarios/examples")
-async def get_scenario_examples() -> Dict[str, Any]:
+async def get_scenario_examples(
+    autonomy: Optional[str] = Query(
+        default=None,
+        description="Опциональный уровень автономности (A0_propose_only/A1_safe_automation/A2_non_prod_changes/A3_restricted_prod) для оценки шагов через Scenario Policy.",
+    ),
+) -> Dict[str, Any]:
     """
     Экспериментальный read-only endpoint, возвращающий
     примерные сценарии ScenarioPlan для BA→Dev→QA и DR rehearsal.
@@ -48,12 +55,28 @@ async def get_scenario_examples() -> Dict[str, Any]:
     ba_plan = example_ba_dev_qa_scenario("DEMO_FEATURE")
     dr_plan = example_dr_rehearsal_scenario("vault")
 
-    return {
-        "scenarios": [
-            asdict(ba_plan),
-            asdict(dr_plan),
-        ]
-    }
+    autonomy_level: Optional[AutonomyLevel] = None
+    if autonomy:
+        mapping = {
+            "A0_propose_only": AutonomyLevel.A0_PROPOSE_ONLY,
+            "A1_safe_automation": AutonomyLevel.A1_SAFE_AUTOMATION,
+            "A2_non_prod_changes": AutonomyLevel.A2_NON_PROD_CHANGES,
+            "A3_restricted_prod": AutonomyLevel.A3_RESTRICTED_PROD,
+        }
+        autonomy_level = mapping.get(autonomy)
+
+    scenarios_payload: List[Dict[str, Any]] = []
+    for plan in (ba_plan, dr_plan):
+        payload = asdict(plan)
+        if autonomy_level is not None:
+            decisions = assess_plan_execution(plan, autonomy_level)
+            payload["policy_decisions"] = {
+                step_id: decision.value for step_id, decision in decisions.items()
+            }
+            payload["autonomy_evaluated"] = autonomy_level.value
+        scenarios_payload.append(payload)
+
+    return {"scenarios": scenarios_payload}
 
 
 @app.get("/api/tools/registry/examples")

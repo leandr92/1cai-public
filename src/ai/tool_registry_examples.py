@@ -102,6 +102,30 @@ def build_example_tool_registry() -> ToolRegistry:
     )
     registry.register_tool(sec_tool)
 
+    # Пример: BA→Dev→QA Scenario Runner (связка с плейбуком)
+    scenario_tool = ToolDescriptor(
+        id="scenario_ba_dev_qa",
+        display_name="Scenario BA→Dev→QA Runner",
+        category=ToolCategory.BA,
+        risk=ScenarioRiskLevel.NON_PROD_CHANGE,
+        description="Запуск BA→Dev→QA сценария на основе YAML-плейбука.",
+        input_schema={"type": "object", "properties": {"feature_id": {"type": "string"}}},
+        output_schema={"type": "object", "properties": {"status": {"type": "string"}}},
+        endpoints=[
+            ToolEndpoint(
+                protocol=ToolProtocol.SCRIPT,
+                name="scripts/runbooks/run_playbook.py",
+                config={"args": ["playbooks/ba_dev_qa_example.yaml", "--autonomy", "A2_non_prod_changes"]},
+            )
+        ],
+        cost_model={"latency_target_ms": 600000, "risk": "non_prod_change"},
+        tags=["scenario", "ba-dev-qa"],
+        docs={
+            "cookbook": "docs/01-getting-started/cookbook.md",
+        },
+    )
+    registry.register_tool(scenario_tool)
+
     return registry
 
 
