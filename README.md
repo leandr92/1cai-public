@@ -17,6 +17,14 @@
 
 **Кому полезно:** DevOps-командам 1С, архитекторам платформы и ML/аналитикам, которым нужно быстрее внедрять изменения в продуктивные 1С-ландшафты.
 
+## FAQ / Частые вопросы
+
+- **Зачем уходить от MCP-центричного подхода к сценариям и ToolRegistry?**  
+  MCP остаётся важным интерфейсом для IDE и интерактивной работы, но основное выполнение сценариев (BA→Dev→QA, DR rehearsal, security-audit) перенесено в протокол-независимый слой: Scenario Hub + ToolRegistry + YAML-плейбуки + HTTP/CLI.  
+  Это уменьшает зависимость рантайма от MCP/LLM, даёт явное описание риска и уровней автономности, а те же сценарии становятся доступны из CI, CLI и GitOps. Подробно: [`docs/architecture/MCP_FREE_TRANSITION.md`](docs/architecture/MCP_FREE_TRANSITION.md).
+
+---
+
 ### Что уже работает
 - **Многослойный анализ конфигураций.** Парсер EDT, `bsl-language-server` и диагностические скрипты из [`src/`](src/) и [`scripts/analysis/`](scripts/analysis/) превращают 1C-конфигурации в метаданные, отчёты и графы зависимостей (см. [`docs/06-features/EDT_PARSER_GUIDE.md`](docs/06-features/EDT_PARSER_GUIDE.md)).
 - **Автоматизация и MCP-инструменты.** [`src/ai/mcp_server.py`](src/ai/mcp_server.py), spec-driven workflow и готовые CLI помогают создавать задачи, генерировать код и запускать тесты из IDE или CI (см. [`docs/06-features/MCP_SERVER_GUIDE.md`](docs/06-features/MCP_SERVER_GUIDE.md)).
@@ -242,7 +250,8 @@ graph TB
   - Анализ и предложения: [`docs/research/spec_kit_analysis.md`](docs/research/spec_kit_analysis.md).
   - Конституция правил проверки: [`docs/research/constitution.md`](docs/research/constitution.md).
   - Шаблоны и CLI: `templates/`, `scripts/research/init_feature.py`, make-таргеты `feature-init` и `feature-validate`.
-- **MCP инструменты**: поиск метаданных, генерация кода, запуск тестов.
+- **MCP инструменты**: поиск метаданных, генерация кода, запуск тестов (IDE и интерактив).
+- **Scenario Hub & MCP-free runtime**: сценарии BA→Dev→QA, DR rehearsal и security-audit описываются через Scenario Hub, ToolRegistry и YAML-плейбуки; MCP остаётся одним из фронтов (IDE), а основное выполнение сценариев выносится в HTTP/CLI/playbooks (см. [`docs/architecture/MCP_FREE_TRANSITION.md`](docs/architecture/MCP_FREE_TRANSITION.md)).
 - **Automation scripts**: [`scripts/context/export_platform_context.py`](scripts/context/export_platform_context.py), [`scripts/context/generate_docs.py`](scripts/context/generate_docs.py), [`scripts/docs/create_adr.py`](scripts/docs/create_adr.py).
 - **Monitoring automation**: [`scripts/monitoring/github_monitor.py`](scripts/monitoring/github_monitor.py) + workflow [`.github/workflows/github-monitor.yml`](.github/workflows/github-monitor.yml) — ежедневный snapshot зависимостей.
 - **Release automation**: [`scripts/release/create_release.py`](scripts/release/create_release.py), make `release-*`, workflow [`.github/workflows/release.yml`](.github/workflows/release.yml) — генерация заметок, тегов, публикация релизов.
