@@ -150,6 +150,17 @@
 
 ---
 
+### 🧭 Scenario Hub & Execution Plans (experimental)
+**Сценарии, плейбуки и двухконтурный режим**
+
+- Scenario Hub как слой поверх Orchestrator и агентов
+- Online-планирование (цели/сценарии) и offline-выполнение плейбуков
+- Модели сценариев, шагов, уровней риска и автономности, trust-score
+
+**Docs:** [`AI_SCENARIO_HUB_REFERENCE`](../architecture/AI_SCENARIO_HUB_REFERENCE.md)
+
+---
+
 ### 🧭 [BA-03 Process & Journey Modelling](./BA_PROCESS_MODELLING_GUIDE.md)
 **Моделирование процессов и customer journeys**
 

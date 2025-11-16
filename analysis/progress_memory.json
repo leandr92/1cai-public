@@ -46,7 +46,9 @@
     "T41: README.md: блок \"Последние улучшения\" переписан в формат ежедневного дайджеста (2025-11-16) с привязкой к реальным скриптам/тестам/докам и ссылкой на docs/05-development/CHANGELOG.md.",
     "T42: docs/05-development/CHANGELOG.md дополнен секциями по новым скриптам (orchestrator_latency_smoke, Windows security-audit), BA-гаидам, DR postmortem-автоматизации и DORA/status.",
     "T43: README.md: \"Последние улучшения\" превращён в журнал последних 7 релизов (новые сверху) с явной отсылкой к CHANGELOG; пока заполнена только дата 2025-11-16, остальные слоты будут заполняться по мере релизов.",
-    "T44: Заполнены слоты журнала релизов в README.md для дат 2025-11-10…2025-11-15 на основе CHANGELOG и progress_memory (security, DevEx, BA/DR, AI-agents)."
+    "T44: Заполнены слоты журнала релизов в README.md для дат 2025-11-10…2025-11-15 на основе CHANGELOG и progress_memory (security, DevEx, BA/DR, AI-agents).",
+    "T45: Добавлен экспериментальный слой типов Scenario Hub (src/ai/scenario_hub.py) для целей/сценариев/плейбуков, уровней риска и автономности, trust-score.",
+    "T46: Создан docs/architecture/AI_SCENARIO_HUB_REFERENCE.md и раздел \"Scenario Hub & Execution Plans (experimental)\" в docs/06-features/README.md."
   ],
   "open_risks": [
     {
@@ -330,6 +332,18 @@
       "title": "Заполнить слоты журнала релизов задним числом",
       "status": "completed",
       "details": "Для 2025-11-10…2025-11-15 добавлены краткие дайджесты по крупным блокам (README/Feature Flags/архитектура, BA-guides, DR/DORA, DevEx/Windows, security-audit, Orchestrator/AI-agents) в разделе \"Последние улучшения\" README."
+    },
+    {
+      "id": "T45",
+      "title": "Scenario Hub: базовые модели сценариев/планов",
+      "status": "completed",
+      "details": "В src/ai/scenario_hub.py описаны экспериментальные модели ScenarioGoal, ScenarioStep, ScenarioPlan, ScenarioRiskLevel, AutonomyLevel, TrustScore и compute_trust_score — как слой типов поверх Orchestrator и агентов."
+    },
+    {
+      "id": "T46",
+      "title": "Scenario Hub: архитектурный reference-документ",
+      "status": "completed",
+      "details": "Создан docs/architecture/AI_SCENARIO_HUB_REFERENCE.md и добавлен раздел \"Scenario Hub & Execution Plans (experimental)\" в docs/06-features/README.md; документ описывает двухконтурный режим, уровни автономности и trust-score."
     }
   ]
 }
