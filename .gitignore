@@ -148,6 +148,7 @@ GIT_STATUS_REPORT.md
 progress_summary.json
 handover_summary.json
 .memory/
+.python-version
 
 # Local AI progress memory (НЕ ДОЛЖНО попадать в git)
 analysis/progress_memory.json
