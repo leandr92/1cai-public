@@ -1,7 +1,7 @@
 # Makefile for Enterprise 1C AI Development Stack
 # Quick commands for common tasks
 
-.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push smoke-tests check-runtime kind-up kind-down helm-deploy terraform-apply terraform-destroy policy-check gitops-apply gitops-sync ba-extract
+.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push smoke-tests check-runtime kind-up kind-down helm-deploy terraform-apply terraform-destroy policy-check gitops-apply gitops-sync ba-extract audit-hidden-dirs audit-secrets security-audit
 
 CONFIG ?= ERPCPM
 EPOCHS ?=
@@ -91,6 +91,9 @@ help:
 	@echo "Utilities:"
 	@echo "  make status           - Show project status"
 	@echo "  make clean            - Clean temporary files"
+	@echo "  make audit-hidden-dirs- Report tracked hidden directories (.folder rule)"
+	@echo "  make audit-secrets    - Run lightweight secret scan (scripts/audit/check_secrets.py)"
+	@echo "  make security-audit   - Run full security audit (hidden dirs, secrets, git safety, comprehensive audit)"
 	@echo "  make scrape-its       - Run ITS scraper (ITS_START_URL, ITS_OUTPUT, ITS_FORMATS, ITS_CONCURRENCY, ITS_SLEEP, ITS_PROXY, ITS_USER_AGENT_FILE)"
 	@echo "  make render-uml       - Render all PlantUML diagrams to PNG"
 	@echo "  make render-uml-svg   - Render PlantUML diagrams to PNG + SVG"
@@ -390,6 +393,17 @@ export-context:
 
 generate-docs:
 	python scripts/context/generate_docs.py
+
+audit-hidden-dirs:
+	python scripts/audit/check_hidden_dirs.py --fail-new
+
+audit-secrets:
+	@mkdir -p analysis 2>/dev/null || true
+	python scripts/audit/check_secrets.py --json > analysis/secret_scan_report.json
+
+security-audit: audit-hidden-dirs audit-secrets
+	python scripts/audit/check_git_safety.py
+	python scripts/audit/comprehensive_project_audit.py
 
 train-ml:
 	@python scripts/ml/config_utils.py --info $(CONFIG)

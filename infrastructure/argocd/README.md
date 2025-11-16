@@ -10,7 +10,8 @@ Kustomize-манифесты, которые разворачивают AppProje
 | `application-1cai.yaml` | Helm release приложения (`infrastructure/helm/1cai-stack`). |
 | `application-observability.yaml` | Helm release observability-стека. |
 | `application-linkerd.yaml` | Развёртывание Linkerd (при использовании Helm chart/manifest). |
-| `applicationset-linkerd.yaml` | ApplicationSet для нескольких сред (staging/prod). |
+| `applicationset-linkerd.yaml` | ApplicationSet для Linkerd в нескольких средах (staging/prod). |
+| `applicationset-1cai.yaml` | ApplicationSet для 1cai Helm chart в нескольких средах (staging/prod). |
 | `kustomization.yaml` | Сборка всех манифестов.
 
 ## Использование

@@ -1,4 +1,4 @@
 # Status Reports
 
 - `dora_history.md` — история DORA метрик (обновляется автоматически).
-- TODO: добавить weekly summary (SLO, incidents, постмортемы).
+- `weekly_summary_template.md` — шаблон weekly summary (DORA, SLO, инциденты, постмортемы, планы).

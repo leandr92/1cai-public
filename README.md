@@ -27,9 +27,8 @@
 - **Marketplace & плагины.** Полный поток upload/moderation задокументирован в [`docs/06-features/MARKETPLACE_GUIDE.md`](docs/06-features/MARKETPLACE_GUIDE.md).
 - **CursorExt / IDE telemetry.** Установка и синхронизация описаны в [`docs/06-features/CURSOR_EXT_GUIDE.md`](docs/06-features/CURSOR_EXT_GUIDE.md).
 - **Observability.** Пошаговое руководство по Prometheus/Grafana находится в [`docs/06-features/OBSERVABILITY_GUIDE.md`](docs/06-features/OBSERVABILITY_GUIDE.md).
+- **Feature Flags / Progressive Rollouts.** Управление включением функционала для пользователей или доли трафика — см. [`docs/06-features/FEATURE_FLAGS_GUIDE.md`](docs/06-features/FEATURE_FLAGS_GUIDE.md) и `src/services/feature_flags.py`.
 
-<<<<<<< HEAD
-=======
 ### 🚀 Последние улучшения (v2.2.0)
 
 **Production-Ready улучшения на основе best practices топ-100 компаний:**
@@ -50,7 +49,6 @@
 
 **Подробнее:** [`IMPROVEMENTS_PROGRESS.md`](IMPROVEMENTS_PROGRESS.md) | [`docs/BEST_PRACTICES_IMPLEMENTED.md`](docs/BEST_PRACTICES_IMPLEMENTED.md) | [`monitoring/AI_SERVICES_MONITORING.md`](monitoring/AI_SERVICES_MONITORING.md)
 
->>>>>>> sync/public-2025-11-15
 ## Архитектура платформы
 
 ```mermaid
@@ -133,7 +131,7 @@ graph TB
 
 > **Подробная версия:** [Полная интерактивная карта](docs/architecture/interactive-architecture.html) с фильтрами и поиском
 
-## За 5 минут: пробный запуск
+## Usage / Быстрый старт
 
 1. Установить Python 3.11, Docker и Docker Compose — подробности в [`docs/setup/python_311.md`](docs/setup/python_311.md).
 2. Проверить окружение: `make check-runtime` (использует [`scripts/setup/check_runtime.py`](scripts/setup/check_runtime.py)).
@@ -144,7 +142,7 @@ graph TB
    make servers        # Graph API + MCP server
    open http://localhost:6001/mcp
    ```
-   > Для Windows есть аналоги в [`scripts/windows/`](scripts/windows/). После запуска доступен живой MCP endpoint, логи сервисов и тестовые данные — можно сразу проверять сценарии.
+   > Для Windows есть аналоги в [`scripts/windows/`](scripts/windows/) и упрощённый сценарий в [`docs/01-getting-started/windows_quickstart.md`](docs/01-getting-started/windows_quickstart.md). После запуска доступен живой MCP endpoint, логи сервисов и тестовые данные — можно сразу проверять сценарии.
 
 ## Сценарии использования
 
@@ -168,7 +166,27 @@ graph TB
 | **Marketplace** | Загрузка/модерация плагинов | [`docs/06-features/MARKETPLACE_GUIDE.md`](docs/06-features/MARKETPLACE_GUIDE.md) |
 | **CursorExt / IDE** | Сбор и синхронизация событий | [`docs/06-features/CURSOR_EXT_GUIDE.md`](docs/06-features/CURSOR_EXT_GUIDE.md) |
 | **Observability** | Prometheus, Grafana, алерты | [`docs/06-features/OBSERVABILITY_GUIDE.md`](docs/06-features/OBSERVABILITY_GUIDE.md) |
+| **Feature Flags** | Progressive rollout, beta, percentage | [`docs/06-features/FEATURE_FLAGS_GUIDE.md`](docs/06-features/FEATURE_FLAGS_GUIDE.md) |
+| **Developer AI Secure** | Rule-of-Two кодогенерация | [`docs/06-features/DEVELOPER_AGENT_GUIDE.md`](docs/06-features/DEVELOPER_AGENT_GUIDE.md) |
+| **QA Engineer AI** | Генерация тестов, coverage | [`docs/06-features/QA_ENGINEER_GUIDE.md`](docs/06-features/QA_ENGINEER_GUIDE.md) |
+| **SQL Optimizer** | Оптимизация запросов и сервера | [`docs/06-features/SQL_OPTIMIZER_GUIDE.md`](docs/06-features/SQL_OPTIMIZER_GUIDE.md) |
 | **Безопасность и FinOps** | Политики, проверки, отчёты, FinOps-скрипты | [`docs/security/policy_as_code.md`](docs/security/policy_as_code.md), [`docs/ops/finops.md`](docs/ops/finops.md) |
+
+## Статусы подсистем
+
+| Компонент | Статус | Документация |
+|-----------|--------|--------------|
+| Security Agent Framework | 🟡 MVP (sandbox в доработке) | [`docs/06-features/README.md`](docs/06-features/README.md#-security-agent-framework) |
+| Voice Queries | ✅ Production | [`docs/06-features/VOICE_QUERIES.md`](docs/06-features/VOICE_QUERIES.md) |
+| OCR Integration | ✅ Beta | [`docs/06-features/OCR_INTEGRATION.md`](docs/06-features/OCR_INTEGRATION.md) |
+| Feature Flags | ✅ Production | [`docs/06-features/FEATURE_FLAGS_GUIDE.md`](docs/06-features/FEATURE_FLAGS_GUIDE.md) |
+| Developer AI Secure | ✅ Production | [`docs/06-features/DEVELOPER_AGENT_GUIDE.md`](docs/06-features/DEVELOPER_AGENT_GUIDE.md) |
+| QA Engineer AI | ✅ Production | [`docs/06-features/QA_ENGINEER_GUIDE.md`](docs/06-features/QA_ENGINEER_GUIDE.md) |
+| SQL Optimizer | ✅ Production | [`docs/06-features/SQL_OPTIMIZER_GUIDE.md`](docs/06-features/SQL_OPTIMIZER_GUIDE.md) |
+| Marketplace Hardening | 🟡 Beta | [`docs/06-features/MARKETPLACE_GUIDE.md`](docs/06-features/MARKETPLACE_GUIDE.md) |
+| ITIL/ITSM Support | 📋 Planned | [`docs/07-itil-analysis/README.md`](docs/07-itil-analysis/README.md) |
+
+> ⚠️ Все Planned/MVP элементы явно помечены; при ссылке на них в README обязательно уточняем статус.
 
 ---
 
@@ -235,6 +253,8 @@ graph TB
 - **Setup & Runtime**
   - [`docs/setup/python_311.md`](docs/setup/python_311.md) — установка Python 3.11 и проверка среды.
   - [`scripts/setup/check_runtime.py`](scripts/setup/check_runtime.py) + `make check-runtime` — автоматическая проверка версии Python.
+  - [`docs/01-getting-started/windows_quickstart.md`](docs/01-getting-started/windows_quickstart.md) — быстрый старт на Windows.
+  - [`docs/01-getting-started/cookbook.md`](docs/01-getting-started/cookbook.md) — готовые «рецепты» (тесты, security-audit, E2E, DR rehearsal).
 - **Infrastructure & DevOps**
   - [`docs/ops/devops_platform.md`](docs/ops/devops_platform.md) — стратегия DevOps-платформы.
   - [`docs/ops/gitops.md`](docs/ops/gitops.md) — GitOps с Argo CD.

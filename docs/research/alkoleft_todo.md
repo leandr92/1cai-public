@@ -19,16 +19,16 @@
 ### 🔥 Высокий приоритет (делаем сейчас):
 
 1. **[ ] Завершить EDT Plugin**
-   - ☐ MetadataGraphView (визуализация графа метаданных)
-   - ☐ SemanticSearchView (семантический поиск в IDE)
-   - ☐ Context menu интеграция
-   - ☐ Build .jar файла для установки в EDT
+   - ☑ MetadataGraphView (визуализация графа метаданных)
+   - ☑ SemanticSearchView (семантический поиск в IDE)
+   - ☑ Context menu интеграция
+   - ☑ Build .jar файла для установки в EDT
 
 2. **[ ] Улучшить тестовое покрытие**
    - ✅ Unit tests для Kimi client (выполнено)
    - ✅ Integration tests для AI Orchestrator (выполнено)
-   - ☐ E2E тесты для критических путей (API → AI → Response)
-   - ☐ Performance benchmarks для Kimi-K2-Thinking
+  - ☑ E2E тесты для критических путей (API → AI → Response)
+  - ☑ Performance benchmarks для Kimi-K2-Thinking
 
 3. **[ ] Мониторинг и наблюдаемость**
    - ✅ Prometheus метрики для AI сервисов (выполнено)
@@ -57,18 +57,18 @@
 
 - [ ] (Высокий) DevOps платформа (K8s/IaC/CI/GitOps)
   - ✅ Kind кластер, Helm chart, Terraform шаблон, Jenkins/GitLab pipeline.
-  - ✅ GitOps: Argo CD manifests (`infrastructure/argocd`), скрипты `scripts/gitops/*`, make `gitops-*`.
-  - TODO: Argo CD ApplicationSet для multi-env, Terraform модуль Argo CD, Vault интеграция.
+  - ✅ GitOps: Argo CD manifests (`infrastructure/argocd`), ApplicationSet для Linkerd (`applicationset-linkerd.yaml`) и 1cai (`applicationset-1cai.yaml`), скрипты `scripts/gitops/*`, make `gitops-*`.
+  - TODO: Terraform модуль Argo CD, Vault интеграция (secret management для Argo CD/Linkerd/observability).
 - [ ] (Средний) Spec-driven workflow: проверки заполнения шаблонов, интеграция с CI (TODO в `docs/research/spec_kit_analysis.md`).
   - ✅ Скрипты `init_feature.py` / `check_feature.py`, make-таргеты `feature-init` / `feature-validate`, CI job `spec-driven-validation`.
 - [ ] (Средний) Release automation и репортинг
   - ✅ `scripts/release/create_release.py`, make `release-*`, workflow `release.yml`, `docs/research/release_playbook.md`.
 - [ ] (Средний) Secret scanning и политика безопасности
   - ✅ Workflows `secret-scan.yml` (Gitleaks) и `trufflehog.yml` (Trufflehog); расширить конституцию пунктами по least privilege.
-  - ✅ Policy-as-code: `policy/kubernetes/*.rego`, Semgrep (`security/semgrep.yml`), make `policy-check`, CI интеграция.
-  - TODO: внедрить OPA/Conftest для Terraform планов и GitOps; формализовать исключения.
+  - ✅ Policy-as-code: `policy/kubernetes/*.rego`, Semgrep (`security/semgrep.yml`), make `policy-check`, CI интеграция; Conftest для Terraform планов (`scripts/security/run_policy_checks.sh`).
+  - TODO: расширить Conftest/OPA на GitOps-манифесты (Argo CD) и формализовать список допустимых исключений (policy waivers). 
 - [ ] (Низкий) Сбор и публикация DORA-метрик
-  - ✅ `scripts/metrics/collect_dora.py`, workflow `dora-metrics.yml`; настроить визуализацию (следующий шаг).
+  - ✅ `scripts/metrics/collect_dora.py`, workflow `dora-metrics.yml`; добавлен шаблон weekly summary (`docs/status/weekly_summary_template.md`) и README (`docs/status/README.md`) для визуализации/обзора.
 - [x] (Средний) Observability & Runbooks **[ОБНОВЛЕНО: Январь 2025]**
   - ✅ `docs/observability/SLO.md`, `docs/runbooks/alert_slo_runbook.md`, `docs/runbooks/postmortem_template.md`; внедрить автоматический экспорт метрик и alert канал.
   - ✅ Инфраструктура: `observability/docker-compose.observability.yml` (локально), `infrastructure/helm/observability-stack` (K8s), правила `observability/alerts.yml`, конфиг `observability/alertmanager.yml`.
@@ -76,7 +76,7 @@
   - ✅ **Grafana дашборды** (`monitoring/grafana/dashboards/ai_services.json`) **[NEW]**
   - ✅ **Alert правила** (`monitoring/prometheus/alerts/ai_alerts.yml`) **[NEW]**
   - ✅ **Документация мониторинга** (`monitoring/AI_SERVICES_MONITORING.md`) **[NEW]**
-  - TODO: Интеграция с Telegram (workflow `telegram-alert.yaml`) + секреты в CI/CD.
+  - ☑ Интеграция с Telegram (workflow `.github/workflows/telegram-alert.yaml`); TODO: добавить/задокументировать секреты в prod CI/CD (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID`).
 - [ ] (Высокий) AWS/Azure Cloud readiness
   - ✅ Terraform модуль `infrastructure/terraform/aws-eks`.
   - ✅ Terraform модуль `infrastructure/terraform/azure-aks`, Azure DevOps pipeline (`infrastructure/azure/azure-pipelines.yml`).
@@ -99,9 +99,11 @@
   - ✅ Исследование рынка вакансий (RU/EU/US) → `docs/research/job_market_business_analyst.md`.
   - ✅ Подготовлен roadmap → `docs/research/ba_agent_roadmap.md`.
   - ✅ BA-02 Requirements Intelligence (LLM-ready extractor, docx/pdf support, CLI `ba-extract`, тесты).
-  - ☐ BA-03 Process & Journey Modelling (BPMN 2.0, CJM, экспорт).
-  - ☐ BA-04 Analytics & KPI Toolkit (SQL/BI, OKR/ROI, Observability).
-  - ☐ BA-05 Traceability & Compliance (risk register, heatmap).
+  - ☐ BA-03 Process & Journey Modelling (BPMN 2.0, CJM, экспорт) — добавлен план/гайд `docs/06-features/BA_PROCESS_MODELLING_GUIDE.md`, реализация остаётся planned.
+  - ☐ BA-04 Analytics & KPI Toolkit (SQL/BI, OKR/ROI, Observability) — добавлен план/гайд `docs/06-features/BA_ANALYTICS_KPI_GUIDE.md`, реализация остаётся planned.
+  - ☐ BA-05 Traceability & Compliance (risk register, heatmap) — добавлен план/гайд `docs/06-features/BA_TRACEABILITY_COMPLIANCE_GUIDE.md`, реализация остаётся planned.
+  - ☐ BA-06 Integrations & Collaboration (Jira/Confluence/ServiceNow) — добавлен план/гайд `docs/06-features/BA_INTEGRATIONS_COLLAB_GUIDE.md`, реализация остаётся planned.
+  - ☐ BA-07 Documentation & Enablement (guides, примеры, дашборды) — добавлен план/гайд `docs/06-features/BA_ENABLEMENT_GUIDE.md`, реализация остаётся planned.
   - ☐ BA-06 Integrations & Collaboration (Jira/Confluence/ServiceNow).
   - ☐ BA-07 Documentation & Enablement (guides, примеры, дашборды).
 - [ ] (Высокий) Runtime & Compliance
@@ -112,4 +114,4 @@
   - TODO: Обновить конституцию правилами по установленной версии Python; автоматизировать проверку наличия `make`, `docker compose`.
 - [ ] (Средний) DR/Resilience
   - ✅ План `docs/runbooks/dr_rehearsal_plan.md`, скрипт `scripts/runbooks/dr_rehearsal_runner.py`, workflow `dr-rehearsal.yml`.
-  - TODO: Автоматический отчёт в postmortem, интеграция Litmus сценариев.
+  - ☑ Автоматический отчёт в postmortem — добавлен `scripts/runbooks/generate_dr_postmortem.py` (создаёт черновики в `docs/runbooks/postmortems/` и описан в `dr_rehearsal_plan.md`); TODO: интеграция Litmus сценариев.

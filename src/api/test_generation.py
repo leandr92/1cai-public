@@ -43,9 +43,9 @@ class TestGenerationRequest(BaseModel):
 
 class TestCase(BaseModel):
     """Тестовый случай"""
-    id: str
-    name: str
-    description: str
+    id: str = Field(..., max_length=100)
+    name: str = Field(..., max_length=200)
+    description: str = Field(..., max_length=1000)
     input: dict
     expectedOutput: Any
     type: Literal["unit", "integration", "e2e"]
@@ -61,12 +61,12 @@ class CoverageMetrics(BaseModel):
 
 class GeneratedTest(BaseModel):
     """Сгенерированный тест"""
-    id: str
-    functionName: str
+    id: str = Field(..., max_length=100)
+    functionName: str = Field(..., max_length=200)
     testCases: List[TestCase]
-    code: str
-    language: str
-    framework: str
+    code: str = Field(..., max_length=50000)
+    language: str = Field(..., max_length=50)
+    framework: str = Field(..., max_length=100)
     coverage: CoverageMetrics
 
 
@@ -75,7 +75,7 @@ class TestGenerationResponse(BaseModel):
     tests: List[GeneratedTest]
     summary: dict
     timestamp: datetime = Field(default_factory=datetime.now)
-    generationId: str
+    generationId: str = Field(..., max_length=100)
 
 
 # ==================== ГЕНЕРАТОР ТЕСТОВ ====================

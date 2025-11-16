@@ -3,13 +3,13 @@
     "requirements_files": [
       {
         "file": "requirements-dev.txt",
-        "dependencies": 23,
+        "dependencies": 24,
         "examples": [
           "pytest==7.4.3",
           "pytest-asyncio==0.21.1",
           "pytest-cov==4.1.0",
           "pytest-mock==3.12.0",
-          "httpx==0.25.2  # For FastAPI testing"
+          "pytest-timeout==2.2.0"
         ]
       },
       {
@@ -91,110 +91,120 @@
       },
       {
         "file": "requirements.txt",
-        "dependencies": 41,
+        "dependencies": 53,
         "examples": [
           "python-dotenv==1.0.0",
           "pyyaml==6.0.1",
-          "pydantic==2.5.0",
+          "pydantic==2.9.2",
           "pydantic-settings==2.1.0",
           "psycopg2-binary==2.9.9"
         ]
       }
     ],
-    "total_dependencies": 113,
+    "total_dependencies": 126,
     "unique_packages": [
-      "beautifulsoup4",
-      "pytesseract",
-      "matplotlib",
-      "lxml",
-      "accelerate",
-      "mypy",
-      "py-spy",
-      "pytest",
-      "jupyter",
-      "pandas",
-      "prometheus-client",
-      "torch",
-      "psycopg2-binary",
-      "safety",
-      "torchvision",
-      "ipython",
-      "mkdocs-material",
-      "pytest-asyncio",
       "numpy",
-      "flake8",
-      "slowapi",
-      "requests",
-      "click",
-      "types-redis",
-      "isort",
-      "pydantic-settings",
-      "mkdocs",
-      "openai",
-      "qdrant-client",
-      "colorama",
-      "memory-profiler",
-      "networkx",
-      "python-dotenv",
-      "fastapi",
-      "pytest-cov",
-      "hashlib-additional",
-      "datasets",
-      "redis",
-      "asyncpg",
-      "pyyaml",
-      "sqlalchemy",
-      "pytz",
-      "hiredis",
-      "curl-cffi",
-      "transformers",
-      "cryptography",
-      "responses",
-      "elasticsearch",
-      "deepseek-ocr",
-      "types-PyYAML",
-      "pillow",
-      "pytest-mock",
-      "tqdm",
-      "httpx",
-      "aiohttp",
-      "python-dateutil",
-      "mkdocstrings",
-      "bandit",
-      "aiogram",
-      "rich",
-      "python-multipart",
-      "python-json-logger",
-      "PyJWT",
-      "alembic",
-      "uvicorn[standard]",
-      "starlette",
-      "black",
       "neo4j",
+      "mkdocs-material",
+      "asyncpg",
+      "alembic",
+      "flake8",
+      "sqlalchemy",
+      "markdownify",
+      "uvicorn[standard]",
+      "transformers",
+      "requests",
+      "pydantic-settings",
+      "starlette",
+      "pyyaml",
+      "mkdocs",
       "faker",
-      "structlog",
-      "pydantic",
-      "httpx-mock",
+      "qdrant-client",
+      "prometheus-fastapi-instrumentator",
+      "types-PyYAML",
+      "typer",
+      "cryptography",
+      "pytest-cov",
+      "colorama",
+      "pytesseract",
+      "rich",
+      "matplotlib",
+      "slowapi",
+      "openai",
+      "types-redis",
+      "psycopg2-binary",
+      "accelerate",
+      "pandas",
+      "boto3",
+      "jupyter",
+      "python-multipart",
+      "pytest",
+      "sentence-transformers",
+      "py-spy",
+      "responses",
+      "allure-pytest",
+      "fastapi",
+      "ipython",
+      "memory-profiler",
+      "tqdm",
+      "pytest-asyncio",
       "chandra-ocr",
+      "curl-cffi",
+      "pytest-mock",
+      "httpx",
+      "python-dotenv",
+      "aiogram",
+      "python-dateutil",
+      "PyJWT",
+      "elasticsearch",
+      "pytest-timeout",
+      "mkdocstrings",
+      "apscheduler",
+      "python-docx",
+      "click",
+      "torchvision",
+      "hashlib-additional",
+      "prometheus-client",
+      "datasets",
+      "beautifulsoup4",
+      "tenacity",
+      "hiredis",
+      "pypdf",
+      "networkx",
+      "pillow",
+      "mypy",
+      "bandit",
+      "safety",
+      "structlog",
       "pylint",
-      "sentence-transformers"
+      "black",
+      "python-json-logger",
+      "lxml",
+      "pydantic",
+      "aiohttp",
+      "torch",
+      "redis",
+      "urllib3",
+      "isort",
+      "pytz"
     ]
   },
   "tests": {
-    "test_files": 89,
-    "test_directories": 11,
-    "estimated_test_functions": 486,
+    "test_files": 112,
+    "test_directories": 10,
+    "estimated_test_functions": 645,
     "coverage": "unknown"
   },
   "documentation": {
-    "readme_files": 101,
-    "total_md_files": 573,
-    "total_doc_size_mb": 8.808403968811035
+    "readme_files": 172,
+    "total_md_files": 481,
+    "total_doc_size_mb": 4.465120315551758
   },
   "configuration": {
     "docker_compose_files": [
       "docker-compose.dev.yml",
       "docker-compose.monitoring.yml",
+      "docker-compose.mvp.yml",
       "docker-compose.parser.yml",
       "docker-compose.saas.yml",
       "docker-compose.stage1.yml",
@@ -205,30 +215,23 @@
       "Dockerfile.gateway",
       "Dockerfile.metrics",
       "Dockerfile.risk",
-      "archive_package\\Dockerfile.gateway",
-      "archive_package\\Dockerfile.metrics",
-      "archive_package\\Dockerfile.risk",
+      ".ci\\templates\\dockerfile.yml",
       "code\\Dockerfile.test",
-      "docker\\Dockerfile.telegram",
-      "docker\\ai-assistant\\Dockerfile",
-      "docker\\ml-system\\Dockerfile",
-      "docker\\ml-worker\\Dockerfile",
-      "docker\\mlflow\\Dockerfile",
-      "demo\\demo-ai-assistants-1c\\monitoring\\health-check\\Dockerfile",
+      "code\\py_server\\Dockerfile",
       "demo\\demo-ai-assistants-1c\\docker\\services\\1c-integration\\Dockerfile",
       "demo\\demo-ai-assistants-1c\\docker\\services\\ai-assistant\\Dockerfile",
       "demo\\demo-ai-assistants-1c\\docker\\services\\analytics\\Dockerfile",
       "demo\\demo-ai-assistants-1c\\docker\\services\\api-gateway\\Dockerfile",
       "demo\\demo-ai-assistants-1c\\docker\\services\\security\\Dockerfile",
       "demo\\demo-ai-assistants-1c\\docker\\services\\user-management\\Dockerfile",
-      "code\\py_server\\Dockerfile",
-      "archive_package\\code\\Dockerfile.test",
-      "archive_package\\docker\\ai-assistant\\Dockerfile",
-      "archive_package\\docker\\ml-system\\Dockerfile",
-      "archive_package\\docker\\ml-worker\\Dockerfile",
-      "archive_package\\docker\\mlflow\\Dockerfile",
-      "archive_package\\code\\py_server\\Dockerfile",
-      ".ci\\templates\\dockerfile.yml"
+      "demo\\demo-ai-assistants-1c\\monitoring\\health-check\\Dockerfile",
+      "docker\\Dockerfile.telegram",
+      "docker\\ai-assistant\\Dockerfile",
+      "docker\\bsl-language-server\\Dockerfile",
+      "docker\\ml-system\\Dockerfile",
+      "docker\\ml-worker\\Dockerfile",
+      "docker\\mlflow\\Dockerfile",
+      "external\\sgr-agent-core\\services\\api_service\\Dockerfile"
     ],
     "config_files": [
       "alembic.ini",
@@ -238,164 +241,85 @@
   "security": {
     "potential_secrets": [
       {
-        "file": "tests\\conftest.py",
-        "type": "hardcoded_password",
-        "count": 1
-      },
-      {
-        "file": "tests\\conftest.py",
-        "type": "hardcoded_api_key",
-        "count": 1
-      },
-      {
-        "file": "tests\\run_demo_tests.py",
-        "type": "hardcoded_password",
-        "count": 1
-      },
-      {
-        "file": "tests\\test_architect_assistant.py",
-        "type": "hardcoded_api_key",
-        "count": 1
-      },
-      {
-        "file": "tests\\acceptance\\test_user_scenarios.py",
-        "type": "hardcoded_password",
-        "count": 3
-      },
-      {
-        "file": "tests\\integration\\test_api_integration.py",
-        "type": "hardcoded_password",
-        "count": 2
-      },
-      {
-        "file": "tests\\performance\\test_load_performance.py",
-        "type": "hardcoded_password",
-        "count": 1
-      },
-      {
-        "file": "tests\\security\\test_ai_security.py",
-        "type": "hardcoded_password",
-        "count": 1
-      },
-      {
-        "file": "tests\\security\\test_ai_security.py",
-        "type": "hardcoded_api_key",
-        "count": 1
-      },
-      {
-        "file": "tests\\security\\test_security.py",
-        "type": "hardcoded_password",
-        "count": 4
-      },
-      {
-        "file": "tests\\security\\test_security.py",
-        "type": "hardcoded_api_key",
-        "count": 1
-      },
-      {
-        "file": "tests\\system\\test_e2e_flows.py",
-        "type": "hardcoded_password",
-        "count": 2
-      },
-      {
-        "file": "tests\\test_driven_development\\test_all_critical_paths.py",
-        "type": "hardcoded_password",
-        "count": 1
-      },
-      {
-        "file": "tests\\unit\\test_ai_agents.py",
-        "type": "hardcoded_password",
-        "count": 1
-      },
-      {
-        "file": "tests\\unit\\test_ai_agents.py",
-        "type": "hardcoded_api_key",
-        "count": 1
-      },
-      {
-        "file": "tests\\unit\\test_neo4j_client.py",
-        "type": "hardcoded_password",
-        "count": 4
-      },
-      {
-        "file": "tests\\unit\\test_postgres_saver.py",
-        "type": "hardcoded_password",
-        "count": 6
-      },
-      {
-        "file": "scripts\\analysis\\analyze_its_page.py",
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\utils\\misc.py",
         "type": "hardcoded_password",
         "count": 1
       }
     ],
     "sql_injection_risks": [
-      "src\\db\\postgres_saver.py"
+      "check_security_comprehensive.py"
     ],
     "hardcoded_ips": [
       {
-        "file": "src\\utils\\structured_logging.py",
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\network\\session.py",
         "ips": [
-          "192.168.1.1"
+          "127.0.0.0"
+        ]
+      },
+      {
+        "file": ".venv\\Lib\\site-packages\\pip\\_vendor\\distlib\\scripts.py",
+        "ips": [
+          "1.0.0.0"
         ]
       }
     ]
   },
   "technical_debt": {
-    "todo_count": 95,
-    "fixme_count": 1,
-    "hack_count": 1,
-    "xxx_count": 1,
-    "deprecated_count": 3,
+    "todo_count": 36,
+    "fixme_count": 12,
+    "hack_count": 2,
+    "xxx_count": 19,
+    "deprecated_count": 5,
     "examples": [
       {
-        "file": "innovation-engine\\discovery_service.py",
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\cache.py",
         "type": "TODO",
         "count": 1
       },
       {
-        "file": "scripts\\analyze_parser_real.py",
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\cli\\base_command.py",
         "type": "TODO",
         "count": 1
       },
       {
-        "file": "scripts\\fix_code_issues.py",
-        "type": "TODO",
-        "count": 2
-      },
-      {
-        "file": "tests\\comprehensive\\test_full_system.py",
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\commands\\inspect.py",
         "type": "TODO",
         "count": 1
       },
       {
-        "file": "src\\ai\\mcp_server_architect.py",
-        "type": "TODO",
-        "count": 8
-      },
-      {
-        "file": "src\\ai\\mcp_server_multi_role.py",
-        "type": "TODO",
-        "count": 2
-      },
-      {
-        "file": "src\\ai\\orchestrator.py",
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\index\\collector.py",
         "type": "TODO",
         "count": 1
       },
       {
-        "file": "src\\api\\billing_webhooks.py",
-        "type": "TODO",
-        "count": 1
-      },
-      {
-        "file": "src\\api\\code_review.py",
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\metadata\\base.py",
         "type": "TODO",
         "count": 3
       },
       {
-        "file": "src\\api\\copilot_api.py",
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\models\\installation_report.py",
         "type": "TODO",
-        "count": 5
+        "count": 1
+      },
+      {
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\models\\selection_prefs.py",
+        "type": "TODO",
+        "count": 1
+      },
+      {
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\network\\lazy_wheel.py",
+        "type": "TODO",
+        "count": 1
+      },
+      {
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\operations\\prepare.py",
+        "type": "TODO",
+        "count": 1
+      },
+      {
+        "file": ".venv\\Lib\\site-packages\\pip\\_internal\\req\\constructors.py",
+        "type": "TODO",
+        "count": 1
       }
     ]
   }

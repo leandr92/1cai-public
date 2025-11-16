@@ -204,6 +204,26 @@ jobs:
     - name: Run acceptance tests
       run: pytest tests/acceptance/ -v
 
+  spec-driven-validation:
+    name: Spec-Driven Validation
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Validate feature specs
+      run: |
+        make feature-validate
+
   bsl-tests:
     name: BSL Tests
     runs-on: windows-latest

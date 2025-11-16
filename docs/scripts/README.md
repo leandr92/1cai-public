@@ -169,6 +169,7 @@
 | `make helm-observability` | `infrastructure/helm/observability-stack` | раздел 4.3 |
 | security pipeline | `scripts/security/run_security_scans.sh` | раздел 4.12 |
 | GitHub Actions | `observability-test.yml` | автоматическая проверка compose стека |
+| Spec-driven validation | `comprehensive-testing.yml` (job `spec-driven-validation`) | см. `docs/research/spec_kit_analysis.md`, `templates/README.md` |
 | `make gitops-apply` | `scripts/gitops/apply.sh` | раздел 4.13 |
 | `make gitops-sync` | `scripts/gitops/sync.sh` | раздел 4.13 |
 | `make chaos-litmus-run` | `scripts/chaos/run_litmus.sh` | раздел 4.14 |

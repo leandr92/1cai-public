@@ -27,3 +27,4 @@
 - Автоматизировать создание DR среды (Terraform).
 - Собирать метрики MTTR/MTTF.
 - Интегрировать Litmus сценарии (network loss) в rehearsal.
+- Использовать `scripts/runbooks/generate_dr_postmortem.py` для автоматического создания черновика постмортема после `dr_rehearsal_runner.py`.

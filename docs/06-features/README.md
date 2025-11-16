@@ -95,6 +95,116 @@
 
 ---
 
+### 🏁 [Feature Flags / Progressive Rollouts](./FEATURE_FLAGS_GUIDE.md)
+**Динамическое включение возможностей**
+
+- Управление для пользователей/тенантов/процентов трафика
+- Поддержка режимов enabled/disabled/beta/percentage
+- Structured logging + in-memory registry (`src/services/feature_flags.py`)
+
+**Status:** ✅ Production
+
+---
+
+### 👨‍💻 [Developer AI Secure](./DEVELOPER_AGENT_GUIDE.md)
+**Rule-of-Two разработчик**
+
+- Класс `DeveloperAISecure` с двойной проверкой ввода/вывода через `AISecurityLayer`
+- Approval-токены, аудит действий, bulk-approve только для безопасных предложений
+- REST-API `/api/code-review/*` + интеграция с UI
+
+**Status:** ✅ Production
+
+---
+
+### 🧪 [QA Engineer AI](./QA_ENGINEER_GUIDE.md)
+**Генерация тестов и покрытие**
+
+- Unit/Vanessa/negative шаблоны для BSL
+- Edge cases, coverage estimate, рекомендации по тест-плану
+- Интеграция с LLM Gateway и pipeline DevOps/QA
+
+**Status:** ✅ Production
+
+---
+
+### ⚡ [SQL Optimizer](./SQL_OPTIMIZER_GUIDE.md)
+**Оптимизация SQL и сервера 1С**
+
+- Детекция SQL anti‑patterns, рекомендации по индексам
+- Secure-обёртка с Rule-of-Two и audit‑логированием
+- Интеграция с Architect MCP и TechLog Analyzer
+
+**Status:** ✅ Production
+
+---
+
+### 📈 [AI Performance & Observability](./AI_PERFORMANCE_GUIDE.md)
+**Производительность AI-контуров**
+
+- Метрики Orchestrator/Kimi/Qwen, cache hit rate и fallback‑частота
+- Prometheus/Grafana дашборды и alert‑правила
+- Практические promql‑запросы и локальные synthetic‑тесты
+
+**Status:** ✅ Production
+
+---
+
+### 🧭 [BA-03 Process & Journey Modelling](./BA_PROCESS_MODELLING_GUIDE.md)
+**Моделирование процессов и customer journeys**
+
+- Черновики BPMN 2.0 / CJM по тексту требований
+- Чек-листы полноты процесса и выявление пробелов
+- Подготовка артефактов для Confluence/Jira
+
+**Status:** 🟡 In Progress
+
+---
+
+### 📊 [BA-04 Analytics & KPI Toolkit](./BA_ANALYTICS_KPI_GUIDE.md)
+**Аналитика и метрики для BA**
+
+- Конструктор KPI/OKR и бизнес‑метрик
+- SQL/BI‑подсказки для PostgreSQL/ClickHouse и Power BI/DataLens
+- Связка технических SLO/DORA с бизнес‑эффектом
+
+**Status:** 🟡 In Progress
+
+---
+
+### 🛡 [BA-05 Traceability & Compliance](./BA_TRACEABILITY_COMPLIANCE_GUIDE.md)
+**Трассируемость требований и соответствие политикам**
+
+- Матрица «требования → задачи → тесты → релизы»
+- Риск‑реестр и heatmap с приоритизацией
+- Compliance‑чек‑листы по регуляторике и внутренним политикам
+
+**Status:** 🟡 In Progress
+
+---
+
+### 🤝 [BA-06 Integrations & Collaboration](./BA_INTEGRATIONS_COLLAB_GUIDE.md)
+**Интеграции BA-агента и совместная работа**
+
+- Синхронизация требований и артефактов с Jira/Confluence/ServiceNow/Docflow
+- Публикация спецификаций, схем и отчётов в Wiki/процессные системы
+- Подготовка summary и action items для встреч/воркшопов
+
+**Status:** 🟡 In Progress
+
+---
+
+### 📚 [BA-07 Documentation & Enablement](./BA_ENABLEMENT_GUIDE.md)
+**Документация и enablement для BA-команды**
+
+- Генерация playbook/guide материалов по BA‑функциям платформы
+- Подготовка презентаций и сценариев демонстраций
+- Onboarding‑чек‑листы и training‑сценарии
+
+**Status:** 🟡 In Progress
+
+---
+
 ## 🆕 NEW Features (Nov 6, 2025)
 
 ### ⚡ Code Execution with MCP

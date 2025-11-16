@@ -11,6 +11,8 @@
 | `code_quality_audit.py` | Собирает линт/тест результаты, проверяет отчёты. |
 | `license_compliance_audit.py` | Проверяет лицензии зависимостей. |
 | `check_git_safety.py` | Убеждается, что чувствительные файлы не попали в репозиторий. |
+| `check_hidden_dirs.py` | Ищет неожиданные скрытые директории (`/.folder`) с использованием `git ls-files`. |
+| `check_secrets.py` | Лёгкий поиск возможных секретов по эвристикам (`sk-…`, `ghp_…`, `API_KEY=…`, `secret_key=…`, `token=\"…\"`). Результат — `analysis/secret_scan_report.json`. |
 
 ## Запуск
 ```bash
@@ -19,6 +21,15 @@ python scripts/audit/comprehensive_project_audit.py
 
 # Проверка структуры
 python scripts/audit/project_structure_audit.py
+
+# Проверка скрытых директорий (.folder rule)
+make audit-hidden-dirs
+
+# Локальный скан возможных секретов
+make audit-secrets
+
+# Полный security-аудит (hidden dirs + secrets + git safety + comprehensive)
+make security-audit
 ```
 
-Результаты складываются в `output/audit/`. Используйте их в `make preflight` и перед синхронизацией с публичным репозиторием.
+Результаты складываются в `output/audit/` и `analysis/secret_scan_report.json`. Используйте их в `make preflight` и перед синхронизацией с публичным репозиторием.

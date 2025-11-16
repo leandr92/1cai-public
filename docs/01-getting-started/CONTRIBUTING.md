@@ -135,6 +135,20 @@ pytest --cov=src --cov-report=html
 5. Address review comments
 6. Merge after approval
 
+## Private → Public Publication
+
+1. Все изменения проходят ревью в **приватном** репозитории.
+2. После `python run_full_audit.py --stop-on-failure` пушим в приватный remote:
+   ```bash
+   git push origin <branch>
+   ```
+3. Дожидаемся ручного подтверждения (чат/issue). Только после этого разрешено обновлять публичный репозиторий.
+4. Для синхронизации используйте скрипт `push_to_public.ps1` (или `push_to_public.ps1 --branch <name>` для feature-веток). Скрипт:
+   - проверяет свежесть отчётов (`BROKEN_LINKS_REPORT.txt`, `SECURITY_AUDIT_REPORT.txt`, `README_CODE_VERIFICATION.txt`);
+   - создаёт merge-коммит для публичного репозитория;
+   - синхронизирует теги.
+5. Не публикуем изменения напрямую в `public` без этой процедуры.
+
 ## Code Review Checklist
 
 - [ ] Code follows style guidelines

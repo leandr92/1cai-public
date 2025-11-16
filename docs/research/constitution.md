@@ -34,7 +34,7 @@
 28. **Secret scanning** — workflows `secret-scan.yml` (Gitleaks), `trufflehog.yml` и `docs-lint.yml` должны быть зелёными перед merge/release.
 29. **Release-only через automation** — релизы создаём `scripts/release/create_release.py` + workflow `release.yml`; никаких ручных GitHub Releases.
 30. **DORA и наблюдаемость** — workflow `dora-metrics.yml` не должен пропускаться; анализ метрик фиксируется в weekly summary.
-31. **Python runtime** — перед запуском сервисов выполняем `make check-runtime`; Python 3.11.x обязателен для API/MCP.
+31. **Python runtime** — перед запуском сервисов выполняем `make check-runtime`; Python 3.11.x обязателен для API/MCP, скрипт дополнительно предупреждает об отсутствии `make` и `docker` в PATH.
 32. **Policy-as-Code** — `make policy-check` (Conftest + Semgrep) и CI стадии (Jenkins/GitLab) обязаны проходить перед merge/release; исключения документируются.
 33. **Operational self-check** — перед деплоем выполняем `make preflight` (lint/test/policy/checkov) и фиксируем результаты в issue/PR.
 

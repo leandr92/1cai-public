@@ -1,102 +1,177 @@
 #!/usr/bin/env python3
 """
-Быстрая диагностика доступности LLM-провайдеров.
+Diagnostics for LLM providers declared in config/llm_providers.yaml.
 
-Использование:
-    python scripts/diagnostics/check_llm_endpoints.py --config config/llm_providers.yaml
+Usage:
+    python scripts/diagnostics/check_llm_endpoints.py
+    python scripts/diagnostics/check_llm_endpoints.py --provider openai --timeout 5
+    python scripts/diagnostics/check_llm_endpoints.py --config config/llm_providers.local.yaml
 """
 
 from __future__ import annotations
 
 import argparse
-import logging
-from dataclasses import dataclass
-from typing import Dict
+import json
+import sys
+from dataclasses import asdict, dataclass
+from pathlib import Path
+from typing import Any, Dict, Iterable, List, Optional
 
-import requests
+import httpx
 import yaml
 
-EXPECTED_AUTH_ERRORS = {401, 403}
+
+DEFAULT_CONFIG = Path("config/llm_providers.yaml")
 
 
 @dataclass
-class Provider:
+class ProviderCheckResult:
     name: str
-    base_url: str
-    enabled: bool
-    provider_type: str
+    url: Optional[str]
+    status: str
+    http_status: Optional[int] = None
+    message: Optional[str] = None
+    latency_ms: Optional[float] = None
+
+    def to_dict(self) -> Dict[str, Any]:
+        return asdict(self)
 
 
-def load_providers(path: str) -> Dict[str, Provider]:
-    with open(path, "r", encoding="utf-8") as f:
-        data = yaml.safe_load(f)
-    providers = {}
-    for name, cfg in data.get("providers", {}).items():
-        providers[name] = Provider(
-            name=name,
-            base_url=cfg.get("base_url", ""),
-            enabled=bool(cfg.get("enabled", True)),
-            provider_type=cfg.get("type", "remote"),
-        )
-    return providers
+class LLMEndpointChecker:
+    def __init__(self, timeout: float = 5.0) -> None:
+        self.timeout = timeout
+
+    def _resolve_url(self, provider_name: str, config: Dict[str, Any]) -> Optional[str]:
+        if "health_url" in config:
+            return config["health_url"]
+        if "base_url" in config:
+            return config["base_url"]
+        return None
+
+    def check_provider(
+        self,
+        provider_name: str,
+        provider_config: Dict[str, Any],
+        method: str = "GET",
+    ) -> ProviderCheckResult:
+        url = self._resolve_url(provider_name, provider_config)
+        if not url:
+            return ProviderCheckResult(
+                name=provider_name,
+                url=None,
+                status="skipped",
+                message="No base_url/health_url provided",
+            )
+
+        try:
+            with httpx.Client(timeout=self.timeout, follow_redirects=True) as client:
+                response = client.request(method.upper(), url)
+                ok = response.status_code < 400
+                return ProviderCheckResult(
+                    name=provider_name,
+                    url=url,
+                    status="ok" if ok else "fail",
+                    http_status=response.status_code,
+                    message=None if ok else response.text[:200],
+                    latency_ms=response.elapsed.total_seconds() * 1000,
+                )
+        except httpx.RequestError as exc:
+            return ProviderCheckResult(
+                name=provider_name,
+                url=url,
+                status="error",
+                message=str(exc),
+            )
 
 
-def check_endpoint(provider: Provider, timeout: float) -> Dict[str, str]:
-    if not provider.enabled:
-        return {"status": "skipped", "message": "disabled in config"}
-
-    try:
-        response = requests.get(provider.base_url, timeout=timeout)
-        code = response.status_code
-        if code == 200:
-            status = "ok"
-            message = "HTTP 200"
-        elif code in EXPECTED_AUTH_ERRORS:
-            status = "reachable"
-            message = f"auth error ({code}) — сеть доступна"
-        else:
-            status = "warning"
-            message = f"HTTP {code}"
-    except requests.exceptions.RequestException as exc:
-        status = "error"
-        message = str(exc)
-    return {"status": status, "message": message}
+def load_config(path: Path) -> Dict[str, Any]:
+    if not path.exists():
+        raise FileNotFoundError(f"Config file not found: {path}")
+    with path.open("r", encoding="utf-8") as handle:
+        data = yaml.safe_load(handle) or {}
+    return data
 
 
-def main() -> None:
-    parser = argparse.ArgumentParser(description="Проверка доступности LLM-провайдеров")
-    parser.add_argument("--config", default="config/llm_providers.yaml", help="Путь к YAML с провайдерами")
-    parser.add_argument("--timeout", type=float, default=10.0, help="Тайм-аут запроса (сек)")
-    parser.add_argument("--verbose", action="store_true", help="Включить подробный лог")
-    args = parser.parse_args()
+def iterate_providers(
+    providers: Dict[str, Any],
+    selected: Optional[Iterable[str]] = None,
+) -> Iterable[tuple[str, Dict[str, Any]]]:
+    if not selected:
+        yield from providers.items()
+        return
 
-    logging.basicConfig(level=logging.DEBUG if args.verbose else logging.INFO, format="%(levelname)s: %(message)s")
+    selected_set = {item.lower() for item in selected}
+    for name, cfg in providers.items():
+        if name.lower() in selected_set:
+            yield name, cfg
 
-    providers = load_providers(args.config)
+
+def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
+    parser = argparse.ArgumentParser(
+        description="Check availability of configured LLM providers.",
+    )
+    parser.add_argument(
+        "--config",
+        type=Path,
+        default=DEFAULT_CONFIG,
+        help="Path to llm_providers.yaml (default: config/llm_providers.yaml)",
+    )
+    parser.add_argument(
+        "--provider",
+        "-p",
+        action="append",
+        help="Provider name to check (can be specified multiple times).",
+    )
+    parser.add_argument(
+        "--timeout",
+        type=float,
+        default=5.0,
+        help="HTTP timeout in seconds (default: 5).",
+    )
+    parser.add_argument(
+        "--json",
+        action="store_true",
+        help="Output results as JSON.",
+    )
+    return parser.parse_args(argv)
+
+
+def main(argv: Optional[List[str]] = None) -> int:
+    args = parse_args(argv)
+    config = load_config(args.config)
+    providers = config.get("providers", {})
     if not providers:
-        logging.error("Не найдено провайдеров в %s", args.config)
-        raise SystemExit(1)
+        print("No providers defined in config.", file=sys.stderr)
+        return 1
 
-    logging.info("Проверяю %s провайдеров (тайм-аут %.1f c)", len(providers), args.timeout)
-    results = {}
-    for provider in providers.values():
-        result = check_endpoint(provider, args.timeout)
-        results[provider.name] = result
-        logging.info("[%s] %s — %s", provider.name, result["status"], result["message"])
+    checker = LLMEndpointChecker(timeout=args.timeout)
+    results: List[ProviderCheckResult] = []
 
-    # Выводим компактный отчёт пригодный для CI
-    print("RESULTS_START")
-    for name, result in results.items():
-        print(f"{name}: {result['status']} ({result['message']})")
-    print("RESULTS_END")
+    for name, cfg in iterate_providers(providers, args.provider):
+        results.append(checker.check_provider(name, cfg))
 
-    # Завершаем с кодом 0, если нет критических ошибок
-    failed = [name for name, res in results.items() if res["status"] == "error"]
-    if failed:
-        logging.error("Недоступны провайдеры: %s", ", ".join(failed))
-        raise SystemExit(2)
+    if args.json:
+        json.dump([res.to_dict() for res in results], sys.stdout, ensure_ascii=False, indent=2)
+        print()
+    else:
+        print("LLM Endpoint Diagnostics")
+        print("========================")
+        for res in results:
+            detail = f"{res.status.upper():8} {res.name:15}"
+            if res.url:
+                detail += f" {res.url}"
+            if res.http_status is not None:
+                detail += f" [{res.http_status}]"
+            if res.latency_ms is not None:
+                detail += f" {res.latency_ms:.1f}ms"
+            print(detail)
+            if res.message:
+                print(f"  -> {res.message}")
+
+    failures = [res for res in results if res.status in {"fail", "error"}]
+    return 2 if failures else 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())
 

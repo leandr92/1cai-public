@@ -24,7 +24,7 @@
 
 ```bash
 # Клонируем репозиторий (если еще не клонирован)
-cd "C:\Users\chg\Downloads\package (1)"
+cd "C:\Projects\1c-ai"
 
 # Запускаем базы данных через Docker
 docker-compose up -d postgres redis

@@ -23,7 +23,7 @@
 
 ## 4. Процедура перехода в офлайн
 1. **Диагностика**
-   - Выполнить `scripts/diagnostics/check_llm_endpoints.py` (будет добавлен) и зафиксировать результат.
+   - Выполнить `python scripts/diagnostics/check_llm_endpoints.py --provider openai gigachat` и зафиксировать результат.
    - При подтверждении недоступности внешних API задокументировать в журнале инцидентов.
 2. **Переключение**
    - Запустить `make switch-llm BACKEND=local-qwen` или указать нужного провайдера из `config/llm_providers.yaml`.
@@ -63,7 +63,7 @@
   - Качество ответов локальных моделей ≥ 80% от baseline (по smoke-набору).
 
 ## 8. Журнал и отчётность
-- Используйте шаблон `docs/templates/offline_incident_report.md` (будет подготовлен).
+- Используйте шаблон `docs/templates/offline_incident_report.md`.
 - Храните отчёты в `analysis/offline-exercises/`.
 - В отчётах фиксируйте:
   - время начала/окончания,

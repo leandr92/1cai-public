@@ -97,10 +97,10 @@ cat .env | grep POSTGRES_PASSWORD
 ```powershell
 # Windows PowerShell
 # Переименуйте папку проекта, убрав пробелы и скобки
-# Было: C:\Users\chg\Downloads\package (1)
-# Стало: C:\Users\chg\Downloads\package-1
+# Было: C:\Projects\package (1)
+# Стало: C:\Projects\package-1
 
-Rename-Item "C:\Users\chg\Downloads\package (1)" "package-1"
+Rename-Item "C:\Projects\package (1)" "package-1"
 
 # Затем откройте проект в Cursor из новой папки
 ```
@@ -182,7 +182,7 @@ docker compose -f docker-compose.dev.yml build
 2. Используйте короткий путь:
    ```powershell
    # Создайте символическую ссылку
-   New-Item -ItemType SymbolicLink -Path "C:\dev\package" -Target "C:\Users\chg\Downloads\package (1)"
+   New-Item -ItemType SymbolicLink -Path "C:\dev\package" -Target "C:\Projects\package (1)"
    ```
 
 ---

@@ -72,5 +72,26 @@ def ensure_python_311_available() -> None:
     raise SystemExit(message)
 
 
+def warn_tool_availability() -> None:
+    """
+    Print warnings about optional tooling required for full developer experience.
+
+    - GNU Make (Linux/macOS)
+    - Docker / Docker Desktop
+    """
+    # Check make (not critical on Windows, поэтому только предупреждение)
+    if shutil.which("make") is None:
+        print("[runtime] WARNING: 'make' not found in PATH. Some helper targets (make test, make servers, …) may not be available.")
+    else:
+        print("[runtime] make detected in PATH")
+
+    # Check docker client
+    if shutil.which("docker") is None:
+        print("[runtime] WARNING: 'docker' not found in PATH. Docker-based workflows (docker-compose, observability stack) will not work.")
+    else:
+        print("[runtime] docker client detected in PATH")
+
+
 if __name__ == "__main__":
     ensure_python_311_available()
+    warn_tool_availability()
