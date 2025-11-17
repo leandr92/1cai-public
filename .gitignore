@@ -241,6 +241,10 @@ TODO_PERSONAL.md
 # Private task tracking (not for public repo)
 docs/tasks/REMAINING_TASKS.md
 
+# Research comparisons with external products (должны оставаться только в приватных репо)
+docs/research/codealive_vs_1cai.tex
+docs/research/*_vs_*.tex
+
 # === КРИТИЧНО: Бизнес-планы и pricing (ТОЛЬКО для приватного репозитория!) ===
 # Эти файлы содержат конфиденциальную бизнес-информацию:
 # - Детальные цены tier'ов

@@ -1,7 +1,7 @@
 # Makefile for Enterprise 1C AI Development Stack
 # Quick commands for common tasks
 
-.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push smoke-tests check-runtime kind-up kind-down helm-deploy terraform-apply terraform-destroy policy-check gitops-apply gitops-sync ba-extract audit-hidden-dirs audit-secrets security-audit
+.PHONY: help install test docker-up docker-down migrate clean train-ml eval-ml train-ml-demo eval-ml-demo scrape-its render-uml render-uml-svg adr-new test-bsl export-context generate-docs bsl-ls-up bsl-ls-down bsl-ls-logs feature-init feature-validate release-notes release-tag release-push smoke-tests check-runtime kind-up kind-down helm-deploy terraform-apply terraform-destroy policy-check gitops-apply gitops-sync ba-extract audit-hidden-dirs audit-secrets security-audit validate-standards
 
 CONFIG ?= ERPCPM
 EPOCHS ?=
@@ -94,6 +94,7 @@ help:
 	@echo "  make audit-hidden-dirs- Report tracked hidden directories (.folder rule)"
 	@echo "  make audit-secrets    - Run lightweight secret scan (scripts/audit/check_secrets.py)"
 	@echo "  make security-audit   - Run full security audit (hidden dirs, secrets, git safety, comprehensive audit)"
+	@echo "  make validate-standards - Validate Scenario DSL / Autonomy Policy schemas against example data"
 	@echo "  make scrape-its       - Run ITS scraper (ITS_START_URL, ITS_OUTPUT, ITS_FORMATS, ITS_CONCURRENCY, ITS_SLEEP, ITS_PROXY, ITS_USER_AGENT_FILE)"
 	@echo "  make render-uml       - Render all PlantUML diagrams to PNG"
 	@echo "  make render-uml-svg   - Render PlantUML diagrams to PNG + SVG"
@@ -249,6 +250,41 @@ install-dev:
 	pip install -r requirements.txt
 	pip install -r requirements-stage1.txt
 	pip install -r requirements-dev.txt
+
+validate-standards:
+	python scripts/validation/validate_scenarios_against_schema.py
+	python scripts/validation/check_conformance_report.py
+	python scripts/validation/validate_code_graph_against_schema.py
+
+# CLI Tools
+CLI_BASE_URL ?= http://localhost:8000
+
+cli-query:
+	@python scripts/cli/1cai_cli.py --base-url $(CLI_BASE_URL) query "$(TEXT)"
+
+cli-scenarios:
+	@python scripts/cli/1cai_cli.py --base-url $(CLI_BASE_URL) scenarios
+
+cli-recommend:
+	@python scripts/cli/1cai_cli.py --base-url $(CLI_BASE_URL) recommend "$(QUERY)" --max $(MAX)
+
+cli-impact:
+	@python scripts/cli/1cai_cli.py --base-url $(CLI_BASE_URL) impact $(NODE_IDS) --max-depth $(MAX_DEPTH)
+
+cli-health:
+	@python scripts/cli/1cai_cli.py --base-url $(CLI_BASE_URL) health
+
+cli-cache-metrics:
+	@python scripts/cli/1cai_cli.py --base-url $(CLI_BASE_URL) cache metrics
+
+cli-cache-invalidate:
+	@python scripts/cli/1cai_cli.py --base-url $(CLI_BASE_URL) cache invalidate --clear-all
+
+cli-llm-providers:
+	@python scripts/cli/1cai_cli.py --base-url $(CLI_BASE_URL) llm-providers list
+
+cli-llm-select:
+	@python scripts/cli/1cai_cli.py --base-url $(CLI_BASE_URL) llm-providers select $(QUERY_TYPE) --max-cost $(MAX_COST) --max-latency $(MAX_LATENCY) --compliance $(COMPLIANCE) --risk-level $(RISK_LEVEL)
 
 # Docker
 docker-up:

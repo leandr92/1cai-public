@@ -24,5 +24,6 @@ Each ADR captures a decision, the context that led to it, the options that were 
 | ADR-0003 | Integrate external MCP tooling (platform context, test runner) | Proposed | 2025-11-10 |
 | ADR-0004 | Adopt tree-sitter BSL for AST-based analysis | Proposed | 2025-11-10 |
 | ADR-0005 | Export platform context and auto-generate docs | Proposed | 2025-11-10 |
+| ADR-0006 | Scenario Hub, LLM Provider Abstraction, Intelligent Cache | Accepted | 2025-11-17 |
 
 

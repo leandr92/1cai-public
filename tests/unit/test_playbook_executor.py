@@ -56,4 +56,14 @@ def test_security_audit_playbook_loads() -> None:
     assert plan.overall_risk.value == "read_only"
 
 
+def test_code_review_playbook_loads() -> None:
+    """Плейбук code review для PR должен загружаться и быть read_only."""
+    playbook_path = Path("playbooks/code_review_pr_example.yaml")
+    plan = load_playbook(playbook_path)
+
+    assert isinstance(plan, ScenarioPlan)
+    assert plan.id == "plan-code-review-EXTERNAL_PR"
+    assert plan.overall_risk.value == "read_only"
+
+
 

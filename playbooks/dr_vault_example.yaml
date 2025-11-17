@@ -20,6 +20,9 @@ steps:
     executor: "agent:DevOps"
     metadata:
       service: "vault"
+      graph_refs:
+        - "node:docs/runbooks/dr_rehearsal_plan.md:FILE"
+        - "node:scripts/runbooks/generate_dr_postmortem.py:MODULE"
   - id: dr-simulate
     title: "Симуляция отказа и восстановления"
     description: "Выполнить DR rehearsal в staging по плейбуку."
@@ -31,6 +34,9 @@ steps:
     executor: "playbook:dr"
     metadata:
       service: "vault"
+      graph_refs:
+        - "node:playbooks/dr_vault_example.yaml:FILE"
+        - "node:monitoring/AI_SERVICES_MONITORING.md:ALERT"
   - id: dr-postmortem
     title: "Генерация и доработка постмортема"
     description: "Сгенерировать черновик постмортема и доработать его."
@@ -42,6 +48,8 @@ steps:
     executor: "agent:DR"
     metadata:
       service: "vault"
+      graph_refs:
+        - "node:docs/runbooks/postmortems:INCIDENT"
 required_autonomy: "A2_non_prod_changes"
 overall_risk: "non_prod_change"
 context:

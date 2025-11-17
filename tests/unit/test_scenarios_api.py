@@ -20,7 +20,7 @@ def test_get_scenario_examples_basic_shape():
     data = response.json()
     assert "scenarios" in data
     assert isinstance(data["scenarios"], list)
-    assert len(data["scenarios"]) >= 2
+    assert len(data["scenarios"]) >= 3
 
     # Проверим один BA→Dev→QA сценарий
     first = data["scenarios"][0]
@@ -29,6 +29,13 @@ def test_get_scenario_examples_basic_shape():
     assert "steps" in first
     assert "overall_risk" in first
     assert "required_autonomy" in first
+    # Unified Change Graph: витринное поле с узлами
+    assert "_graph_nodes_touched" in first
+    assert isinstance(first["_graph_nodes_touched"], list)
+
+    # Убедимся, что среди сценариев есть code-review
+    ids = {s["id"] for s in data["scenarios"]}
+    assert any("code-review" in s_id for s_id in ids)
 
 
 @pytest.mark.unit

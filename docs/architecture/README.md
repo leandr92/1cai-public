@@ -44,8 +44,13 @@ docs/architecture/
 │   ├── ADR-0001-*.md           # Отдельные ADR
 │   ├── ADR-0002-*.md           # Решение по BSL-тестам
 │   └── ADR-0004-*.md           # Adopt tree-sitter для AST-анализа
-└── scripts/docs/*.py           # Утилиты генерации (render_uml, create_adr)
-└── research/                   # Дополнительные обзоры (например, alkoleft_inventory.md)
+├── scripts/docs/*.py           # Утилиты генерации (render_uml, create_adr)
+├── research/                   # Дополнительные обзоры (например, alkoleft_inventory.md)
+├── SCENARIO_DSL_SPEC.md        # Спецификация Scenario DSL (описание сценариев изменений)
+├── CODE_GRAPH_REFERENCE.md     # Unified Change Graph (модель графа изменений)
+├── AUTONOMY_POLICY_SPEC.md     # Спецификация уровней автономности и политик Scenario Policy
+├── AI_SCENARIO_HUB_REFERENCE.md # AI Scenario Hub & Two-Contour Execution (Reference)
+└── TOOL_REGISTRY_REFERENCE.md  # Tool Registry Reference (если существует)
 ```
 
 ## Процесс внесения изменений

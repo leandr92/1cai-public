@@ -1,6 +1,6 @@
 # 1C AI Stack — High Level Design (HLD)
 
-> Обновлено: 2025-11-09  
+> Обновлено: 2025-11-17  
 > Ответственный: Архитектурная группа (контакт: architecture@1cai.dev)
 
 Документ описывает архитектуру 1C AI Stack для технических специалистов. Здесь приведены цели продукта, ключевые компоненты, потоки данных, требования к инфраструктуре и схемы взаимодействия. Все диаграммы представлены в формате PlantUML и располагаются в `docs/architecture/uml/`.
@@ -45,6 +45,12 @@
 
 ### 3.1 Обзор подсистем
 - **API слой** (`src/api/*`): Graph API, Auth, Admin, Test Generation, Marketplace. Интерфейсы — REST/OAS3, GraphQL, WebSocket, MCP.
+- **AI Orchestrator** (`src/ai/orchestrator.py`): интеллектуальная маршрутизация запросов к AI-сервисам, классификация запросов, кэширование, fallback-механизмы. Интегрирован с Scenario Hub, Unified Change Graph, LLM Provider Abstraction и Intelligent Cache.
+- **Scenario Hub** (`src/ai/scenario_hub.py`, `src/ai/scenario_recommender.py`): протокол-независимый слой для определения и выполнения сценариев (BA→Dev→QA, Code Review, DR Rehearsal) с автоматическими рекомендациями на основе Unified Change Graph.
+- **Unified Change Graph** (`src/ai/code_graph*.py`): централизованный граф знаний для всех артефактов проекта (код, тесты, документация, инциденты). Автоматическое построение графа из кода 1С через `OneCCodeGraphBuilder`.
+- **LLM Provider Abstraction** (`src/ai/llm_provider_abstraction.py`): унифицированный уровень абстракции для работы с разными LLM провайдерами (Kimi, Qwen, GigaChat, YandexGPT) с автоматическим выбором на основе типа запроса, рисков, стоимости и compliance требований.
+- **Intelligent Cache** (`src/ai/intelligent_cache.py`): интеллектуальное кэширование с TTL на основе типа запроса, инвалидацией по тегам и типу запроса, LRU eviction и метриками производительности.
+- **Unified CLI Tool** (`scripts/cli/1cai_cli.py`): командная строка для работы с платформой (Orchestrator, Scenario Hub, Unified Change Graph, LLM провайдеры, кэш).
 - **Фоновые воркеры** (`src/workers`, `scripts/analysis/*`, `scripts/audit/*`): анализ конфигураций, архитектурный аудит, обновление графа зависимостей, генерация метрик.
 - **ML/AI сервисы** (`src/ml/*`, `scripts/ml/*`): подготовка датасетов, тренировка, оценка, публикация моделей, управление конфигурациями через `config/ml_datasets.json` и `Makefile`.
 - **Интеграции** (EDT Plugin, ITS Scraper, n8n, Telegram Bot, Marketplace): разные точки входа для команд разработки и поддержки.
@@ -63,7 +69,7 @@
 
 | Подсистема | Диаграмма | Ключевые элементы |
 |------------|-----------|-------------------|
-| Graph API / анализ | ![Component Analysis](uml/c4/png/component_analysis.png) | Роутеры, GraphQL resolvers, Rate Limiter, Audit Service, клиенты Neo4j/Qdrant, метрики |
+| Graph API / анализ | ![Component Analysis](uml/c4/png/component_analysis.png) | Роутеры, GraphQL resolvers, Rate Limiter, Audit Service, клиенты Neo4j/Qdrant, метрики, **AI Orchestrator, Scenario Recommender, Impact Analyzer, LLM Provider Abstraction, Intelligent Cache, Unified CLI Tool** |
 | ML Platform | ![Component ML](uml/c4/png/component_ml.png) | Оркестратор, preprocessing, feature store, тренер, регистратор, публикация, алертинг |
 | Integrations Hub | ![Component Integrations](uml/c4/png/component_integrations.png) | EDT actions, n8n node, Telegram bot, Marketplace publisher, ITS writer SDK |
 | Observability & Ops | ![Component Ops](uml/c4/png/component_ops.png) | Prometheus/Agent, Grafana, Alertmanager, CI/CD, IaC, Notification fanout |
@@ -91,6 +97,33 @@
 - **Analysis Request** — IDE инициирует анализ; результаты возвращаются через Graph API и стриминг.
 - **Knowledge Search** — ITS Scraper и MinIO формируют корпус знаний, Qdrant обеспечивает семантический поиск.
 - **AI Assisted Development** — API взаимодействует с моделями, сохраняет разговоры и метрики.
+
+### 4.1.1 AI Orchestrator и новые компоненты
+
+![Scenario Recommender Flow](uml/dynamics/png/scenario-recommender-flow.png)
+
+Источник: `docs/architecture/uml/dynamics/scenario-recommender-flow.puml`
+
+- **Scenario Recommendation** — AI Orchestrator использует Scenario Recommender для автоматического предложения релевантных сценариев на основе запроса пользователя и узлов Unified Change Graph.
+- **Impact Analysis** — Impact Analyzer анализирует влияние изменений через граф, определяя затронутые компоненты, тесты и генерируя рекомендации.
+
+![LLM Provider Selection](uml/dynamics/png/llm-provider-selection.png)
+
+Источник: `docs/architecture/uml/dynamics/llm-provider-selection.puml`
+
+- **LLM Provider Selection** — LLM Provider Abstraction автоматически выбирает оптимального провайдера на основе типа запроса, стоимости, compliance требований и рисков.
+
+![Intelligent Cache Flow](uml/dynamics/png/intelligent-cache-flow.png)
+
+Источник: `docs/architecture/uml/dynamics/intelligent-cache-flow.puml`
+
+- **Intelligent Caching** — Intelligent Cache обеспечивает контекстно-зависимое кэширование с TTL на основе типа запроса, автоматической инвалидацией и LRU eviction.
+
+![CLI Tool Overview](uml/integrations/png/cli-tool-overview.png)
+
+Источник: `docs/architecture/uml/integrations/cli-tool-overview.puml`
+
+- **Unified CLI Tool** — единая командная строка для работы со всеми компонентами платформы через REST API.
 
 ### 4.2 Ingestion: ITS Scraper
 

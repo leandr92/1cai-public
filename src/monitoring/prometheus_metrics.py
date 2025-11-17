@@ -12,7 +12,7 @@ TIER 1 Improvement: Comprehensive monitoring
 import logging
 from prometheus_client import Counter, Histogram, Gauge, Info, generate_latest, CONTENT_TYPE_LATEST
 from fastapi import Response
-from typing import Dict
+from typing import Dict, Optional
 import psutil
 import time
 from src.utils.structured_logging import StructuredLogger
@@ -144,6 +144,123 @@ orchestrator_cache_hits_total = Counter(
 orchestrator_cache_misses_total = Counter(
     'orchestrator_cache_misses_total',
     'Total cache misses in orchestrator'
+)
+
+# Scenario Hub / Scenario API metrics
+scenario_requests_total = Counter(
+    'scenario_requests_total',
+    'Total Scenario Hub API requests',
+    ['endpoint', 'autonomy_provided']
+)
+
+# Scenario Recommender metrics
+scenario_recommender_requests_total = Counter(
+    'scenario_recommender_requests_total',
+    'Total scenario recommendation requests',
+    ['status']
+)
+
+scenario_recommender_duration_seconds = Histogram(
+    'scenario_recommender_duration_seconds',
+    'Scenario recommendation duration',
+    ['graph_size_category'],  # small (<100), medium (100-1000), large (>1000)
+    buckets=[0.01, 0.05, 0.1, 0.5, 1.0, 2.0, 5.0]
+)
+
+scenario_recommender_recommendations_count = Histogram(
+    'scenario_recommender_recommendations_count',
+    'Number of scenarios recommended',
+    buckets=[1, 2, 3, 5, 10, 20]
+)
+
+# Impact Analyzer metrics
+impact_analyzer_requests_total = Counter(
+    'impact_analyzer_requests_total',
+    'Total impact analysis requests',
+    ['status']
+)
+
+impact_analyzer_duration_seconds = Histogram(
+    'impact_analyzer_duration_seconds',
+    'Impact analysis duration',
+    ['max_depth', 'include_tests'],
+    buckets=[0.01, 0.05, 0.1, 0.5, 1.0, 2.0, 5.0]
+)
+
+impact_analyzer_affected_nodes_count = Histogram(
+    'impact_analyzer_affected_nodes_count',
+    'Number of affected nodes found',
+    buckets=[1, 5, 10, 50, 100, 500, 1000]
+)
+
+# LLM Provider Abstraction metrics
+llm_provider_selections_total = Counter(
+    'llm_provider_selections_total',
+    'Total LLM provider selections',
+    ['provider_id', 'query_type', 'reason']
+)
+
+llm_provider_selection_duration_seconds = Histogram(
+    'llm_provider_selection_duration_seconds',
+    'LLM provider selection duration',
+    buckets=[0.001, 0.005, 0.01, 0.05, 0.1]
+)
+
+llm_provider_cost_estimate = Histogram(
+    'llm_provider_cost_estimate',
+    'Estimated cost per 1k tokens for selected provider',
+    ['provider_id'],
+    buckets=[0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0]
+)
+
+# Intelligent Cache metrics
+intelligent_cache_operations_total = Counter(
+    'intelligent_cache_operations_total',
+    'Intelligent Cache operations',
+    ['operation', 'status']  # operation: get, set, invalidate_by_tags, invalidate_by_query_type, clear
+)
+
+intelligent_cache_duration_seconds = Histogram(
+    'intelligent_cache_duration_seconds',
+    'Intelligent Cache operation duration',
+    ['operation'],
+    buckets=[0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0]
+)
+
+intelligent_cache_size = Gauge(
+    'intelligent_cache_size',
+    'Current size of Intelligent Cache',
+    ['cache_type']  # cache_type: orchestrator
+)
+
+intelligent_cache_max_size = Gauge(
+    'intelligent_cache_max_size',
+    'Maximum size of Intelligent Cache',
+    ['cache_type']
+)
+
+intelligent_cache_hits_total = Counter(
+    'intelligent_cache_hits_total',
+    'Total Intelligent Cache hits',
+    ['cache_type', 'query_type']
+)
+
+intelligent_cache_misses_total = Counter(
+    'intelligent_cache_misses_total',
+    'Total Intelligent Cache misses',
+    ['cache_type', 'query_type']
+)
+
+intelligent_cache_evictions_total = Counter(
+    'intelligent_cache_evictions_total',
+    'Total Intelligent Cache evictions',
+    ['cache_type', 'eviction_reason']  # eviction_reason: lru, ttl_expired
+)
+
+intelligent_cache_invalidations_total = Counter(
+    'intelligent_cache_invalidations_total',
+    'Total Intelligent Cache invalidations',
+    ['cache_type', 'invalidation_type']  # invalidation_type: tags, query_type, manual
 )
 
 
@@ -402,6 +519,60 @@ def set_ba_session_counts(active_sessions: int, active_participants: int):
     """
     ba_ws_active_sessions.set(max(0, active_sessions))
     ba_ws_active_participants.set(max(0, active_participants))
+
+
+def track_scenario_recommendation(duration: float, graph_size_category: str, recommendations_count: int, status: str = 'success'):
+    """Track scenario recommendation"""
+    scenario_recommender_requests_total.labels(status=status).inc()
+    scenario_recommender_duration_seconds.labels(graph_size_category=graph_size_category).observe(duration)
+    scenario_recommender_recommendations_count.observe(recommendations_count)
+
+
+def track_impact_analysis(duration: float, max_depth: int, include_tests: bool, affected_nodes_count: int, status: str = 'success'):
+    """Track impact analysis"""
+    impact_analyzer_requests_total.labels(status=status).inc()
+    impact_analyzer_duration_seconds.labels(max_depth=str(max_depth), include_tests=str(include_tests)).observe(duration)
+    impact_analyzer_affected_nodes_count.observe(affected_nodes_count)
+
+
+def track_llm_provider_selection(duration: float, provider_id: str, query_type: str, reason: str = 'default', cost_per_1k_tokens: Optional[float] = None):
+    """Track LLM provider selection"""
+    llm_provider_selections_total.labels(provider_id=provider_id, query_type=query_type, reason=reason).inc()
+    llm_provider_selection_duration_seconds.observe(duration)
+    if cost_per_1k_tokens is not None:
+        llm_provider_cost_estimate.labels(provider_id=provider_id).observe(cost_per_1k_tokens)
+
+
+def track_intelligent_cache_operation(operation: str, duration: float, status: str = 'success', cache_type: str = 'orchestrator'):
+    """Track Intelligent Cache operation"""
+    intelligent_cache_operations_total.labels(operation=operation, status=status).inc()
+    intelligent_cache_duration_seconds.labels(operation=operation).observe(duration)
+
+
+def track_intelligent_cache_hit(cache_type: str = 'orchestrator', query_type: Optional[str] = None):
+    """Track Intelligent Cache hit"""
+    intelligent_cache_hits_total.labels(cache_type=cache_type, query_type=query_type or 'unknown').inc()
+
+
+def track_intelligent_cache_miss(cache_type: str = 'orchestrator', query_type: Optional[str] = None):
+    """Track Intelligent Cache miss"""
+    intelligent_cache_misses_total.labels(cache_type=cache_type, query_type=query_type or 'unknown').inc()
+
+
+def track_intelligent_cache_eviction(cache_type: str = 'orchestrator', eviction_reason: str = 'lru'):
+    """Track Intelligent Cache eviction"""
+    intelligent_cache_evictions_total.labels(cache_type=cache_type, eviction_reason=eviction_reason).inc()
+
+
+def track_intelligent_cache_invalidation(cache_type: str = 'orchestrator', invalidation_type: str = 'manual'):
+    """Track Intelligent Cache invalidation"""
+    intelligent_cache_invalidations_total.labels(cache_type=cache_type, invalidation_type=invalidation_type).inc()
+
+
+def update_intelligent_cache_size(cache_type: str = 'orchestrator', current_size: int = 0, max_size: int = 0):
+    """Update Intelligent Cache size metrics"""
+    intelligent_cache_size.labels(cache_type=cache_type).set(current_size)
+    intelligent_cache_max_size.labels(cache_type=cache_type).set(max_size)
 
 
 # ==================== METRICS ENDPOINT ====================

@@ -21,6 +21,9 @@ steps:
     executor: "agent:BA"
     metadata:
       feature_id: "DEMO_FEATURE"
+      graph_refs:
+        - "node:ba-requirements:BA_REQUIREMENT"
+        - "node:tests/system/test_e2e_ba_dev_qa.py::test_ba_to_dev_to_qa_flow:TEST_CASE"
   - id: dev-impl
     title: "Реализация изменений разработчиком"
     description: "Dev-агент предлагает изменения в конфигурации/коде."
@@ -32,6 +35,9 @@ steps:
     executor: "agent:Dev"
     metadata:
       feature_id: "DEMO_FEATURE"
+      graph_refs:
+        - "node:src/ai/role_based_router.py:MODULE"
+        - "node:src/ai/agents/developer_ai_secure.py:MODULE"
   - id: qa-coverage
     title: "Покрытие тестами и прогон E2E"
     description: "QA-агент генерирует/обновляет тесты и запускает E2E."
@@ -43,6 +49,9 @@ steps:
     executor: "agent:QA"
     metadata:
       feature_id: "DEMO_FEATURE"
+      graph_refs:
+        - "node:tests/system/test_e2e_ba_dev_qa.py:TEST_SUITE"
+        - "node:monitoring/AI_SERVICES_MONITORING.md:ALERT"
 required_autonomy: "A2_non_prod_changes"
 overall_risk: "non_prod_change"
 context:

@@ -26,6 +26,9 @@ def test_dry_run_playbook_endpoint_success() -> None:
     assert report.get("scenario_id") == "plan-ba-dev-qa-DEMO_FEATURE"
     assert "summary" in report
     assert isinstance(report.get("timeline"), list)
+    # Unified Change Graph: поле graph_nodes_touched присутствует
+    assert "graph_nodes_touched" in report
+    assert isinstance(report["graph_nodes_touched"], list)
 
 
 def test_dry_run_playbook_endpoint_not_found() -> None:

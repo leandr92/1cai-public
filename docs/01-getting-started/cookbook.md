@@ -69,6 +69,90 @@ python scripts/testing/kimi_benchmark.py --requests 10 --concurrency 2
 
 ---
 
+## 5.1. Использовать российские AI провайдеры (GigaChat, YandexGPT, 1C:Напарник)
+
+Платформа автоматически выбирает российские провайдеры для русскоязычных запросов через LLM Provider Abstraction.
+
+### Конфигурация
+
+**GigaChat:**
+```bash
+# Вариант 1: Access Token (прямой доступ)
+export GIGACHAT_ACCESS_TOKEN="your-token"
+
+# Вариант 2: Client Credentials (OAuth 2.0)
+export GIGACHAT_CLIENT_ID="your-client-id"
+export GIGACHAT_CLIENT_SECRET="your-client-secret"
+```
+
+**YandexGPT:**
+```bash
+export YANDEXGPT_API_KEY="your-api-key"
+export YANDEXGPT_FOLDER_ID="your-folder-id"
+```
+
+**1C:Напарник:**
+```bash
+export NAPARNIK_API_KEY="your-api-key"
+```
+
+### Проверка интеграции
+
+```bash
+# E2E тесты для GigaChat/YandexGPT
+python -m pytest tests/system/test_e2e_llm_provider_abstraction.py::test_e2e_gigachat_integration_with_orchestrator -v
+python -m pytest tests/system/test_e2e_llm_provider_abstraction.py::test_e2e_yandexgpt_integration_with_orchestrator -v
+
+# E2E тесты для 1C:Напарник
+python -m pytest tests/system/test_e2e_llm_provider_abstraction.py::test_e2e_naparnik_integration_with_orchestrator -v
+python -m pytest tests/system/test_e2e_llm_provider_abstraction.py::test_e2e_naparnik_in_llm_provider_abstraction -v
+
+# Unit тесты для 1C:Напарник
+python -m pytest tests/unit/test_naparnik_client.py -v
+```
+
+### Использование через API
+
+```bash
+# Русскоязычный запрос автоматически выберет российский провайдер
+curl -X POST "http://localhost:8000/api/ai/query" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Объясни, как работает механизм проведения документов в 1С", "context": {}}' | jq
+
+# Запрос с требованием compliance (152-ФЗ)
+curl -X POST "http://localhost:8000/api/ai/query" \
+  -H "Content-Type: application/json" \
+  -d '{"query": "Запрос на русском", "context": {"compliance": ["152-ФЗ"]}}' | jq
+
+# Выбор провайдера через LLM Provider Abstraction
+curl -X POST "http://localhost:8000/api/llm/select-provider" \
+  -H "Content-Type: application/json" \
+  -d '{"query_type": "russian_text", "required_compliance": ["152-ФЗ"]}' | jq
+```
+
+### Использование через CLI
+
+```bash
+# Запрос через CLI (автоматически выберет российский провайдер для русского текста)
+python scripts/cli/1cai_cli.py query "Объясни, как работает механизм проведения документов в 1С"
+
+# Список доступных LLM провайдеров
+python scripts/cli/1cai_cli.py llm-providers list
+
+# Выбор провайдера с учетом compliance
+python scripts/cli/1cai_cli.py llm-providers select --query-type russian_text --compliance 152-ФЗ
+```
+
+**Особенности:**
+- Автоматическое определение русского текста в запросах
+- Выбор провайдера на основе compliance требований (152-ФЗ, GDPR)
+- 1C:Напарник бесплатен для пользователей 1С (cost 0.0)
+- Автоматический fallback между российскими провайдерами
+
+Подробнее: `docs/06-features/AI_PERFORMANCE_GUIDE.md` (разделы 3.1 и 1C:Напарник интеграция).
+
+---
+
 ## 6. DR rehearsal + постмортем (staging)
 
 ```bash
@@ -135,4 +219,25 @@ python -m pytest tests/unit/test_ai_orchestrator_basic.py -q
 python -m pytest tests/performance/test_load_performance.py::test_api_latency_benchmark -q
 python -m pytest tests/performance/test_load_performance.py::test_concurrent_requests -q
 ```
+
+---
+
+## 10. Проверить соответствие стандартам (Scenario DSL / Policy / Graph)
+
+Если вы используете наши сценарии/политику/граф в своём окружении или после крупных
+изменений схем/примеров, полезно прогнать стандартизирующие проверки:
+
+```bash
+make validate-standards
+```
+
+Команда:
+
+- валидирует примеры ScenarioPlan и Autonomy Policy по JSON Schema;
+- проверяет пример экспорта Unified Change Graph;
+- формирует JSON-отчёт о совместимости (скрипт `scripts/validation/check_conformance_report.py`).
+
+Подробнее про стандарты и уровни совместимости:
+`docs/architecture/SCENARIO_DSL_SPEC.md`, `AUTONOMY_POLICY_SPEC.md`,
+`CODE_GRAPH_REFERENCE.md` и `STANDARDS_CONFORMANCE_CHECKLIST.md`.
 

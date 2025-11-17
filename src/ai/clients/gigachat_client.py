@@ -141,7 +141,25 @@ class GigaChatClient:
         except aiohttp.ClientError as exc:
             raise LLMCallError(f"GigaChat network error: {exc}") from exc
 
-    async def _get_session(self) -> aiohttp.ClientSession:
+    async def _get_session(self, use_pool: bool = True) -> aiohttp.ClientSession:
+        """
+        Получить HTTP сессию, используя ConnectionPool если доступен.
+
+        Args:
+            use_pool: Использовать ConnectionPool если доступен (по умолчанию True)
+
+        Returns:
+            aiohttp.ClientSession
+        """
+        if use_pool:
+            try:
+                from src.ai.connection_pool import get_global_pool
+                pool = get_global_pool()
+                return await pool.get_session(self.config.base_url)
+            except ImportError:
+                # ConnectionPool не доступен, используем обычную сессию
+                pass
+
         if self._session is None or self._session.closed:
             self._session = aiohttp.ClientSession(timeout=self._timeout)
         return self._session

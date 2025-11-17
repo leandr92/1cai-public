@@ -1,0 +1,1523 @@
+{
+  "repo": "DmitrL-dev/1cai-public",
+  "indexed_at": "2025-11-17T11:22:38.084104",
+  "statistics": {
+    "files_found": 1574,
+    "files_processed": 1561,
+    "functions_found": 829,
+    "modules_found": 131,
+    "total_lines": 524370,
+    "errors": 0
+  },
+  "files": [
+    {
+      "file_path": "1c_mcp/src/1c_ext/CommonModules/mcp_Выполнение/Ext/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 3163,
+      "lines_count": 64,
+      "functions_count": 3,
+      "functions": [
+        "ВыполнитьИнструмент",
+        "ПрочитатьРесурс",
+        "ПолучитьПромпт"
+      ],
+      "regions_count": 1,
+      "regions": [
+        "ПрограммныйИнтерфейс"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.453910"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/CommonModules/mcp_КонтейнерыПовтИсп/Ext/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 2358,
+      "lines_count": 59,
+      "functions_count": 3,
+      "functions": [
+        "Инструменты",
+        "Ресурсы",
+        "Промпты"
+      ],
+      "regions_count": 1,
+      "regions": [
+        "ПрограммныйИнтерфейс"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.471466"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/CommonModules/mcp_Метаданные/Ext/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 25309,
+      "lines_count": 457,
+      "functions_count": 15,
+      "functions": [
+        "ТаблицаИнструментов",
+        "ТаблицаРесурсов",
+        "ТаблицаПромптов",
+        "ДобавитьИнструмент",
+        "ДобавитьРесурс",
+        "ДобавитьПромпт",
+        "ЗаполнитьТаблицуИнструментов",
+        "ЗаполнитьТаблицуРесурсов",
+        "ЗаполнитьТаблицуПромптов",
+        "ПараметрИнструмента"
+      ],
+      "regions_count": 6,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "СозданиеТаблицОписанияОбъектов",
+        "ДобавлениеСтрок",
+        "СхемаПараметровИнструментов",
+        "ПараметрыПромптов"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.480793"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/CommonModules/mcp_ОбщегоНазначения/Ext/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 40692,
+      "lines_count": 784,
+      "functions_count": 29,
+      "functions": [
+        "JSONВСтруктуру",
+        "РазобратьURL",
+        "СтруктураВJSON",
+        "ЭтоБуква",
+        "ЭтоЦифра",
+        "НормализоватьКлюч",
+        "СоответствиеВСтруктуруСНормализациейКлючей",
+        "ОбработатьИсключение",
+        "ВыполнитьСОбработкойОшибок",
+        "ПолучитьFallbackЗначение"
+      ],
+      "regions_count": 4,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции",
+        "ОбработкаОшибок",
+        "ИнтеграцияКомпонентов"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.501666"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/CommonModules/mcp_Содержимое/Ext/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 6571,
+      "lines_count": 142,
+      "functions_count": 5,
+      "functions": [
+        "ТекстовоеСодержимое",
+        "ТекстовоеСодержимоеРесурса",
+        "ИзображениеСодержимое",
+        "ДвоичноеСодержимое",
+        "СообщениеПромпта"
+      ],
+      "regions_count": 1,
+      "regions": [
+        "ПрограммныйИнтерфейс"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.515238"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/DataProcessors/mcp_ИнструментДанныеОКонфигурации/Ext/ManagerModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 9196,
+      "lines_count": 182,
+      "functions_count": 6,
+      "functions": [
+        "ДобавитьИнструменты",
+        "ВыполнитьИнструмент",
+        "ДобавитьИнструментСписокМетаданных",
+        "СписокМетаданных",
+        "ДобавитьИнструментСтруктураОбъекта",
+        "СтруктураОбъектаМетаданных"
+      ],
+      "regions_count": 2,
+      "regions": [
+        "ИнструментСписокМетаданных",
+        "ИнструментСтруктураОбъекта"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.527204"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/DataProcessors/mcp_ИнструментДанныеОКонфигурации/Ext/ObjectModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 8884,
+      "lines_count": 162,
+      "functions_count": 7,
+      "functions": [
+        "ОписаниеСтруктурыОбъектаМетаданных",
+        "ЭтоРегистрМД",
+        "ПолучитьСтрокуТипаМетаданных",
+        "ВывестиЗаголовокОбъектаМетаданных",
+        "ВывестиСписокРеквизитовМетаданных",
+        "ВывестиТабличныеЧастиМетаданных",
+        "ВывестиВладельцевМетаданных"
+      ],
+      "regions_count": 4,
+      "regions": [
+        "Переменные",
+        "ПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции",
+        "ИнструментСтруктураОбъекта"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.540458"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/DataProcessors/mcp_РесурсОписаниеСинтаксисаВстроенногоЯзыка/Ext/ManagerModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 1902,
+      "lines_count": 44,
+      "functions_count": 2,
+      "functions": [
+        "ДобавитьРесурсы",
+        "ПрочитатьРесурс"
+      ],
+      "regions_count": 1,
+      "regions": [
+        "ПрограммныйИнтерфейс"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.556314"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/DataProcessors/mcp_УправлениеСервером/Ext/ManagerModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 5,
+      "lines_count": 3,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.575394"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/DataProcessors/mcp_УправлениеСервером/Ext/ObjectModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 5,
+      "lines_count": 3,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.588333"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/DataProcessors/mcp_УправлениеСервером/Forms/Форма/Ext/Form/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 609,
+      "lines_count": 10,
+      "functions_count": 1,
+      "functions": [
+        "ПриСозданииНаСервере"
+      ],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.600595"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/HTTPServices/mcp_APIBackend/Ext/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 32373,
+      "lines_count": 604,
+      "functions_count": 16,
+      "functions": [
+        "rpcPOST",
+        "healthGET",
+        "mcpPOST",
+        "mcpGET",
+        "ОбработатьJSONRPCЗапрос",
+        "ОбработатьInitialize",
+        "СформироватьJSONУспех",
+        "СформироватьJSONОшибку",
+        "СформироватьОтвет204",
+        "ПолучитьСписокИнструментов"
+      ],
+      "regions_count": 6,
+      "regions": [
+        "ОбщийИнтерфейс",
+        "УнифицированнаяОбработкаJSONRPC",
+        "РаботаСИнструментами",
+        "РаботаСРесурсами",
+        "РаботаСПромптами"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.615370"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_Восстановление/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 54608,
+      "lines_count": 1032,
+      "functions_count": 37,
+      "functions": [
+        "ВыполнитьСРетрай",
+        "ВыполнитьВТранзакцииСОткатом",
+        "ВыполнитьСCircuitBreaker",
+        "ВыполнитьСGracefulDegradation",
+        "ДобавитьДжиттер",
+        "ПолучитьФункциюОбработчик",
+        "СохранитьСостояниеСистемы",
+        "ВосстановитьСостояниеСистемы",
+        "ПолучитьСостояниеBreaker",
+        "ПроверитьИОбновитьСостояниеBreaker"
+      ],
+      "regions_count": 5,
+      "regions": [
+        "СлужебныйПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции",
+        "ВспомогательныеФункции",
+        "МониторингИМетрики",
+        "Инициализация"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.626981"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_Диагностика/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 33829,
+      "lines_count": 625,
+      "functions_count": 22,
+      "functions": [
+        "ПолучитьСтекВызовов",
+        "СоздатьКонтекстОперации",
+        "ЗавершитьКонтекстОперации",
+        "ВычислитьХешОшибки",
+        "ПроверитьДедупликациюОшибки",
+        "СохранитьМетрикуПроизводительности",
+        "ПолучитьОтчетПоПроизводительности",
+        "ПолучитьАнализЧастыхОшибок",
+        "ПолучитьРекомендацииПоОптимизации",
+        "РазобратьСтекВызовов"
+      ],
+      "regions_count": 3,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции",
+        "Инициализация"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.633797"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_ИсключенияОшибок/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 48961,
+      "lines_count": 845,
+      "functions_count": 33,
+      "functions": [
+        "ПолучитьКодыОшибок",
+        "СоздатьMcpИсключение",
+        "СоздатьВосстановимоеИсключение",
+        "СоздатьНевосстановимоеИсключение",
+        "СоздатьВалидационноеИсключение",
+        "СоздатьТранспортноеИсключение",
+        "СоздатьИнтеграционноеИсключение",
+        "СоздатьАутентификационноеИсключение",
+        "СоздатьТранзакционноеИсключение",
+        "ИнициализироватьКатегориюИсключения"
+      ],
+      "regions_count": 8,
+      "regions": [
+        "СлужебныйПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции",
+        "РаботаСоСтруктурированнымЛогированием",
+        "ВспомогательныеПроцедурыИФункции",
+        "ПримерыИспользования"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.644230"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_Кэширование/Examples.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 16729,
+      "lines_count": 307,
+      "functions_count": 5,
+      "functions": [
+        "ПолучитьДанныеОтчетаСТехПоддержкой",
+        "НастроитьМногоуровневоеКэширование",
+        "ОтправитьМетрикиКэшаВМониторинг",
+        "ОбработкаСобытияОбновленияКонфигурации",
+        "ОбработкаСобытияОбновленияДанных"
+      ],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.657352"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_Кэширование/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 30073,
+      "lines_count": 555,
+      "functions_count": 15,
+      "functions": [
+        "УстановитьВКэш",
+        "ПолучитьИзКэша",
+        "УдалитьИзКэша",
+        "ОчиститьКэш",
+        "ПолучитьКэшМетаданныхКонфигурации",
+        "СоздатьETag",
+        "ПроверитьETag",
+        "ИнвалидироватьКэшПоСобытию",
+        "ПолучитьСтатистикуКэша",
+        "ИнициализироватьКэш"
+      ],
+      "regions_count": 4,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "СлужебныйПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции",
+        "Инициализация"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.664252"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_Логирование/Examples.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 20826,
+      "lines_count": 398,
+      "functions_count": 18,
+      "functions": [
+        "Пример1_ПростоеИнформационноеСообщение",
+        "Пример2_ЛогированиеСВременнымиМетками",
+        "Пример3_ЛогированиеВебСервиса",
+        "Пример4_ЛогированиеОбработкиФайлов",
+        "Пример5_ЛогированиеБизнесПроцессов",
+        "Пример6_ЛогированиеСМаскированием",
+        "Пример7_ЛогированиеФоновыхЗаданий",
+        "Пример8_ЛогированиеСКорреляционнымиID",
+        "ВыполнитьДлительнуюОперации",
+        "ОбработатьФайлДанных"
+      ],
+      "regions_count": 1,
+      "regions": [
+        "ПримерыИспользованияМодуляЛогирования"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.675893"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_Логирование/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 48119,
+      "lines_count": 907,
+      "functions_count": 39,
+      "functions": [
+        "ЛогироватьИнформацию",
+        "ЛогироватьПредупреждение",
+        "ЛогироватьОшибку",
+        "ЛогироватьКритическуюОшибку",
+        "ЗаписатьСтруктурированныйЛог",
+        "СформироватьСтруктуруЛога",
+        "СгенерироватьИдентификаторЗапроса",
+        "СгенерироватьКорреляционныйИдентификатор",
+        "ПолучитьКорреляционныеИдентификаторы",
+        "НачатьНовуюОперацию"
+      ],
+      "regions_count": 2,
+      "regions": [
+        "СлужебныйПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.686144"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_СообщенияОбОшибках/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 50788,
+      "lines_count": 471,
+      "functions_count": 8,
+      "functions": [
+        "ПолучитьСообщениеПользователю",
+        "ПолучитьТехническоеСообщение",
+        "ПолучитьСообщениеРазработчика",
+        "ОпределитьЯзыкПользователя",
+        "НайтиСообщениеПоКоду",
+        "ПодставитьПараметрыВСообщение",
+        "ПолучитьСправочникСообщений",
+        "ИнициализацияМодуля"
+      ],
+      "regions_count": 3,
+      "regions": [
+        "СлужебныйПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции",
+        "Инициализация"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.699020"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_Тестирование/Module.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 42688,
+      "lines_count": 898,
+      "functions_count": 32,
+      "functions": [
+        "Инициализировать",
+        "СоздатьНаборТестов",
+        "ЗавершитьНаборТестов",
+        "ВыполнитьТест",
+        "ОжидаемРавно",
+        "ОжидаемНеРавно",
+        "ОжидаемИстину",
+        "ОжидаемЛожь",
+        "ОжидаемНеопределено",
+        "ОжидаемЗаполненность"
+      ],
+      "regions_count": 9,
+      "regions": [
+        "СлужебныйПрограммныйИнтерфейс",
+        "Инициализация",
+        "ТестовыеНаборы",
+        "ВыполнениеТестов",
+        "Assertions"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.708879"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_Тестирование/Forms/УправлениеТестами/Form.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 23514,
+      "lines_count": 516,
+      "functions_count": 37,
+      "functions": [
+        "ПриОткрытии",
+        "КомандаЗапуститьТесты",
+        "КомандаЗапуститьВсеТесты",
+        "КомандаОстановитьТесты",
+        "КомандаОбновитьСписок",
+        "КомандаЭкспортироватьОтчет",
+        "ФильтрКатегорияПриИзменении",
+        "ФильтрСтатусПриИзменении",
+        "ИнициализироватьФорму",
+        "ЗагрузитьТестовыеНаборы"
+      ],
+      "regions_count": 5,
+      "regions": [
+        "ОбработчикиСобытийФормы",
+        "ОбработчикиКомандФормы",
+        "ОбработчикиЭлементовФормы",
+        "СлужебныеПроцедурыИФункции",
+        "ДемоТестовыеФункции"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.719578"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_Тестирование/Утилиты/ГенераторОтчетов.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 37310,
+      "lines_count": 676,
+      "functions_count": 16,
+      "functions": [
+        "СоздатьОтчет",
+        "СоздатьИнтерактивныйHTMLОтчет",
+        "СоздатьJUnitXMLОтчет",
+        "СоздатьMarkdownОтчет",
+        "ПодсчитатьОбщуюСтатистику",
+        "СоздатьБлокОбщейСтатистики",
+        "СоздатьНавигацию",
+        "СоздатьДеталиНаборов",
+        "ПолучитьCSSСтили",
+        "ПолучитьJavaScriptКод"
+      ],
+      "regions_count": 3,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "ОсновныеОтчеты",
+        "ВспомогательныеФункции"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.728058"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_Тестирование/Утилиты/СравнениеДанных.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 25807,
+      "lines_count": 477,
+      "functions_count": 9,
+      "functions": [
+        "СравнитьСтруктурыГлубоко",
+        "СравнитьМассивыГлубоко",
+        "СравнитьЗначенияГлубоко",
+        "СравнитьJSONRPCОтветы",
+        "СравнитьСхемыИнструментов",
+        "СравнитьПримитивныеТипы",
+        "ОбработатьПустыеЗначения",
+        "СравнитьСоответствияГлубоко",
+        "ПреобразоватьВСтруктуру"
+      ],
+      "regions_count": 4,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "ГлубокоеСравнение",
+        "СпециализированныеСравнения",
+        "ВспомогательныеФункции"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.736392"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_ТестыИнструментов/mcp_ТестыИнструментДанныеОКонфигурации/Ext/ManagerModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 20847,
+      "lines_count": 368,
+      "functions_count": 8,
+      "functions": [
+        "ЗапуститьВсеТесты",
+        "ЗапуститьТестыМетода",
+        "ЗапуститьPositiveТесты",
+        "ЗапуститьNegativeТесты",
+        "ЗапуститьPerformanceТесты",
+        "ПолучитьСтатистику",
+        "ПолучитьСписокМетодов",
+        "ВыполнитьИнструмент"
+      ],
+      "regions_count": 3,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "ПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.745110"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_ТестыИнструментов/mcp_ТестыИнструментДанныеОКонфигурации/Ext/ObjectModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 36029,
+      "lines_count": 611,
+      "functions_count": 7,
+      "functions": [
+        "ВыполнитьВсеТестыИнструмента",
+        "ТестироватьListMetadataObjects",
+        "ТестироватьGetMetadataStructure",
+        "ТестироватьПроизводительность",
+        "ТестироватьКэширование",
+        "ПолучитьОбщуюСтатистику",
+        "ВыполнитьИнструмент"
+      ],
+      "regions_count": 2,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.755851"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_ТестыИнструментов/mcp_ТестыИнструментЗаписьФайла/Ext/ObjectModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 4245,
+      "lines_count": 66,
+      "functions_count": 1,
+      "functions": [
+        "ВыполнитьВсеТестыИнструмента"
+      ],
+      "regions_count": 1,
+      "regions": [
+        "ПрограммныйИнтерфейс"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.764219"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_ТестыИнструментов/mcp_ТестыИнструментПолучениеДанныхОБазе/Ext/ObjectModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 4267,
+      "lines_count": 66,
+      "functions_count": 1,
+      "functions": [
+        "ВыполнитьВсеТестыИнструмента"
+      ],
+      "regions_count": 1,
+      "regions": [
+        "ПрограммныйИнтерфейс"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.773987"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_ТестыИнструментов/mcp_ТестыИнструментСписокКаталогов/Ext/ObjectModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 2202,
+      "lines_count": 36,
+      "functions_count": 1,
+      "functions": [
+        "ВыполнитьВсеТестыИнструмента"
+      ],
+      "regions_count": 1,
+      "regions": [
+        "ПрограммныйИнтерфейс"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.782772"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_ТестыИнструментов/mcp_ТестыИнструментЧтениеФайла/Ext/ObjectModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 3666,
+      "lines_count": 59,
+      "functions_count": 1,
+      "functions": [
+        "ВыполнитьВсеТестыИнструмента"
+      ],
+      "regions_count": 1,
+      "regions": [
+        "ПрограммныйИнтерфейс"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.796248"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_ТестыИнструментов/mcp_ТестыОсновной/Ext/ManagerModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 14602,
+      "lines_count": 245,
+      "functions_count": 8,
+      "functions": [
+        "ЗапуститьВсеТесты",
+        "ЗапуститьТестыИнструмента",
+        "ПолучитьСписокИнструментов",
+        "ПолучитьСтатистикуТестирования",
+        "СоздатьТестовыеДанные",
+        "СоздатьТестовыеМетаданные",
+        "СоздатьТестовыеФайлы",
+        "СоздатьТестовыеДанныеБазы"
+      ],
+      "regions_count": 3,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "ПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.806335"
+    },
+    {
+      "file_path": "code/1c_ext/mcp_ТестыИнструментов/mcp_ТестыОсновной/Ext/ObjectModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 39829,
+      "lines_count": 694,
+      "functions_count": 8,
+      "functions": [
+        "ВыполнитьВсеТесты",
+        "ТестироватьИнструментДанныеОКонфигурации",
+        "ТестироватьИнструментСписокКаталогов",
+        "ТестироватьИнструментЧтениеФайла",
+        "ТестироватьИнструментЗаписьФайла",
+        "ТестироватьИнструментПолучениеДанныхОБазе",
+        "ВыполнитьИнструмент",
+        "ПроверитьФайлЗаписан"
+      ],
+      "regions_count": 2,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции"
+      ],
+      "indexed_at": "2025-11-17T11:22:21.815388"
+    },
+    {
+      "file_path": "edt-plugin/test-fixtures/SampleProject/CommonModules/DemoModule.bsl",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 1680,
+      "lines_count": 53,
+      "functions_count": 4,
+      "functions": [
+        "РасчетИтоговойСуммы",
+        "РассчитатьНалог",
+        "ПолучитьКурсВалюты",
+        "ОчиститьИсторию"
+      ],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.824243"
+    },
+    {
+      "file_path": "requirements-dev.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 652,
+      "lines_count": 50,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.830282"
+    },
+    {
+      "file_path": "requirements-neural.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 418,
+      "lines_count": 27,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.838562"
+    },
+    {
+      "file_path": "requirements-parser-optimization.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 502,
+      "lines_count": 29,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.843090"
+    },
+    {
+      "file_path": "requirements-stage1.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 336,
+      "lines_count": 29,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.846890"
+    },
+    {
+      "file_path": "requirements-telegram.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 859,
+      "lines_count": 32,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.850580"
+    },
+    {
+      "file_path": "requirements.gateway.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 313,
+      "lines_count": 18,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.856651"
+    },
+    {
+      "file_path": "requirements.metrics.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 173,
+      "lines_count": 9,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.860594"
+    },
+    {
+      "file_path": "requirements.risk.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 168,
+      "lines_count": 8,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.864308"
+    },
+    {
+      "file_path": "requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 2104,
+      "lines_count": 97,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.868135"
+    },
+    {
+      "file_path": "1c_mcp/src/1c_ext/DataProcessors/mcp_РесурсОписаниеСинтаксисаВстроенногоЯзыка/Templates/syntax_1c/Ext/Template.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 6348,
+      "lines_count": 218,
+      "functions_count": 4,
+      "functions": [
+        "ОбработатьДок",
+        "ПолучитьСумму",
+        "ОткрытьФорму",
+        "Сервисная"
+      ],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.885717"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 130,
+      "lines_count": 7,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.893947"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/cache/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 2218,
+      "lines_count": 58,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.901579"
+    },
+    {
+      "file_path": "code/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 7828,
+      "lines_count": 336,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.911771"
+    },
+    {
+      "file_path": "code/py_server/requirements-cache.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 1150,
+      "lines_count": 65,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.920751"
+    },
+    {
+      "file_path": "code/py_server/requirements-test.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 2355,
+      "lines_count": 70,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.926667"
+    },
+    {
+      "file_path": "code/py_server/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 781,
+      "lines_count": 31,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.932419"
+    },
+    {
+      "file_path": "code/py_server/cache/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 782,
+      "lines_count": 14,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.943835"
+    },
+    {
+      "file_path": "code/py_server/logging/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 1583,
+      "lines_count": 30,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.952788"
+    },
+    {
+      "file_path": "code/py_server/ratelimit/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 1222,
+      "lines_count": 50,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.959883"
+    },
+    {
+      "file_path": "demo/demo-ai-assistants-1c/docker/services/1c-integration/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 410,
+      "lines_count": 23,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.968796"
+    },
+    {
+      "file_path": "demo/demo-ai-assistants-1c/docker/services/ai-assistant/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 398,
+      "lines_count": 22,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.977481"
+    },
+    {
+      "file_path": "demo/demo-ai-assistants-1c/docker/services/analytics/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 356,
+      "lines_count": 21,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.988907"
+    },
+    {
+      "file_path": "demo/demo-ai-assistants-1c/docker/services/security/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 360,
+      "lines_count": 19,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:21.997306"
+    },
+    {
+      "file_path": "demo/demo-ai-assistants-1c/docker/services/user-management/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 368,
+      "lines_count": 19,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.007085"
+    },
+    {
+      "file_path": "demo/demo-ai-assistants-1c/public/use.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 30,
+      "lines_count": 1,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.014150"
+    },
+    {
+      "file_path": "docs/09-archive/temp-backup/baseline_performance.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 96,
+      "lines_count": 6,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.021512"
+    },
+    {
+      "file_path": "docs/09-archive/temp-backup/PROJECT_COMPLETED.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 5343,
+      "lines_count": 175,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.028670"
+    },
+    {
+      "file_path": "edt-plugin/icons/placeholder.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 12,
+      "lines_count": 2,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.037459"
+    },
+    {
+      "file_path": "edt-plugin/resources/placeholder.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 12,
+      "lines_count": 2,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.044539"
+    },
+    {
+      "file_path": "security/agent_framework/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 105,
+      "lines_count": 9,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.049812"
+    },
+    {
+      "file_path": "supabase/shared/health-check/requirements.txt",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 1247,
+      "lines_count": 58,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.059677"
+    },
+    {
+      "file_path": "check_all_links.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 4074,
+      "lines_count": 128,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.069241"
+    },
+    {
+      "file_path": "check_readme_vs_code.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 6308,
+      "lines_count": 168,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.074488"
+    },
+    {
+      "file_path": "check_security_comprehensive.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 13779,
+      "lines_count": 340,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.083998"
+    },
+    {
+      "file_path": "cleanup_all_temp.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 784,
+      "lines_count": 39,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.091385"
+    },
+    {
+      "file_path": "comprehensive_project_audit_final.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 17117,
+      "lines_count": 423,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.095695"
+    },
+    {
+      "file_path": "run_full_audit.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 3119,
+      "lines_count": 124,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.099668"
+    },
+    {
+      "file_path": "sitecustomize.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 2814,
+      "lines_count": 87,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.105377"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/config.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 2240,
+      "lines_count": 46,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.114477"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/http_server.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 27218,
+      "lines_count": 733,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.126823"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/main.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 8306,
+      "lines_count": 240,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.133323"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/mcp_server.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 8384,
+      "lines_count": 231,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.142392"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/onec_client.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 10298,
+      "lines_count": 321,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.148793"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/stdio_server.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 819,
+      "lines_count": 35,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.178676"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/__init__.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 406,
+      "lines_count": 18,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.229748"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/__main__.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 172,
+      "lines_count": 7,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.239774"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/auth/oauth2.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 10851,
+      "lines_count": 326,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.248456"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/auth/__init__.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 143,
+      "lines_count": 7,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.258086"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/cache/integration_example.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 23459,
+      "lines_count": 577,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.266181"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/cache/oauth_cache.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 57252,
+      "lines_count": 1385,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.276221"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/cache/test_oauth_cache.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 31432,
+      "lines_count": 792,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.291982"
+    },
+    {
+      "file_path": "1c_mcp/src/py_server/cache/__init__.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 3019,
+      "lines_count": 89,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.300707"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/engine.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 26577,
+      "lines_count": 618,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.310931"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/__init__.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 11943,
+      "lines_count": 359,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.323341"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/llm/client.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 20125,
+      "lines_count": 405,
+      "functions_count": 15,
+      "functions": [
+        "ОбработатьДанные",
+        "ПолучитьРезультат",
+        "ВнутренняяОбработка",
+        "ВыполнитьОбработку",
+        "Обработать",
+        "ПолучитьСхему",
+        "СоздатьОтчет",
+        "Сформировать",
+        "СоздатьЭлемент",
+        "ПриЗаписи"
+      ],
+      "regions_count": 10,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции",
+        "ПрограммныйИнтерфейс",
+        "ПрограммныйИнтерфейс",
+        "ПрограммныйИнтерфейс"
+      ],
+      "indexed_at": "2025-11-17T11:22:22.332005"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/llm/__init__.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 320,
+      "lines_count": 14,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.344031"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/prompts/context.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 28010,
+      "lines_count": 654,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.354006"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/prompts/manager.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 27458,
+      "lines_count": 624,
+      "functions_count": 10,
+      "functions": [
+        "ВыполнитьОбработку",
+        "КнопкаВыполнитьНажатие",
+        "СформироватьОтчет",
+        "СформироватьНажатие",
+        "ПриЗаписи",
+        "ОбработкаЗаполнения",
+        "РеквизитПриИзменении",
+        "ОбработкаПроведения",
+        "ОбработкаУдаленияПроведения",
+        "ТабличнаяЧастьПриИзменении"
+      ],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.365107"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/prompts/optimizer.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 25578,
+      "lines_count": 526,
+      "functions_count": 2,
+      "functions": [
+        "ИмяПроцедуры",
+        "ИмяЭлементаНажатие"
+      ],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.378563"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/prompts/__init__.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 563,
+      "lines_count": 19,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.393729"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/security/manager.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 35017,
+      "lines_count": 805,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.404941"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/security/__init__.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 391,
+      "lines_count": 14,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.413210"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/templates/library.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 32889,
+      "lines_count": 722,
+      "functions_count": 23,
+      "functions": [
+        "ВыполнитьОбработку",
+        "ПолучитьРезультат",
+        "КнопкаВыполнитьНажатие",
+        "КнопкаОтменаНажатие",
+        "СформироватьОтчет",
+        "ПолучитьМакет",
+        "СформироватьНажатие",
+        "ВыполнитьСервернуюПроцедуру",
+        "ПриЗаписи",
+        "ОбработкаЗаполнения"
+      ],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.422831"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/templates/manager.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 37037,
+      "lines_count": 909,
+      "functions_count": 25,
+      "functions": [
+        "ОбработатьДанные",
+        "ПолучитьРезультат",
+        "ВнутренняяОбработка",
+        "ВыполнитьОбработку",
+        "Обработать",
+        "ПолучитьСхему",
+        "СформироватьОтчет",
+        "СоздатьОтчет",
+        "Сформировать",
+        "СоздатьЭлемент"
+      ],
+      "regions_count": 13,
+      "regions": [
+        "ПрограммныйИнтерфейс",
+        "СлужебныеПроцедурыИФункции",
+        "ПрограммныйИнтерфейс",
+        "ПрограммныйИнтерфейс",
+        "ПрограммныйИнтерфейс"
+      ],
+      "indexed_at": "2025-11-17T11:22:22.436341"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/templates/processor.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 24130,
+      "lines_count": 504,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.456852"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/templates/__init__.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 539,
+      "lines_count": 22,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.474302"
+    },
+    {
+      "file_path": "1c_mcp_code_generation/src/py_server/code_generation/utils/audit.py",
+      "repo": "DmitrL-dev/1cai-public",
+      "size_bytes": 19984,
+      "lines_count": 528,
+      "functions_count": 0,
+      "functions": [],
+      "regions_count": 0,
+      "regions": [],
+      "indexed_at": "2025-11-17T11:22:22.490151"
+    }
+  ]
+}

@@ -219,10 +219,12 @@ jobs:
     - name: Install dependencies
       run: |
         pip install -r requirements.txt
+        pip install -r requirements-dev.txt
 
-    - name: Validate feature specs
+    - name: Validate feature specs and standards
       run: |
         make feature-validate
+        make validate-standards
 
   bsl-tests:
     name: BSL Tests

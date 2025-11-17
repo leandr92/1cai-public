@@ -1,7 +1,12 @@
 # 📊 BA-04 Analytics & KPI Toolkit Guide
 
-**Статус:** 🟡 In Progress  
-**Связанные файлы:** `src/ai/agents/business_analyst_agent_extended.py`
+**Статус:** ✅ Реализовано  
+**Версия:** 1.0.0  
+**Дата:** Январь 2025  
+**Связанные файлы:** 
+- `src/ai/agents/business_analyst_agent_extended.py`
+- `src/ai/agents/analytics_kpi_with_graph.py`
+- `src/api/ba_sessions.py`
 
 ---
 
@@ -53,10 +58,98 @@
 
 ---
 
-## 4. Текущее состояние
+## 4. Реализованная функциональность
 
-- Требования и дорожная карта BA‑агента описаны в `docs/research/ba_agent_roadmap.md`.  
-- BA‑02 (Requirements Intelligence) реализован и покрыт тестами.  
-- Для BA‑04 на данный момент добавлен только данный план/гайд; реализация аналитического функционала остаётся в статусе **Planned**.
+### ✅ KPI Generator с Unified Change Graph
+
+Реализован `KPIGeneratorWithGraph` (`src/ai/agents/analytics_kpi_with_graph.py`), который автоматически строит KPI на основе реальных метрик из графа:
+
+**Технические KPI:**
+- **Code Coverage** — процент кода, покрытого тестами для фичи
+- **Test Coverage** — процент требований, покрытых тестами
+- **Incident Rate** — количество инцидентов на модуль
+- **Change Failure Rate** — процент изменений, приводящих к инцидентам (DORA metric)
+
+**Бизнес KPI (шаблоны):**
+- **Revenue Impact** — влияние фичи на выручку
+- **User Adoption** — процент пользователей, использующих фичу
+- **Time to Value** — время от релиза до первого использования
+
+### ✅ SQL Query Builder
+
+Автоматическая генерация SQL-запросов для KPI:
+- SQL для технических KPI на основе графа (code coverage, incident rate)
+- SQL шаблоны для бизнес KPI (требуют внешних данных)
+
+### ✅ Visualizations
+
+Автоматические рекомендации по визуализациям:
+- Тип графика (gauge для coverage, bar для rate, line для трендов)
+- Рекомендуемый инструмент (Grafana для технических, Power BI для бизнес)
+
+### ✅ API Endpoints
+
+Добавлен REST API endpoint в `src/api/ba_sessions.py`:
+
+- `POST /ba-sessions/analytics/kpi` — сгенерировать KPI для инициативы/фичи
+
+## 5. Использование
+
+### Python API
+
+```python
+from src.ai.agents.business_analyst_agent_extended import BusinessAnalystAgentExtended
+
+agent = BusinessAnalystAgentExtended()
+
+# Сгенерировать KPI с использованием графа
+result = await agent.design_kpi_blueprint(
+    initiative_name="Новая фича",
+    feature_id="FEATURE001",
+    use_graph=True,  # Использовать Unified Change Graph
+)
+
+# Результат содержит:
+# - kpis: список KPI с формулами, значениями, целями
+# - sql_queries: SQL-запросы для каждого KPI
+# - visualizations: рекомендации по визуализациям
+```
+
+### REST API
+
+```bash
+# Сгенерировать KPI
+curl -X POST http://localhost:8000/ba-sessions/analytics/kpi \
+    -H "Content-Type: application/json" \
+    -d '{
+        "initiative_name": "Новая фича",
+        "feature_id": "FEATURE001",
+        "include_technical": true,
+        "include_business": true,
+        "use_graph": true
+    }'
+```
+
+## 6. Интеграция с Unified Change Graph
+
+BA-04 автоматически использует Unified Change Graph для:
+- Автоматического построения технических KPI на основе реальных метрик (code, tests, incidents)
+- Генерации SQL-запросов для извлечения данных из графа
+- Расчёта DORA метрик (Change Failure Rate)
+
+Если граф недоступен, используется базовый `design_kpi_blueprint` с шаблонными KPI.
+
+## 7. Тестирование
+
+```bash
+# Запустить unit-тесты
+pytest tests/unit/test_analytics_kpi_with_graph.py -v
+```
+
+## 8. См. также
+
+- [`BUSINESS_ANALYST_GUIDE.md`](BUSINESS_ANALYST_GUIDE.md) — общий гайд по BA агенту
+- [`BA_TRACEABILITY_COMPLIANCE_GUIDE.md`](BA_TRACEABILITY_COMPLIANCE_GUIDE.md) — BA-05 Traceability & Compliance
+- [`CODE_GRAPH_REFERENCE.md`](../architecture/CODE_GRAPH_REFERENCE.md) — спецификация Unified Change Graph
 
 

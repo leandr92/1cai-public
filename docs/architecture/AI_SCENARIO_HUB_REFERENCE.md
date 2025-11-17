@@ -53,7 +53,7 @@
 
 ---
 
-## 3. Модели сценариев и планов (реализовано как типы)
+## 3. Примеры сценариев и планы (реализовано как типы)
 
 В `src/ai/scenario_hub.py` описаны базовые модели:
 
@@ -66,6 +66,17 @@
 - `ScenarioRiskLevel` — шкала риск-профиля: read-only, non-prod, prod-low,
   prod-high.
 - `AutonomyLevel` — уровни автономности системы (A0–A3).
+
+Примерные сценарии, реализованные в коде и плейбуках, находятся в:
+
+- `src/ai/scenario_examples.py`:
+  - `example_ba_dev_qa_scenario(feature_id)` — BA→Dev→QA;
+  - `example_dr_rehearsal_scenario(service_name)` — DR rehearsal для сервиса;
+  - `example_code_review_scenario(feature_id)` — code review для фичи/PR;
+- `playbooks/ba_dev_qa_example.yaml` — YAML‑плейбук BA→Dev→QA;
+- `playbooks/dr_vault_example.yaml` — YAML‑плейбук DR rehearsal;
+- `playbooks/security_audit_example.yaml` — YAML‑плейбук security-audit;
+- `playbooks/code_review_pr_example.yaml` — YAML‑плейбук code review PR.
 
 На этом этапе модели не «подключены» к FastAPI/Orchestrator — это
 reference-слой типов, который можно использовать:

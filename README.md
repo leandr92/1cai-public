@@ -36,10 +36,28 @@
 - **CursorExt / IDE telemetry.** Установка и синхронизация описаны в [`docs/06-features/CURSOR_EXT_GUIDE.md`](docs/06-features/CURSOR_EXT_GUIDE.md).
 - **Observability.** Пошаговое руководство по Prometheus/Grafana находится в [`docs/06-features/OBSERVABILITY_GUIDE.md`](docs/06-features/OBSERVABILITY_GUIDE.md).
 - **Feature Flags / Progressive Rollouts.** Управление включением функционала для пользователей или доли трафика — см. [`docs/06-features/FEATURE_FLAGS_GUIDE.md`](docs/06-features/FEATURE_FLAGS_GUIDE.md) и `src/services/feature_flags.py`.
+- **Scenario Hub & Unified Change Graph.** Протокол-независимый слой для определения и выполнения сценариев (BA→Dev→QA, Code Review, DR Rehearsal) с автоматическим построением графа изменений из кода 1С, рекомендациями сценариев и анализом влияния изменений. См. [`docs/architecture/AI_SCENARIO_HUB_REFERENCE.md`](docs/architecture/AI_SCENARIO_HUB_REFERENCE.md), [`docs/06-features/UNIFIED_CHANGE_GRAPH_GUIDE.md`](docs/06-features/UNIFIED_CHANGE_GRAPH_GUIDE.md), [`docs/06-features/1C_CODE_GRAPH_BUILDER_GUIDE.md`](docs/06-features/1C_CODE_GRAPH_BUILDER_GUIDE.md).
+- **LLM Provider Abstraction.** Унифицированный уровень абстракции для работы с разными LLM провайдерами (Kimi, Qwen, GigaChat, YandexGPT) с автоматическим выбором на основе типа запроса, рисков, стоимости и compliance требований. См. `src/ai/llm_provider_abstraction.py`.
+- **Intelligent Cache.** Интеллектуальное кэширование с TTL на основе типа запроса, инвалидацией по тегам и типу запроса, LRU eviction и метриками производительности. См. `src/ai/intelligent_cache.py`.
+- **Unified CLI Tool.** Командная строка для работы с платформой (Orchestrator, Scenario Hub, Unified Change Graph, LLM провайдеры, кэш). См. [`docs/01-getting-started/CLI_GUIDE.md`](docs/01-getting-started/CLI_GUIDE.md), `scripts/cli/1cai_cli.py`.
+- **Performance Benchmarks.** Комплексные benchmarks для новых компонентов с целевыми показателями производительности (p95 < 50ms для Scenario Recommender на малом графе, p95 < 1ms для cache hit). См. [`docs/05-development/PERFORMANCE_BENCHMARKS.md`](docs/05-development/PERFORMANCE_BENCHMARKS.md), `tests/performance/test_new_components_performance.py`.
 
 ### 🚀 Последние улучшения
 
 Журнал **последних 7 релизов** (новые сверху). Детали по каждому релизу см. в `docs/05-development/CHANGELOG.md`.
+
+#### 2025‑11‑17 — Performance, Observability, CLI
+
+- **Performance Benchmarks & Prometheus Metrics**
+  - Код/тесты: `tests/performance/test_new_components_performance.py` - benchmarks для Scenario Recommender, Impact Analyzer, LLM Provider Selection, Intelligent Cache с целевыми метриками (p95 < 50ms для малого графа, p95 < 1ms для cache hit).
+  - Метрики: расширены Prometheus метрики в `src/monitoring/prometheus_metrics.py` для всех новых компонентов (scenario_recommender_*, impact_analyzer_*, llm_provider_*, intelligent_cache_*).
+  - Интеграция: добавлены вызовы track_* функций в ScenarioRecommender, ImpactAnalyzer, LLMProviderAbstraction, IntelligentCache для автоматической отправки метрик.
+  - Документация: `docs/05-development/PERFORMANCE_BENCHMARKS.md` с описанием всех benchmarks и метрик.
+- **E2E Tests**
+  - Код/тесты: `tests/system/test_e2e_scenario_hub_graph.py`, `tests/system/test_e2e_llm_provider_abstraction.py`, `tests/system/test_e2e_intelligent_cache.py`, `tests/system/test_e2e_cli_tool.py`, `tests/system/test_e2e_ba_with_graph.py` - полное покрытие новых компонентов E2E тестами.
+- **CLI Tool**
+  - Код: `scripts/cli/1cai_cli.py` - унифицированный CLI для работы с платформой (query, scenarios, recommend, impact, health, cache, llm-providers).
+  - Документация: `docs/01-getting-started/CLI_GUIDE.md` с примерами использования.
 
 #### 2025‑11‑16 — AI агенты, тесты, безопасность, DevEx
 
@@ -183,6 +201,14 @@ graph TB
 
 > **Подробная версия:** [Полная интерактивная карта](docs/architecture/interactive-architecture.html) с фильтрами и поиском
 
+> 📐 **Стандарты (Scenario DSL / Autonomy Policy / Unified Change Graph):**  
+> Если вы хотите использовать наши сценарии и политику в своей системе, см.  
+> `docs/architecture/SCENARIO_DSL_SPEC.md`, `docs/architecture/AUTONOMY_POLICY_SPEC.md`,  
+> `docs/architecture/CODE_GRAPH_REFERENCE.md` и короткий гид по внедрению  
+> `docs/architecture/STANDARDS_ADOPTION_GUIDE.md`. Для быстрой самопроверки можно:
+> - локально: `make validate-standards` (валидация Scenario DSL / Autonomy Policy / Code Graph против JSON Schema);
+> - вручную: пройти чеклист `docs/architecture/STANDARDS_CONFORMANCE_CHECKLIST.md`.
+
 ## Usage / Быстрый старт
 
 1. Установить Python 3.11, Docker и Docker Compose — подробности в [`docs/setup/python_311.md`](docs/setup/python_311.md).
@@ -252,6 +278,7 @@ graph TB
   - Шаблоны и CLI: `templates/`, `scripts/research/init_feature.py`, make-таргеты `feature-init` и `feature-validate`.
 - **MCP инструменты**: поиск метаданных, генерация кода, запуск тестов (IDE и интерактив).
 - **Scenario Hub & MCP-free runtime**: сценарии BA→Dev→QA, DR rehearsal и security-audit описываются через Scenario Hub, ToolRegistry и YAML-плейбуки; MCP остаётся одним из фронтов (IDE), а основное выполнение сценариев выносится в HTTP/CLI/playbooks (см. [`docs/architecture/MCP_FREE_TRANSITION.md`](docs/architecture/MCP_FREE_TRANSITION.md)).
+- **Open Standards (Scenario DSL / Autonomy Policy / Unified Change Graph)**: описания сценариев, уровней автономии и графа изменений формализованы как открытые спецификации и JSON Schema (`SCENARIO_DSL_SPEC.md`, `AUTONOMY_POLICY_SPEC.md`, `CODE_GRAPH_REFERENCE.md`), с примерами, CLI (`print_scenario_decisions.py`) и чеклистом соответствия; внешний оркестратор может использовать их без переноса кода стека (см. [`docs/architecture/STANDARDS_ADOPTION_GUIDE.md`](docs/architecture/STANDARDS_ADOPTION_GUIDE.md)).
 - **Automation scripts**: [`scripts/context/export_platform_context.py`](scripts/context/export_platform_context.py), [`scripts/context/generate_docs.py`](scripts/context/generate_docs.py), [`scripts/docs/create_adr.py`](scripts/docs/create_adr.py).
 - **Monitoring automation**: [`scripts/monitoring/github_monitor.py`](scripts/monitoring/github_monitor.py) + workflow [`.github/workflows/github-monitor.yml`](.github/workflows/github-monitor.yml) — ежедневный snapshot зависимостей.
 - **Release automation**: [`scripts/release/create_release.py`](scripts/release/create_release.py), make `release-*`, workflow [`.github/workflows/release.yml`](.github/workflows/release.yml) — генерация заметок, тегов, публикация релизов.

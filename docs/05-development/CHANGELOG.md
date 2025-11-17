@@ -55,6 +55,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Добавлены примерные планы сценариев BA→Dev→QA и DR rehearsal в `src/ai/scenario_examples.py` и read-only endpoint `/api/scenarios/examples` в `src/ai/orchestrator.py` для их получения.
  - Добавлены YAML-плейбуки `playbooks/ba_dev_qa_example.yaml` и `playbooks/dr_vault_example.yaml`, dry-run исполнитель `src/ai/playbook_executor.py` и CLI `scripts/runbooks/run_playbook.py`; в tests/unit добавлен `test_playbook_executor.py`.
  - Добавлен примерный ToolRegistry (`src/ai/tool_registry_examples.py`) и read-only endpoint `/api/tools/registry/examples` в `src/ai/orchestrator.py`, а также тест `tests/unit/test_tool_registry_api.py`.
+ - Формализованы открытые стандарты: Scenario DSL (`SCENARIO_DSL_SPEC.md` + `SCENARIO_DSL_SCHEMA.json`), Autonomy & Policy Model (`AUTONOMY_POLICY_SPEC.md` + `AUTONOMY_POLICY_SCHEMA.json`) и Unified Change Graph (`CODE_GRAPH_REFERENCE.md`); добавлены примеры внешних JSON (`docs/architecture/examples/*`), CLI `print_scenario_decisions.py`, скрипты валидации (`validate_scenarios_against_schema.py`, `check_conformance_report.py`), гид по внедрению (`STANDARDS_ADOPTION_GUIDE.md`) и чеклист соответствия (`STANDARDS_CONFORMANCE_CHECKLIST.md`), а также интеграция стандартизирующих проверок в CI (`make validate-standards` в `comprehensive-testing.yml`).
+
+### Scenario Hub & Unified Change Graph (Production) - 2025-11-17
+- **Scenario Recommender & Impact Analyzer**: реализованы компоненты для автоматического предложения релевантных сценариев и анализа влияния изменений через Unified Change Graph.
+- **OneCCodeGraphBuilder**: создан автоматический построитель графа из BSL модулей для 1С кода.
+- **LLM Provider Abstraction**: унифицированный уровень абстракции для работы с разными LLM провайдерами (Kimi, Qwen, GigaChat, YandexGPT) с автоматическим выбором на основе типа запроса, рисков, стоимости и compliance требований.
+- **Intelligent Cache**: интеллектуальное кэширование с TTL на основе типа запроса, инвалидацией по тегам и типу запроса, LRU eviction и метриками производительности.
+- **Unified CLI Tool**: создан `scripts/cli/1cai_cli.py` для работы со всеми компонентами платформы через REST API.
+- **Performance Benchmarks**: созданы benchmarks для всех новых компонентов с целевыми метриками (p95 < 50ms для малого графа, p95 < 1ms для cache hit).
+- **Prometheus Metrics**: расширены метрики для Scenario Recommender, Impact Analyzer, LLM Provider Abstraction, Intelligent Cache.
+- **E2E Tests**: созданы E2E тесты для Scenario Hub, LLM Provider Abstraction, Intelligent Cache, CLI Tool, BA-функций с Unified Change Graph.
+- **E2E Tests для критических путей**: создан `tests/system/test_e2e_critical_paths.py` с 13 тестами, покрывающими полный цикл API → Orchestrator → LLM Provider → Response, интеграцию с новыми компонентами, обработку ошибок и производительность.
+- **Architecture Documentation**: созданы UML-схемы (sequence и component диаграммы), обновлён HLD документ, создан ADR-0006 для архитектурных решений.
 
 ### Added
 - Initial project structure
