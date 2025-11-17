@@ -39,7 +39,7 @@
 - ✅ **100% уникальность** для BSL-specific компонентов
 - ✅ **Производственная готовность** — все стандарты проверены в реальных проектах
 
-**Полная информация:** [`docs/DE_FACTO_STANDARD.md`](docs/DE_FACTO_STANDARD.md) | [`docs/architecture/STANDARDS_INDEX.md`](docs/architecture/STANDARDS_INDEX.md)
+**Полная информация:** [`docs/DE_FACTO_STANDARD.md`](docs/DE_FACTO_STANDARD.md) | [`docs/architecture/STANDARDS_INDEX.md`](docs/architecture/STANDARDS_INDEX.md) | **[Standards Hub](docs/standards/index.md)** — центральная точка входа
 
 ---
 
