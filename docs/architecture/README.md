@@ -69,6 +69,17 @@ docs/architecture/
 10. **Автогенерация документации** — `make generate-docs` вызывает [alkoleft/ones_doc_gen](https://github.com/alkoleft/ones_doc_gen) (`ONES_DOC_GEN_CMD`). Результат — `output/docs/generated/`. Благодарите автора в README/HLD при публикации.
 11. **Публикация** — после обновления диаграмм обязательно зафиксируйте изменения в `README.md`/`CHANGELOG.md` и в корневом `README` (секция «Что нового»).
 
+## Интерактивная карта архитектуры
+
+Интерактивная HTML карта (`interactive-architecture.html`) позволяет визуально исследовать архитектуру с возможностью фильтрации, поиска и перехода к документации.
+
+**Как открыть:**
+- Через JSDelivr: https://cdn.jsdelivr.net/gh/DmitrL-dev/1cai-public@main/docs/architecture/interactive-architecture.html
+- Через RawGit: https://raw.githack.com/DmitrL-dev/1cai-public/main/docs/architecture/interactive-architecture.html
+- Локально: откройте файл в браузере после клонирования репозитория
+
+**Примечание:** GitHub отображает HTML файлы как исходный код. Для просмотра интерактивной карты используйте один из способов выше.
+
 ## Практики сопровождения
 
 - Ссылки из документации должны указывать на PNG-версии диаграмм, чтобы GitHub отображал их нативно.
