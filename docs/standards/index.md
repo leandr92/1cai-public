@@ -170,7 +170,7 @@ docs/standards/
 
 ### Документация:
 
-- [**DE_FACTO_STANDARD.md**](../DE_FACTO_STANDARD.md) — раздел про де-факто стандарт
+- [**DE_FACTO_STANDARD.md**](../DE_FACTO_STANDARD.md) — раздел про стандарты платформы
 - [**01-high-level-design.md**](../architecture/01-high-level-design.md) — архитектура со схемами
 - [**UML диаграммы**](../architecture/uml/) — все архитектурные схемы
 
