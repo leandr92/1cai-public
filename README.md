@@ -89,6 +89,7 @@
 - **Блок бизнес-аналитики.** Агент BA с расширенными интеграциями (Jira/Confluence/PowerBI/Docflow) и собственным API лежит в [`src/ai/agents/business_analyst_agent_extended.py`](src/ai/agents/business_analyst_agent_extended.py), сервисы — в [`src/api/ba_sessions.py`](src/api/ba_sessions.py) и [`src/services/ba_session_manager.py`](src/services/ba_session_manager.py); документация и сценарии — в [`docs/06-features/BUSINESS_ANALYST_GUIDE.md`](docs/06-features/BUSINESS_ANALYST_GUIDE.md), [`docs/07-integrations/BA_INTEGRATION_PLAN.md`](docs/07-integrations/BA_INTEGRATION_PLAN.md), [`docs/08-e2e-tests/BA_E2E_MATRIX.md`](docs/08-e2e-tests/BA_E2E_MATRIX.md).
 - **Защита от отключения интернета и LLM-блокировок.** Конфигурация LLM Gateway, fallback-провайдеры и тестовые сценарии находятся в [`src/services/llm_gateway.py`](src/services/llm_gateway.py), [`config/llm_gateway_simulation.yaml`](config/llm_gateway_simulation.yaml) и [`scripts/tests/llm_smoke.py`](scripts/tests/llm_smoke.py); регламент и отчёты — в [`analysis/llm_blocking_resilience_plan.md`](analysis/llm_blocking_resilience_plan.md) и [`docs/templates/offline_incident_report.md`](docs/templates/offline_incident_report.md).
 - **Graph & Hybrid Search.** MATCH-запросы, семантический и гибридный поиск описаны в [`docs/06-features/GRAPH_SEARCH_GUIDE.md`](docs/06-features/GRAPH_SEARCH_GUIDE.md), покрывают `src/api/graph_api.py`, `src/services/hybrid_search.py`.
+- **🚀 Гибридный режим CPU+GPU с продвинутыми оптимизациями.** Параллельная обработка векторизации на CPU и GPU для ускорения индексации больших конфигураций (до 4x ускорение). Включает: автоматическую перекалибровку квантизации, инкрементальное обновление ANN индексов, предиктивную оптимизацию batch size (XGBoost/LightGBM), SLO/SLI tracking, многоуровневое кэширование (L1/L2/L3), семантический кэш с ANN, memory-aware batching, circuit breakers, retry logic, health checks, graceful degradation. Полная документация: [`docs/06-features/HYBRID_CPU_GPU_MODE.md`](docs/06-features/HYBRID_CPU_GPU_MODE.md), [`docs/06-features/HYBRID_CPU_GPU_BEST_PRACTICES.md`](docs/06-features/HYBRID_CPU_GPU_BEST_PRACTICES.md), [`docs/06-features/HYBRID_CPU_GPU_ADVANCED_RESEARCH.md`](docs/06-features/HYBRID_CPU_GPU_ADVANCED_RESEARCH.md), [`docs/06-features/HYBRID_CPU_GPU_IMPLEMENTATION_ROADMAP.md`](docs/06-features/HYBRID_CPU_GPU_IMPLEMENTATION_ROADMAP.md), [`docs/06-features/HYBRID_CPU_GPU_IMPROVEMENTS_CHECKLIST.md`](docs/06-features/HYBRID_CPU_GPU_IMPROVEMENTS_CHECKLIST.md), [`docs/06-features/HYBRID_CPU_GPU_USAGE_EXAMPLES.md`](docs/06-features/HYBRID_CPU_GPU_USAGE_EXAMPLES.md). Код: `src/services/embedding_service.py` (v2.7.0), `src/services/advanced_optimizations.py` (v2.2.0). Мониторинг: Grafana dashboard (`config/grafana/dashboards/embedding_service_advanced.json`), Prometheus alerts (`config/prometheus/alerts/embedding_service.yml`).
 - **Marketplace & плагины.** Полный поток upload/moderation задокументирован в [`docs/06-features/MARKETPLACE_GUIDE.md`](docs/06-features/MARKETPLACE_GUIDE.md).
 - **CursorExt / IDE telemetry.** Установка и синхронизация описаны в [`docs/06-features/CURSOR_EXT_GUIDE.md`](docs/06-features/CURSOR_EXT_GUIDE.md).
 - **Observability.** Пошаговое руководство по Prometheus/Grafana находится в [`docs/06-features/OBSERVABILITY_GUIDE.md`](docs/06-features/OBSERVABILITY_GUIDE.md).
@@ -103,7 +104,31 @@
 
 ### 🚀 Последние улучшения
 
-Журнал **последних 7 релизов** (новые сверху). Детали по каждому релизу см. в `docs/05-development/CHANGELOG.md`.
+Журнал **последних 8 релизов** (новые сверху). Детали по каждому релизу см. в `docs/05-development/CHANGELOG.md`.
+
+#### 2025‑01‑XX — Гибридный CPU+GPU: Продвинутые оптимизации и мониторинг
+
+- **🚀 Продвинутые оптимизации Embedding Service**
+  - Код: `src/services/embedding_service.py` (v2.7.0), `src/services/advanced_optimizations.py` (v2.2.0)
+  - **Автоматическая перекалибровка квантизации:** Adaptive Quantizer с периодической перекалибровкой на новых данных, настраиваемый интервал через env
+  - **Оптимизация Semantic Cache ANN:** Инкрементальное обновление индексов, автоматическая перестройка, ограничение размера (FIFO)
+  - **Улучшение Predictive Batch Optimizer:** Поддержка XGBoost/LightGBM, больше признаков (9 вместо 5: логарифмы, std), fallback на RandomForest
+  - **Memory-Aware Batching:** Интеграция в encode() для автоматического формирования батчей на основе доступной памяти
+  - **SLO/SLI Tracking:** Отслеживание Service Level Objectives/Indicators, error budgets, автоматические алерты
+  - **Многоуровневое кэширование:** L1 (in-memory), L2 (Redis), L3 (database), квантизация для экономии памяти
+  - **Circuit Breakers & Retry Logic:** Защита от каскадных сбоев, экспоненциальный backoff
+  - **Health Checks & Graceful Degradation:** Проверка состояния компонентов, автоматический fallback
+- **📊 Мониторинг и алертинг**
+  - Grafana dashboard: `config/grafana/dashboards/embedding_service_advanced.json` (11 панелей)
+  - Prometheus alerts: `config/prometheus/alerts/embedding_service.yml` (5 правил алертинга)
+  - Расширенные метрики Prometheus для всех компонентов (15+ новых метрик)
+- **🧪 Тестирование**
+  - Unit тесты: `tests/unit/test_slo_tracker.py`, `test_adaptive_quantizer.py`, `test_semantic_cache_ann.py`, `test_predictive_batch_optimizer.py`, `test_memory_aware_batcher.py`, `test_weighted_gpu_scheduler.py` (~72 теста)
+  - Интеграционные тесты: `tests/integration/test_embedding_service_advanced.py` (10 тестов)
+- **📚 Документация**
+  - `docs/06-features/HYBRID_CPU_GPU_IMPROVEMENTS_CHECKLIST.md` — чеклист выполненных улучшений
+  - `docs/06-features/HYBRID_CPU_GPU_USAGE_EXAMPLES.md` — практические примеры использования
+  - Обновлены все существующие документы по гибридному режиму
 
 #### 2025‑11‑17 — Performance, Observability, CLI
 
@@ -232,11 +257,15 @@ graph TB
     API -->|Graph| Neo4j
     API -->|Vector search| Qdrant
     API -->|Cache| Redis
-    API -->|Jobs| Celery
+    API -->|Events| NATS
+    API -->|Embeddings| EmbeddingService
 
-    Celery -->|Update| Postgres
-    Celery -->|Update| Neo4j
-    Celery -->|Sync| Qdrant
+    NATS -->|Events| EventWorkers
+    EventWorkers -->|Update| Postgres
+    EventWorkers -->|Update| Neo4j
+    EventWorkers -->|Sync| Qdrant
+    EmbeddingService -->|Store| Qdrant
+    EmbeddingService -->|Cache| Redis
     MLPipelines -->|Store| Minio
 
     EDTPlugin -->|Analysis| API

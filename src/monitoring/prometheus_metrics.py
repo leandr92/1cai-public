@@ -263,6 +263,223 @@ intelligent_cache_invalidations_total = Counter(
     ['cache_type', 'invalidation_type']  # invalidation_type: tags, query_type, manual
 )
 
+# ==================== EMBEDDING SERVICE METRICS ====================
+
+# Embedding requests
+embedding_requests_total = Counter(
+    'embedding_requests_total',
+    'Total embedding requests',
+    ['device', 'status']  # device: cpu, gpu, hybrid, cache; status: success, error
+)
+
+# Embedding duration
+embedding_duration_seconds = Histogram(
+    'embedding_duration_seconds',
+    'Embedding processing duration',
+    ['device'],
+    buckets=[0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0, 2.5, 5.0, 10.0]
+)
+
+# Items processed
+embedding_items_processed_total = Counter(
+    'embedding_items_processed_total',
+    'Total items processed by embedding service',
+    ['device']
+)
+
+# Cache metrics
+embedding_cache_hits_total = Counter(
+    'embedding_cache_hits_total',
+    'Total embedding cache hits'
+)
+
+embedding_cache_misses_total = Counter(
+    'embedding_cache_misses_total',
+    'Total embedding cache misses'
+)
+
+# Device usage percentage
+embedding_device_usage_percent = Gauge(
+    'embedding_device_usage_percent',
+    'Device usage percentage for embeddings',
+    ['device']  # device: cpu, gpu
+)
+
+# Circuit breaker metrics
+embedding_circuit_breaker_state = Gauge(
+    'embedding_circuit_breaker_state',
+    'Circuit breaker state (0=closed, 1=open, 2=half_open)',
+    ['device']  # device: cpu, gpu
+)
+
+embedding_circuit_breaker_failures = Counter(
+    'embedding_circuit_breaker_failures_total',
+    'Total circuit breaker failures',
+    ['device']
+)
+
+# Health check metrics
+embedding_health_status = Gauge(
+    'embedding_health_status',
+    'Health status of embedding service components (1=healthy, 0=unhealthy)',
+    ['component']  # component: cpu, gpu, cache
+)
+
+embedding_health_check_duration_seconds = Histogram(
+    'embedding_health_check_duration_seconds',
+    'Duration of health checks',
+    ['component'],
+    buckets=[0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0]
+)
+
+# Semantic cache metrics
+embedding_semantic_cache_hits_total = Counter(
+    'embedding_semantic_cache_hits_total',
+    'Total semantic cache hits (similarity-based)'
+)
+
+embedding_semantic_cache_similarity = Histogram(
+    'embedding_semantic_cache_similarity',
+    'Cosine similarity scores for semantic cache hits',
+    buckets=[0.90, 0.92, 0.94, 0.95, 0.96, 0.98, 0.99, 1.0]
+)
+
+# Multi-layer cache metrics
+embedding_cache_layer_hits_total = Counter(
+    'embedding_cache_layer_hits_total',
+    'Cache hits by layer',
+    ['layer']  # layer: l1, l2, l3
+)
+
+embedding_cache_layer_misses_total = Counter(
+    'embedding_cache_layer_misses_total',
+    'Cache misses by layer',
+    ['layer']
+)
+
+# Quantization metrics
+embedding_quantization_enabled = Gauge(
+    'embedding_quantization_enabled',
+    'Whether quantization is enabled (1=enabled, 0=disabled)'
+)
+
+embedding_quantization_ratio = Gauge(
+    'embedding_quantization_ratio',
+    'Memory savings ratio from quantization',
+    ['dtype']  # dtype: int8, int16
+)
+
+# Multi-GPU metrics
+embedding_gpu_count = Gauge(
+    'embedding_gpu_count',
+    'Number of available GPU devices'
+)
+
+embedding_gpu_requests_total = Counter(
+    'embedding_gpu_requests_total',
+    'Total requests per GPU device',
+    ['gpu_id']
+)
+
+embedding_gpu_memory_usage_gb = Gauge(
+    'embedding_gpu_memory_usage_gb',
+    'GPU memory usage in GB',
+    ['gpu_id', 'type']  # type: total, allocated, free, reserved
+)
+
+# Adaptive batch size metrics
+embedding_optimal_batch_size = Gauge(
+    'embedding_optimal_batch_size',
+    'Optimal batch size calculated based on GPU memory',
+    ['gpu_id']
+)
+
+embedding_batch_size_adjustments_total = Counter(
+    'embedding_batch_size_adjustments_total',
+    'Total batch size adjustments',
+    ['adjustment_type']  # adjustment_type: increased, decreased, unchanged
+)
+
+# SLO/SLI metrics
+embedding_slo_latency_p95 = Gauge(
+    'embedding_slo_latency_p95',
+    'Current SLI for latency p95',
+    ['slo_name']
+)
+
+embedding_slo_error_budget = Gauge(
+    'embedding_slo_error_budget',
+    'Current error budget for SLO',
+    ['slo_name']
+)
+
+embedding_slo_violations_total = Counter(
+    'embedding_slo_violations_total',
+    'Total SLO violations',
+    ['slo_name']
+)
+
+# Adaptive Quantization metrics
+embedding_adaptive_quantization_calibrated = Gauge(
+    'embedding_adaptive_quantization_calibrated',
+    'Whether adaptive quantization is calibrated (1=calibrated, 0=not calibrated)'
+)
+
+embedding_adaptive_quantization_scale = Gauge(
+    'embedding_adaptive_quantization_scale',
+    'Current quantization scale factor',
+    ['dtype']
+)
+
+# Semantic Cache ANN metrics
+embedding_semantic_cache_ann_size = Gauge(
+    'embedding_semantic_cache_ann_size',
+    'Current size of semantic cache ANN index',
+    ['index_type']  # index_type: linear, faiss, hnswlib
+)
+
+embedding_semantic_cache_ann_search_duration_seconds = Histogram(
+    'embedding_semantic_cache_ann_search_duration_seconds',
+    'Duration of ANN search operations',
+    ['index_type'],
+    buckets=[0.001, 0.005, 0.01, 0.05, 0.1, 0.5, 1.0]
+)
+
+# Predictive Batch Optimizer metrics
+embedding_predictive_batch_history_size = Gauge(
+    'embedding_predictive_batch_history_size',
+    'Current size of prediction history'
+)
+
+embedding_predictive_batch_model_trained = Gauge(
+    'embedding_predictive_batch_model_trained',
+    'Whether prediction model is trained (1=trained, 0=not trained)'
+)
+
+embedding_predictive_batch_prediction_accuracy = Gauge(
+    'embedding_predictive_batch_prediction_accuracy',
+    'Accuracy of batch size predictions (MAE)'
+)
+
+# Weighted GPU Scheduler metrics
+embedding_weighted_gpu_weights = Gauge(
+    'embedding_weighted_gpu_weights',
+    'Current weights for GPU devices',
+    ['gpu_id']
+)
+
+embedding_weighted_gpu_load = Gauge(
+    'embedding_weighted_gpu_load',
+    'Current load for GPU devices',
+    ['gpu_id']
+)
+
+embedding_weighted_gpu_requests_total = Counter(
+    'embedding_weighted_gpu_requests_total',
+    'Total requests per GPU via weighted scheduler',
+    ['gpu_id']
+)
+
 
 # ==================== BUSINESS METRICS ====================
 
