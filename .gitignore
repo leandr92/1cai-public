@@ -193,6 +193,9 @@ analysis/functionality_review/
 analysis/project_architecture/
 analysis/offline-exercises/
 
+# Research documents in docs/research/ (технические исследования можно публиковать)
+# docs/research/MCP_SERVERS_APPLICABILITY_ANALYSIS.md - технический анализ, можно публиковать
+
 # 1C Commercial Configurations (protection against accidental commits)
 1c_configurations/*/*.xml
 1c_configurations/*/*.epf
