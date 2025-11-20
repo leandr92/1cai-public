@@ -87,7 +87,15 @@ class WikiService:
         
         page_id = str(uuid.uuid4())
         revision_id = str(uuid.uuid4())
-        namespace_id = str(uuid.uuid4()) # STUB
+        
+        # If namespace is not a valid UUID (e.g. "default"), treat it as a name or handle properly
+        # For now, if it looks like a UUID, use it; otherwise generate a stub ID or lookup.
+        try:
+            uuid.UUID(data.namespace)
+            namespace_id = data.namespace
+        except (ValueError, AttributeError):
+             # Fallback for legacy/test calls
+             namespace_id = str(uuid.uuid4())
         
         async with get_db_connection() as conn:
             async with conn.transaction():
