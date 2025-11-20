@@ -1,12 +1,13 @@
-# [NEXUS IDENTITY] ID: 4382096754574891920 | DATE: 2025-11-19
-
 """
 Security Tests - Тестирование безопасности
 """
 
+import asyncio
 import sys
 from pathlib import Path
+from unittest.mock import Mock, patch
 
+import asyncpg
 import pytest
 
 sys.path.insert(0, str(Path(__file__).parent.parent.parent))
@@ -38,14 +39,14 @@ async def test_sql_injection_prevention():
             )
             # Should succeed without damage
             assert True
-        except Exception:
+        except:
             pytest.fail("Parameterized query failed")
 
         # Verify table still exists
         exists = await conn.fetchval(
             """
             SELECT EXISTS (
-                SELECT FROM information_schema.tables
+                SELECT FROM information_schema.tables 
                 WHERE table_name = 'projects'
             )
         """
@@ -222,8 +223,8 @@ def test_input_validation():
     from pydantic import BaseModel, ValidationError, constr
 
     class TenantCreate(BaseModel):
-        name: constr(min_length=1, max_length=100)
-        email: constr(regex=r"^[\w\.-]+@[\w\.-]+\.\w+$")
+        name: constr(min_length=1, max_length=100)  # type: ignore
+        email: constr(regex=r"^[\w\.-]+@[\w\.-]+\.\w+$")  # noqa: F722
 
     # Valid input
     valid = TenantCreate(name="Test Co", email="test@example.com")
@@ -244,7 +245,7 @@ async def test_csrf_protection():
     Security: CSRF token validation
     """
 
-    from fastapi import FastAPI, Header, HTTPException
+    from fastapi import Depends, FastAPI, Header, HTTPException
     from fastapi.testclient import TestClient
 
     app = FastAPI()
