@@ -38,7 +38,7 @@
 - ✅ **Nested Learning Integration** — Google Nested Learning для continual learning без catastrophic forgetting
 - ✅ **Desktop-First Experience** — нативный клиент с context awareness
 - ✅ **Clean Architecture** — 35+ модулей, ~28K строк кода
-- ✅ **8 AI Agents** — специализированные агенты для разных ролей
+- ✅ **8 AI Agents** ⭐ — Architect, Business Analyst, Developer, QA, DevOps, Technical Writer, Security, Project Manager
 - ✅ **Revolutionary AI Components** ⭐ — Self-Evolving AI, Self-Healing Code, Distributed Agents, Code DNA
 - ✅ **API Versioning** ⭐ — v1 (stable) + v2 (enhanced with batch operations)
 - ✅ **Tiered Rate Limiting** ⭐ — Free/Pro/Enterprise tiers с Prometheus metrics

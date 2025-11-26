@@ -17,6 +17,14 @@ from src.ai.agents.sql_optimizer import SQLOptimizer
 from src.ai.agents.tech_log_analyzer import TechLogAnalyzer
 from src.ai.agents.technology_selector import TechnologySelector
 
+# New agents
+from src.ai.agents.security_agent import SecurityAgent
+from src.ai.agents.project_manager_agent import ProjectManagerAgent
+try:
+    from src.ai.agents.technical_writer_agent_extended import TechnicalWriterAgentExtended
+except ImportError:
+    TechnicalWriterAgentExtended = None
+
 __all__ = [
     "BusinessAnalystAgent",
     "QAEngineerAgent",
