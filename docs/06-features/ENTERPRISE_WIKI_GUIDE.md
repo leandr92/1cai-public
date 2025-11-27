@@ -423,8 +423,8 @@ async def import_from_confluence(space_key: str):
 Подробная информация...
 
 ## См. также
-- [Связанная страница 1](link1)
-- [Связанная страница 2](link2)
+- [API Documentation](/wiki/api-documentation)
+- [Architecture Overview](/wiki/architecture-overview)
 ```
 
 ### 2. Naming Conventions
