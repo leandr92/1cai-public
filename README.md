@@ -18,7 +18,8 @@
 
 ## 📰 Последние обновления
 
-### 🎉 2025-11-27: DevOps Module - Clean Architecture Implementation
+<details>
+<summary><h3>🎉 2025-11-27: DevOps Module - Clean Architecture Implementation</h3></summary>
 
 **DevOps Agent Enhanced** полностью рефакторен согласно Clean Architecture принципам.
 
@@ -71,9 +72,12 @@ src/modules/devops/
 **Документация:**
 - [DevOps Module README](src/modules/devops/README.md)
 
+</details>
+
 ---
 
-### 🎉 2025-11-27: Business Analyst Module - Clean Architecture Implementation
+<details>
+<summary><h3>🎉 2025-11-27: Business Analyst Module - Clean Architecture Implementation</h3></summary>
 
 **Business Analyst Agent Enhanced** рефакторен согласно Clean Architecture принципам.
 
@@ -120,9 +124,12 @@ src/modules/business_analyst/
 **Документация:**
 - [Business Analyst Module README](src/modules/business_analyst/README.md)
 
+</details>
+
 ---
 
-### 🎉 2025-11-27: QA Engineer Module - Clean Architecture Implementation
+<details>
+<summary><h3>🎉 2025-11-27: QA Engineer Module - Clean Architecture Implementation</h3></summary>
 
 **QA Engineer Agent Enhanced** рефакторен согласно Clean Architecture принципам.
 
@@ -161,9 +168,12 @@ src/modules/qa/
 **Документация:**
 - [QA Engineer Module README](src/modules/qa/README.md)
 
+</details>
+
 ---
 
-### 🎉 2025-11-27: Architect Module - Clean Architecture Implementation
+<details>
+<summary><h3>🎉 2025-11-27: Architect Module - Clean Architecture Implementation</h3></summary>
 
 **Architect Agent Enhanced** рефакторен согласно Clean Architecture принципам.
 
@@ -207,6 +217,8 @@ src/modules/architect/
 
 **Документация:**
 - [Architect Module README](src/modules/architect/README.md)
+
+</details>
 
 ---
 
