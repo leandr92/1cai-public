@@ -19,7 +19,7 @@
 ## 📰 Последние обновления
 
 <details>
-<summary><h3>🎉 2025-11-27: DevOps Module - Clean Architecture Implementation</h3></summary>
+<summary><strong>🎉 2025-11-27: DevOps Module - Clean Architecture Implementation</strong></summary>
 
 **DevOps Agent Enhanced** полностью рефакторен согласно Clean Architecture принципам.
 
@@ -77,7 +77,7 @@ src/modules/devops/
 ---
 
 <details>
-<summary><h3>🎉 2025-11-27: Business Analyst Module - Clean Architecture Implementation</h3></summary>
+<summary><strong>🎉 2025-11-27: Business Analyst Module - Clean Architecture Implementation</strong></summary>
 
 **Business Analyst Agent Enhanced** рефакторен согласно Clean Architecture принципам.
 
@@ -129,7 +129,7 @@ src/modules/business_analyst/
 ---
 
 <details>
-<summary><h3>🎉 2025-11-27: QA Engineer Module - Clean Architecture Implementation</h3></summary>
+<summary><strong>🎉 2025-11-27: QA Engineer Module - Clean Architecture Implementation</strong></summary>
 
 **QA Engineer Agent Enhanced** рефакторен согласно Clean Architecture принципам.
 
@@ -173,7 +173,7 @@ src/modules/qa/
 ---
 
 <details>
-<summary><h3>🎉 2025-11-27: Architect Module - Clean Architecture Implementation</h3></summary>
+<summary><strong>🎉 2025-11-27: Architect Module - Clean Architecture Implementation</strong></summary>
 
 **Architect Agent Enhanced** рефакторен согласно Clean Architecture принципам.
 
@@ -223,7 +223,7 @@ src/modules/architect/
 ---
 
 <details>
-<summary><h3>🎉 2025-11-27: Security Module - Clean Architecture Implementation</h3></summary>
+<summary><strong>🎉 2025-11-27: Security Module - Clean Architecture Implementation</strong></summary>
 
 **Security** рефакторен согласно Clean Architecture принципам.
 
@@ -276,7 +276,7 @@ src/modules/security/
 ---
 
 <details>
-<summary><h3>🎉 2025-11-27: Technical Writer Module - Clean Architecture Implementation</h3></summary>
+<summary><strong>🎉 2025-11-27: Technical Writer Module - Clean Architecture Implementation</strong></summary>
 
 **Technical Writer** рефакторен согласно Clean Architecture принципам.
 
@@ -329,7 +329,7 @@ src/modules/technical_writer/
 ---
 
 <details>
-<summary><h3>🎉 2025-11-27: Tech Log Analyzer Module - Clean Architecture Implementation</h3></summary>
+<summary><strong>🎉 2025-11-27: Tech Log Analyzer Module - Clean Architecture Implementation</strong></summary>
 
 **Tech Log Analyzer** рефакторен согласно Clean Architecture принципам.
 
@@ -370,7 +370,7 @@ src/modules/tech_log/
 ---
 
 <details>
-<summary><h3>🎉 2025-11-27: RAS Monitor Module - Clean Architecture Implementation</h3></summary>
+<summary><strong>🎉 2025-11-27: RAS Monitor Module - Clean Architecture Implementation</strong></summary>
 
 **RAS Monitor** рефакторен согласно Clean Architecture принципам.
 
@@ -423,7 +423,7 @@ src/modules/ras_monitor/
 ---
 
 <details>
-<summary><h3>🎉 2025-11-27: SQL Optimizer Module - Clean Architecture Implementation</h3></summary>
+<summary><strong>🎉 2025-11-27: SQL Optimizer Module - Clean Architecture Implementation</strong></summary>
 
 **SQL Optimizer** рефакторен согласно Clean Architecture принципам.
 
