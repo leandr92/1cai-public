@@ -1,3 +1,11 @@
+    """Модуль schemas.
+    
+    TODO: Добавить подробное описание модуля.
+    
+    Этот docstring был автоматически сгенерирован.
+    Пожалуйста, обновите его с правильным описанием.
+    """
+    
 from datetime import datetime
 from typing import Any, Dict, List, Optional
 
@@ -7,26 +15,50 @@ from pydantic import BaseModel
 
 
 class RevenueData(BaseModel):
-    this_month: float
+        """Класс RevenueData.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    this_month: float
     last_month: float
     change_percent: float
     trend: str  # "up" or "down"
 
 
 class CustomersData(BaseModel):
-    total: int
+        """Класс CustomersData.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    total: int
     new_this_month: int
 
 
 class MetricData(BaseModel):
-    value: float
+        """Класс MetricData.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    value: float
     change: float
     trend: str
     status: str
 
 
 class OwnerDashboardResponse(BaseModel):
-    revenue: RevenueData
+        """Класс OwnerDashboardResponse.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    revenue: RevenueData
     customers: CustomersData
     growth_percent: float
     system_status: str  # "healthy", "warning", "critical"
@@ -34,7 +66,13 @@ class OwnerDashboardResponse(BaseModel):
 
 
 class ExecutiveDashboardResponse(BaseModel):
-    id: str
+        """Класс ExecutiveDashboardResponse.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    id: str
     health: Dict[str, str]
     roi: MetricData
     users: MetricData
@@ -46,7 +84,13 @@ class ExecutiveDashboardResponse(BaseModel):
 
 
 class SprintProgress(BaseModel):
-    sprint_number: int
+        """Класс SprintProgress.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    sprint_number: int
     tasks_done: int
     tasks_total: int
     progress: float
@@ -55,7 +99,13 @@ class SprintProgress(BaseModel):
 
 
 class PMDashboardResponse(BaseModel):
-    id: str
+        """Класс PMDashboardResponse.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    id: str
     projects: List[Dict[str, Any]]
     projects_summary: Dict[str, Any]
     timeline: List[Dict[str, Any]]
@@ -64,7 +114,13 @@ class PMDashboardResponse(BaseModel):
 
 
 class DeveloperDashboardResponse(BaseModel):
-    id: str
+        """Класс DeveloperDashboardResponse.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    id: str
     name: str
     assigned_tasks: List[Dict[str, Any]]
     code_reviews: List[Dict[str, Any]]
@@ -77,13 +133,25 @@ class DeveloperDashboardResponse(BaseModel):
 
 
 class ReportRequest(BaseModel):
-    title: str
+        """Класс ReportRequest.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    title: str
     period_days: int = 7
     components: Optional[List[str]] = None
 
 
 class ReportResponse(BaseModel):
-    id: str
+        """Класс ReportResponse.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    id: str
     title: str
     period_start: datetime
     period_end: datetime

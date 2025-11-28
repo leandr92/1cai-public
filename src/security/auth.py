@@ -48,13 +48,25 @@ class AuthSettings(BaseSettings):
 
 
 class TokenResponse(BaseModel):
-    access_token: str
+        """Класс TokenResponse.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    access_token: str
     token_type: str = "bearer"
     expires_in: int
 
 
 class UserCredentials(BaseModel):
-    username: str
+        """Класс UserCredentials.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    username: str
     password: str
     user_id: str
     roles: List[str] = Field(default_factory=list)
@@ -64,7 +76,13 @@ class UserCredentials(BaseModel):
 
 
 class CurrentUser(BaseModel):
-    user_id: str
+        """Класс CurrentUser.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    user_id: str
     username: str
     roles: List[str] = Field(default_factory=list)
     permissions: List[str] = Field(default_factory=list)
@@ -72,10 +90,18 @@ class CurrentUser(BaseModel):
     email: Optional[str] = None
 
     def has_role(self, *required_roles: str) -> bool:
-        return any(role in self.roles for role in required_roles)
+            """TODO: Описать функцию has_role.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return any(role in self.roles for role in required_roles)
 
     def has_permission(self, *required_permissions: str) -> bool:
-        return any(
+            """TODO: Описать функцию has_permission.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return any(
             permission in self.permissions for permission in required_permissions
         )
 
@@ -106,7 +132,11 @@ class AuthService:
     """Service for authenticating users and issuing JWT tokens."""
 
     def __init__(self, settings: AuthSettings):
-        self.settings = settings
+            """TODO: Описать функцию __init__.
+                    
+                    Args:
+                        settings: TODO: Описать параметр.
+                    """        self.settings = settings
         self._users: Dict[str, UserCredentials] = self._load_users()
         self._service_tokens: Dict[str, CurrentUser] = self._load_service_tokens()
 
@@ -188,7 +218,15 @@ class AuthService:
         return token_map
 
     def authenticate_user(
-        self, username: str, password: str
+            """TODO: Описать функцию authenticate_user.
+                    
+                    Args:
+                        username: TODO: Описать параметр.
+                        password: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        self, username: str, password: str
     ) -> Optional[UserCredentials]:
         user = self._users.get(username)
         if not user:
@@ -341,7 +379,14 @@ class AuthService:
         )
 
     def authenticate_service_token(self, token: str) -> Optional[CurrentUser]:
-        if not token:
+            """TODO: Описать функцию authenticate_service_token.
+                    
+                    Args:
+                        token: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        if not token:
             return None
         principal = self._service_tokens.get(token)
         if principal:
@@ -351,16 +396,32 @@ class AuthService:
 
 @lru_cache()
 def get_auth_settings() -> AuthSettings:
-    return AuthSettings()
+        """TODO: Описать функцию get_auth_settings.
+                
+                Returns:
+                    TODO: Описать возвращаемое значение.
+                """    return AuthSettings()
 
 
 @lru_cache()
 def get_auth_service() -> AuthService:
-    return AuthService(get_auth_settings())
+        """TODO: Описать функцию get_auth_service.
+                
+                Returns:
+                    TODO: Описать возвращаемое значение.
+                """    return AuthService(get_auth_settings())
 
 
 async def get_current_user(
-    request: Request, token: Optional[str] = Depends(oauth2_scheme)
+        """TODO: Описать функцию get_current_user.
+                
+                Args:
+                    request: TODO: Описать параметр.
+                    token: TODO: Описать параметр.
+                
+                Returns:
+                    TODO: Описать возвращаемое значение.
+                """    request: Request, token: Optional[str] = Depends(oauth2_scheme)
 ) -> CurrentUser:
     auth_service = get_auth_service()
 
@@ -390,8 +451,16 @@ async def get_current_user(
 
 
 def require_roles(*roles: str):
-    async def dependency(user: CurrentUser = Depends(get_current_user)) -> CurrentUser:
-        if roles and not user.has_role(*roles):
+        """TODO: Описать функцию require_roles.
+                """    async def dependency(user: CurrentUser = Depends(get_current_user)) -> CurrentUser:
+            """TODO: Описать функцию dependency.
+                    
+                    Args:
+                        user: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        if roles and not user.has_role(*roles):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Insufficient role",
@@ -402,8 +471,16 @@ def require_roles(*roles: str):
 
 
 def require_permissions(*permissions: str):
-    async def dependency(user: CurrentUser = Depends(get_current_user)) -> CurrentUser:
-        if permissions and not user.has_permission(*permissions):
+        """TODO: Описать функцию require_permissions.
+                """    async def dependency(user: CurrentUser = Depends(get_current_user)) -> CurrentUser:
+            """TODO: Описать функцию dependency.
+                    
+                    Args:
+                        user: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        if permissions and not user.has_permission(*permissions):
             raise HTTPException(
                 status_code=status.HTTP_403_FORBIDDEN,
                 detail="Insufficient permissions",

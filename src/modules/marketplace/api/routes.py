@@ -1,3 +1,11 @@
+    """Модуль routes.
+    
+    TODO: Добавить подробное описание модуля.
+    
+    Этот docstring был автоматически сгенерирован.
+    Пожалуйста, обновите его с правильным описанием.
+    """
+    
 from typing import Any, Dict, Optional
 
 from fastapi import APIRouter, Depends, File, HTTPException, Query, Response, UploadFile
@@ -22,14 +30,28 @@ router = APIRouter(prefix="/marketplace", tags=["marketplace"])
 
 
 def get_marketplace_repository(request: Request) -> MarketplaceRepository:
-    repo = getattr(request.app.state, "marketplace_repo", None)
+        """TODO: Описать функцию get_marketplace_repository.
+                
+                Args:
+                    request: TODO: Описать параметр.
+                
+                Returns:
+                    TODO: Описать возвращаемое значение.
+                """    repo = getattr(request.app.state, "marketplace_repo", None)
     if repo is None:
         raise RuntimeError("Marketplace repository is not initialized")
     return repo
 
 
 def get_marketplace_service(
-    repo: MarketplaceRepository = Depends(get_marketplace_repository),
+        """TODO: Описать функцию get_marketplace_service.
+                
+                Args:
+                    repo: TODO: Описать параметр.
+                
+                Returns:
+                    TODO: Описать возвращаемое значение.
+                """    repo: MarketplaceRepository = Depends(get_marketplace_repository),
 ) -> MarketplaceService:
     return MarketplaceService(repo)
 
@@ -42,7 +64,15 @@ def get_marketplace_service(
 )
 @limiter.limit("5/minute")
 async def submit_plugin(
-    request: Request,
+        """TODO: Описать функцию submit_plugin.
+                
+                Args:
+                    request: TODO: Описать параметр.
+                    response: TODO: Описать параметр.
+                    plugin: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    request: Request,
     response: Response,
     plugin: PluginSubmitRequest,
     current_user: CurrentUser = Depends(require_roles("developer", "admin")),
@@ -61,7 +91,18 @@ async def submit_plugin(
     summary="Search plugins",
 )
 async def search_plugins(
-    query: Optional[str] = Query(None, description="Search query"),
+        """TODO: Описать функцию search_plugins.
+                
+                Args:
+                    query: TODO: Описать параметр.
+                    category: TODO: Описать параметр.
+                    author: TODO: Описать параметр.
+                    sort_by: TODO: Описать параметр.
+                    order: TODO: Описать параметр.
+                    page: TODO: Описать параметр.
+                    page_size: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    query: Optional[str] = Query(None, description="Search query"),
     category: Optional[PluginCategory] = Query(None, description="Filter by category"),
     author: Optional[str] = Query(None, description="Filter by author username"),
     sort_by: str = Query("rating", description="Sort field"),
@@ -96,7 +137,12 @@ async def search_plugins(
 
 @router.get("/plugins/{plugin_id}", response_model=PluginResponse)
 async def get_plugin(
-    plugin_id: str,
+        """TODO: Описать функцию get_plugin.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     service: MarketplaceService = Depends(get_marketplace_service),
 ):
     plugin = await service.get_plugin(plugin_id)
@@ -107,7 +153,14 @@ async def get_plugin(
 
 @router.put("/plugins/{plugin_id}", response_model=PluginResponse)
 async def update_plugin(
-    plugin_id: str,
+        """TODO: Описать функцию update_plugin.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    update: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     update: PluginUpdateRequest,
     current_user: CurrentUser = Depends(get_current_user),
     service: MarketplaceService = Depends(get_marketplace_service),
@@ -126,7 +179,16 @@ async def update_plugin(
 @router.post("/plugins/{plugin_id}/artifact", response_model=PluginResponse, status_code=201)
 @limiter.limit("10/minute")
 async def upload_plugin_artifact(
-    request: Request,
+        """TODO: Описать функцию upload_plugin_artifact.
+                
+                Args:
+                    request: TODO: Описать параметр.
+                    response: TODO: Описать параметр.
+                    plugin_id: TODO: Описать параметр.
+                    file: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    request: Request,
     response: Response,
     plugin_id: str,
     file: UploadFile = File(...),
@@ -148,7 +210,13 @@ async def upload_plugin_artifact(
 
 @router.delete("/plugins/{plugin_id}")
 async def delete_plugin(
-    plugin_id: str,
+        """TODO: Описать функцию delete_plugin.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     current_user: CurrentUser = Depends(get_current_user),
     service: MarketplaceService = Depends(get_marketplace_service),
 ):
@@ -163,7 +231,13 @@ async def delete_plugin(
 
 @router.post("/plugins/{plugin_id}/install")
 async def install_plugin(
-    plugin_id: str,
+        """TODO: Описать функцию install_plugin.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     current_user: CurrentUser = Depends(get_current_user),
     service: MarketplaceService = Depends(get_marketplace_service),
 ):
@@ -180,7 +254,13 @@ async def install_plugin(
 
 @router.post("/plugins/{plugin_id}/uninstall")
 async def uninstall_plugin(
-    plugin_id: str,
+        """TODO: Описать функцию uninstall_plugin.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     current_user: CurrentUser = Depends(get_current_user),
     service: MarketplaceService = Depends(get_marketplace_service),
 ):
@@ -192,7 +272,12 @@ async def uninstall_plugin(
 
 @router.get("/plugins/{plugin_id}/stats", response_model=PluginStatsResponse)
 async def get_plugin_stats(
-    plugin_id: str,
+        """TODO: Описать функцию get_plugin_stats.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     service: MarketplaceService = Depends(get_marketplace_service),
 ):
     stats = await service.get_stats(plugin_id)
@@ -203,7 +288,14 @@ async def get_plugin_stats(
 
 @router.post("/plugins/{plugin_id}/reviews", response_model=PluginReviewResponse)
 async def submit_review(
-    plugin_id: str,
+        """TODO: Описать функцию submit_review.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    review: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     review: PluginReviewRequest,
     current_user: CurrentUser = Depends(get_current_user),
     service: MarketplaceService = Depends(get_marketplace_service),
@@ -219,7 +311,17 @@ async def submit_review(
 
 @router.get("/plugins/{plugin_id}/reviews")
 async def get_plugin_reviews(
-    plugin_id: str,
+        """TODO: Описать функцию get_plugin_reviews.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    page: TODO: Описать параметр.
+                    page_size: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                
+                Returns:
+                    TODO: Описать возвращаемое значение.
+                """    plugin_id: str,
     page: int = 1,
     page_size: int = 10,
     service: MarketplaceService = Depends(get_marketplace_service),
@@ -239,7 +341,12 @@ async def get_plugin_reviews(
 
 @router.get("/plugins/{plugin_id}/download")
 async def download_plugin(
-    plugin_id: str,
+        """TODO: Описать функцию download_plugin.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     service: MarketplaceService = Depends(get_marketplace_service),
 ):
     payload = await service.build_download_payload(plugin_id)
@@ -250,7 +357,11 @@ async def download_plugin(
 
 @router.get("/categories")
 async def get_categories(
-    service: MarketplaceService = Depends(get_marketplace_service),
+        """TODO: Описать функцию get_categories.
+                
+                Args:
+                    service: TODO: Описать параметр.
+                """    service: MarketplaceService = Depends(get_marketplace_service),
 ):
     category_counts = await service.get_category_counts()
     return {
@@ -267,7 +378,12 @@ async def get_categories(
 
 @router.get("/featured")
 async def get_featured_plugins(
-    limit: int = 6,
+        """TODO: Описать функцию get_featured_plugins.
+                
+                Args:
+                    limit: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    limit: int = 6,
     service: MarketplaceService = Depends(get_marketplace_service),
 ):
     featured = await service.get_featured(limit)
@@ -276,7 +392,13 @@ async def get_featured_plugins(
 
 @router.get("/trending")
 async def get_trending_plugins(
-    period: str = "week",
+        """TODO: Описать функцию get_trending_plugins.
+                
+                Args:
+                    period: TODO: Описать параметр.
+                    limit: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    period: str = "week",
     limit: int = 10,
     service: MarketplaceService = Depends(get_marketplace_service),
 ):
@@ -289,7 +411,13 @@ async def get_trending_plugins(
 
 @router.post("/plugins/{plugin_id}/favorite")
 async def add_to_favorites(
-    plugin_id: str,
+        """TODO: Описать функцию add_to_favorites.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     current_user: CurrentUser = Depends(get_current_user),
     service: MarketplaceService = Depends(get_marketplace_service),
 ):
@@ -302,7 +430,13 @@ async def add_to_favorites(
 
 @router.delete("/plugins/{plugin_id}/favorite")
 async def remove_from_favorites(
-    plugin_id: str,
+        """TODO: Описать функцию remove_from_favorites.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     current_user: CurrentUser = Depends(get_current_user),
     service: MarketplaceService = Depends(get_marketplace_service),
 ):
@@ -315,7 +449,15 @@ async def remove_from_favorites(
 
 @router.post("/plugins/{plugin_id}/report")
 async def report_plugin(
-    plugin_id: str,
+        """TODO: Описать функцию report_plugin.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    reason: TODO: Описать параметр.
+                    details: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     reason: str,
     details: Optional[str] = None,
     current_user: CurrentUser = Depends(get_current_user),
@@ -337,7 +479,13 @@ async def report_plugin(
 
 @router.post("/admin/plugins/{plugin_id}/approve")
 async def approve_plugin(
-    plugin_id: str,
+        """TODO: Описать функцию approve_plugin.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     current_user: CurrentUser = Depends(require_roles("admin", "moderator")),
     service: MarketplaceService = Depends(get_marketplace_service),
 ):
@@ -350,7 +498,14 @@ async def approve_plugin(
 
 @router.post("/admin/plugins/{plugin_id}/reject")
 async def reject_plugin(
-    plugin_id: str,
+        """TODO: Описать функцию reject_plugin.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    reason: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     reason: str,
     current_user: CurrentUser = Depends(require_roles("admin", "moderator")),
     service: MarketplaceService = Depends(get_marketplace_service),
@@ -364,7 +519,14 @@ async def reject_plugin(
 
 @router.post("/admin/plugins/{plugin_id}/feature")
 async def feature_plugin(
-    plugin_id: str,
+        """TODO: Описать функцию feature_plugin.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    featured: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     featured: bool = True,
     current_user: CurrentUser = Depends(require_roles("admin", "moderator")),
     service: MarketplaceService = Depends(get_marketplace_service),
@@ -378,7 +540,14 @@ async def feature_plugin(
 
 @router.post("/admin/plugins/{plugin_id}/verify")
 async def verify_plugin(
-    plugin_id: str,
+        """TODO: Описать функцию verify_plugin.
+                
+                Args:
+                    plugin_id: TODO: Описать параметр.
+                    verified: TODO: Описать параметр.
+                    current_user: TODO: Описать параметр.
+                    service: TODO: Описать параметр.
+                """    plugin_id: str,
     verified: bool = True,
     current_user: CurrentUser = Depends(require_roles("admin", "moderator")),
     service: MarketplaceService = Depends(get_marketplace_service),

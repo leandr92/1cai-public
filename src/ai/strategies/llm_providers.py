@@ -1,3 +1,11 @@
+    """Модуль llm_providers.
+    
+    TODO: Добавить подробное описание модуля.
+    
+    Этот docstring был автоматически сгенерирован.
+    Пожалуйста, обновите его с правильным описанием.
+    """
+    
 from typing import Any, Dict
 
 from src.ai.clients.gigachat_client import GigaChatClient, GigaChatConfig
@@ -12,8 +20,15 @@ logger = StructuredLogger(__name__).logger
 
 
 class GigaChatStrategy(AIStrategy):
-    def __init__(self):
-        try:
+        """Класс GigaChatStrategy.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    def __init__(self):
+            """TODO: Описать функцию __init__.
+                    """        try:
             self.client = GigaChatClient(config=GigaChatConfig())
             self.is_available = self.client.is_configured
         except Exception:
@@ -21,10 +36,22 @@ class GigaChatStrategy(AIStrategy):
 
     @property
     def service_name(self) -> str:
-        return "gigachat"
+            """TODO: Описать функцию service_name.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return "gigachat"
 
     async def execute(self, query: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        if not self.is_available:
+            """TODO: Описать функцию execute.
+                    
+                    Args:
+                        query: TODO: Описать параметр.
+                        context: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        if not self.is_available:
             return {"status": "skipped", "message": "GigaChat not configured"}
 
         system_prompt = context.get(
@@ -39,8 +66,15 @@ class GigaChatStrategy(AIStrategy):
 
 
 class YandexGPTStrategy(AIStrategy):
-    def __init__(self):
-        try:
+        """Класс YandexGPTStrategy.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    def __init__(self):
+            """TODO: Описать функцию __init__.
+                    """        try:
             self.client = YandexGPTClient(config=YandexGPTConfig())
             self.is_available = self.client.is_configured
         except Exception:
@@ -48,10 +82,22 @@ class YandexGPTStrategy(AIStrategy):
 
     @property
     def service_name(self) -> str:
-        return "yandexgpt"
+            """TODO: Описать функцию service_name.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return "yandexgpt"
 
     async def execute(self, query: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        if not self.is_available:
+            """TODO: Описать функцию execute.
+                    
+                    Args:
+                        query: TODO: Описать параметр.
+                        context: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        if not self.is_available:
             return {"status": "skipped", "message": "YandexGPT not configured"}
 
         system_prompt = context.get(
@@ -66,8 +112,15 @@ class YandexGPTStrategy(AIStrategy):
 
 
 class NaparnikStrategy(AIStrategy):
-    def __init__(self):
-        try:
+        """Класс NaparnikStrategy.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    def __init__(self):
+            """TODO: Описать функцию __init__.
+                    """        try:
             self.client = NaparnikClient(config=NaparnikConfig())
             self.is_available = self.client.is_configured
         except Exception:
@@ -75,10 +128,22 @@ class NaparnikStrategy(AIStrategy):
 
     @property
     def service_name(self) -> str:
-        return "naparnik"
+            """TODO: Описать функцию service_name.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return "naparnik"
 
     async def execute(self, query: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        if not self.is_available:
+            """TODO: Описать функцию execute.
+                    
+                    Args:
+                        query: TODO: Описать параметр.
+                        context: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        if not self.is_available:
             return {"status": "skipped", "message": "Naparnik not configured"}
 
         system_prompt = context.get(
@@ -93,8 +158,15 @@ class NaparnikStrategy(AIStrategy):
 
 
 class OllamaStrategy(AIStrategy):
-    def __init__(self):
-        try:
+        """Класс OllamaStrategy.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    def __init__(self):
+            """TODO: Описать функцию __init__.
+                    """        try:
             self.client = OllamaClient(config=OllamaConfig())
             self.is_available = self.client.is_configured
         except Exception:
@@ -102,10 +174,22 @@ class OllamaStrategy(AIStrategy):
 
     @property
     def service_name(self) -> str:
-        return "ollama"
+            """TODO: Описать функцию service_name.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return "ollama"
 
     async def execute(self, query: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        if not self.is_available:
+            """TODO: Описать функцию execute.
+                    
+                    Args:
+                        query: TODO: Описать параметр.
+                        context: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        if not self.is_available:
             return {"status": "skipped", "message": "Ollama not configured"}
 
         model_name = context.get("ollama_model", "llama3")
@@ -120,8 +204,15 @@ class OllamaStrategy(AIStrategy):
 
 
 class TabnineStrategy(AIStrategy):
-    def __init__(self):
-        try:
+        """Класс TabnineStrategy.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    def __init__(self):
+            """TODO: Описать функцию __init__.
+                    """        try:
             self.client = TabnineClient(config=TabnineConfig())
             self.is_available = self.client.is_configured
         except Exception:
@@ -129,10 +220,22 @@ class TabnineStrategy(AIStrategy):
 
     @property
     def service_name(self) -> str:
-        return "tabnine"
+            """TODO: Описать функцию service_name.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return "tabnine"
 
     async def execute(self, query: str, context: Dict[str, Any]) -> Dict[str, Any]:
-        if not self.is_available:
+            """TODO: Описать функцию execute.
+                    
+                    Args:
+                        query: TODO: Описать параметр.
+                        context: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        if not self.is_available:
             return {"status": "skipped", "message": "Tabnine not configured"}
 
         system_prompt = context.get(

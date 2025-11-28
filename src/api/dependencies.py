@@ -1,3 +1,11 @@
+    """Модуль dependencies.
+    
+    TODO: Добавить подробное описание модуля.
+    
+    Этот docstring был автоматически сгенерирован.
+    Пожалуйста, обновите его с правильным описанием.
+    """
+    
 from typing import Optional
 
 from fastapi import Depends, HTTPException
@@ -21,14 +29,21 @@ _graph_service: Optional["GraphService"] = None
 
 
 class ServiceContainer:
-    _neo4j_client: Optional[Neo4jClient] = None
+        """Класс ServiceContainer.
+                
+                TODO: Добавить описание класса.
+                
+                Attributes:
+                    TODO: Описать атрибуты класса.
+                """    _neo4j_client: Optional[Neo4jClient] = None
     _qdrant_client: Optional[QdrantClient] = None
     _pg_client: Optional[PostgreSQLSaver] = None
     _embedding_service: Optional[EmbeddingService] = None
 
     @classmethod
     def initialize(cls):
-        try:
+            """TODO: Описать функцию initialize.
+                    """        try:
             # Neo4j
             cls._neo4j_client = Neo4jClient()
             cls._neo4j_client.connect()
@@ -62,7 +77,8 @@ class ServiceContainer:
 
     @classmethod
     def cleanup(cls):
-        if cls._neo4j_client:
+            """TODO: Описать функцию cleanup.
+                    """        if cls._neo4j_client:
             cls._neo4j_client.disconnect()
         if cls._pg_client:
             cls._pg_client.disconnect()
@@ -70,23 +86,43 @@ class ServiceContainer:
 
     @classmethod
     def get_neo4j(cls) -> Optional[Neo4jClient]:
-        return cls._neo4j_client
+            """TODO: Описать функцию get_neo4j.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return cls._neo4j_client
 
     @classmethod
     def get_qdrant(cls) -> Optional[QdrantClient]:
-        return cls._qdrant_client
+            """TODO: Описать функцию get_qdrant.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return cls._qdrant_client
 
     @classmethod
     def get_postgres(cls) -> Optional[PostgreSQLSaver]:
-        return cls._pg_client
+            """TODO: Описать функцию get_postgres.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return cls._pg_client
 
     @classmethod
     def get_embedding(cls) -> Optional[EmbeddingService]:
-        return cls._embedding_service
+            """TODO: Описать функцию get_embedding.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return cls._embedding_service
 
 
 def get_qdrant_client() -> QdrantClient:
-    return QdrantClient()
+        """TODO: Описать функцию get_qdrant_client.
+                
+                Returns:
+                    TODO: Описать возвращаемое значение.
+                """    return QdrantClient()
 
 
 def get_neo4j_client() -> Neo4jClient:
@@ -139,8 +175,16 @@ def get_archi_importer(
 
 
 def get_postgres_client() -> Optional[PostgreSQLSaver]:
-    return ServiceContainer.get_postgres()
+        """TODO: Описать функцию get_postgres_client.
+                
+                Returns:
+                    TODO: Описать возвращаемое значение.
+                """    return ServiceContainer.get_postgres()
 
 
 def get_embedding_service() -> Optional[EmbeddingService]:
-    return ServiceContainer.get_embedding()
+        """TODO: Описать функцию get_embedding_service.
+                
+                Returns:
+                    TODO: Описать возвращаемое значение.
+                """    return ServiceContainer.get_embedding()

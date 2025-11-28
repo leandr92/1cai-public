@@ -147,21 +147,53 @@ class CodeGraphBackend:
     """
 
     async def upsert_node(self, node: Node) -> None:  # pragma: no cover - интерфейс
-        raise NotImplementedError
+            """TODO: Описать функцию upsert_node.
+                    
+                    Args:
+                        node: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        raise NotImplementedError
 
     async def upsert_edge(self, edge: Edge) -> None:  # pragma: no cover - интерфейс
-        raise NotImplementedError
+            """TODO: Описать функцию upsert_edge.
+                    
+                    Args:
+                        edge: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        raise NotImplementedError
 
     async def get_node(self, node_id: str) -> Optional[Node]:  # pragma: no cover
-        raise NotImplementedError
+            """TODO: Описать функцию get_node.
+                    
+                    Args:
+                        node_id: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        raise NotImplementedError
 
     async def neighbors(
-        self, node_id: str, *, kinds: Optional[Iterable[EdgeKind]] = None
+            """TODO: Описать функцию neighbors.
+                    
+                    Args:
+                        node_id: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        self, node_id: str, *, kinds: Optional[Iterable[EdgeKind]] = None
     ) -> List[Node]:  # pragma: no cover
         raise NotImplementedError
 
     async def find_nodes(
-        self,
+            """TODO: Описать функцию find_nodes.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        self,
         *,
         kind: Optional[NodeKind] = None,
         label: Optional[str] = None,
@@ -180,23 +212,55 @@ class InMemoryCodeGraphBackend(CodeGraphBackend):
     """
 
     def __init__(self) -> None:
-        self._nodes: Dict[str, Node] = {}
+            """TODO: Описать функцию __init__.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        self._nodes: Dict[str, Node] = {}
         self._edges: List[Edge] = []
 
     async def upsert_node(self, node: Node) -> None:
-        self._nodes[node.id] = node
+            """TODO: Описать функцию upsert_node.
+                    
+                    Args:
+                        node: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        self._nodes[node.id] = node
 
     async def upsert_edge(self, edge: Edge) -> None:
-        if edge.source not in self._nodes or edge.target not in self._nodes:
+            """TODO: Описать функцию upsert_edge.
+                    
+                    Args:
+                        edge: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        if edge.source not in self._nodes or edge.target not in self._nodes:
             # В простом бэкенде тихо игнорируем связи к несуществующим узлам
             return
         self._edges.append(edge)
 
     async def get_node(self, node_id: str) -> Optional[Node]:
-        return self._nodes.get(node_id)
+            """TODO: Описать функцию get_node.
+                    
+                    Args:
+                        node_id: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        return self._nodes.get(node_id)
 
     async def neighbors(
-        self, node_id: str, *, kinds: Optional[Iterable[EdgeKind]] = None
+            """TODO: Описать функцию neighbors.
+                    
+                    Args:
+                        node_id: TODO: Описать параметр.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        self, node_id: str, *, kinds: Optional[Iterable[EdgeKind]] = None
     ) -> List[Node]:
         if kinds is not None:
             kinds_set = set(kinds)
@@ -208,7 +272,11 @@ class InMemoryCodeGraphBackend(CodeGraphBackend):
         return [self._nodes[e.target] for e in relevant if e.target in self._nodes]
 
     async def find_nodes(
-        self,
+            """TODO: Описать функцию find_nodes.
+                    
+                    Returns:
+                        TODO: Описать возвращаемое значение.
+                    """        self,
         *,
         kind: Optional[NodeKind] = None,
         label: Optional[str] = None,
