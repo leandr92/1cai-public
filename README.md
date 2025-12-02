@@ -282,10 +282,10 @@
 graph LR
     subgraph OneC ["🪐 Экосистема 1С:Предприятие"]
         direction TB
-        Dev[Разработчик 1С]
-        Designer[Конфигуратор / EDT]
-        Client[1C:Предприятие (Клиент)]
-        Server[Кластер серверов 1С]
+        Dev["Разработчик 1С"]
+        Designer["Конфигуратор / EDT"]
+        Client["1C:Предприятие (Клиент)"]
+        Server["Кластер серверов 1С"]
         
         Dev -->|Кодит в| Designer
         Designer -.->|Обновляет| Server
@@ -294,24 +294,24 @@ graph LR
 
     subgraph Bridge ["🌉 Шина интеграции"]
         direction TB
-        ExtProc[Внешняя обработка (EPF)]
-        HTTP[HTTP Сервис (JSON)]
-        OData[OData Standard]
-        RAS[RAS Protocol]
+        ExtProc["Внешняя обработка (EPF)"]
+        HTTP["HTTP Сервис (JSON)"]
+        OData["OData Standard"]
+        RAS["RAS Protocol"]
     end
 
     subgraph AIStack ["🤖 1C AI Stack (Backend)"]
         direction TB
-        API[API Gateway]
+        API["API Gateway"]
         
         subgraph Brain ["Мозг системы"]
-            Agents[AI Агенты]
-            Gen[Генераторы кода]
+            Agents["AI Агенты"]
+            Gen["Генераторы кода"]
         end
         
         subgraph Memory ["Память"]
-            Vector[Векторная база (RAG)]
-            Graph[Граф метаданных (Neo4j)]
+            Vector["Векторная база (RAG)"]
+            Graph["Граф метаданных (Neo4j)"]
         end
     end
 
