@@ -1,12 +1,14 @@
 # AI Orchestrator - Intelligent routing of queries to AI services
-# Версия: 3.1.0
+# Версия: 3.2.0 (Self-Evolution Instrumented)
 # Refactored: API endpoints moved to src/api/orchestrator_api.py
 
 import asyncio
+import time
 from typing import Any, Dict, Optional, TYPE_CHECKING
 
 from src.ai.query_classifier import QueryClassifier, QueryIntent, QueryType, AIService
 from src.utils.structured_logging import StructuredLogger
+from src.infrastructure.event_bus import EventPublisher, EventType, get_event_bus
 
 logger = StructuredLogger(__name__).logger
 
@@ -18,6 +20,9 @@ class AIOrchestrator:
 
     def __init__(self):
         self.classifier = QueryClassifier()
+        
+        # Initialize Event Publisher for Telemetry
+        self.event_publisher = EventPublisher(get_event_bus(), source="ai_orchestrator")
 
         # Initialize strategies (Lazy Loading)
         from src.ai.strategies.graph import Neo4jStrategy
@@ -71,6 +76,20 @@ class AIOrchestrator:
             logger.info("Council orchestrator initialized")
         except Exception as e:
             logger.warning("Council orchestrator not available: %s", e)
+
+        # GAM Components (Cognitive Memory)
+        self.memorizer = None
+        self.context_compiler = None
+        try:
+            from src.ai.memory.memory_manager import Memorizer
+            from src.ai.memory.context_compiler import ContextCompiler
+            from src.ai.memory.schemas import MemorySource
+            
+            self.memorizer = Memorizer()
+            self.context_compiler = ContextCompiler(self.memorizer)
+            logger.info("Cognitive Memory (GAM) initialized")
+        except Exception as e:
+            logger.warning("Cognitive Memory (GAM) not available: %s", e)
 
     def _get_strategy(self, service: AIService, context: Dict) -> Any:
         # Get strategy for service
@@ -148,6 +167,18 @@ class AIOrchestrator:
         except Exception:
             pass
 
+        # GAM: JIT Context Compilation
+        # Если включено, мы обогащаем контекст "брифингом" из памяти
+        if self.context_compiler and context.get("use_memory", True):
+            try:
+                briefing = self.context_compiler.compile_briefing(query)
+                if briefing:
+                    # Добавляем брифинг в контекст
+                    context["memory_briefing"] = briefing
+                    logger.info("Context enriched with GAM briefing", extra={"briefing_len": len(briefing)})
+            except Exception as e:
+                logger.warning(f"Failed to compile context briefing: {e}")
+
         # Classify
         intent = self.classifier.classify(query, context)
 
@@ -174,6 +205,25 @@ class AIOrchestrator:
             self.cache[cache_key] = response
         else:
             self.cache.set(query, response, context, query_type=intent.query_type.value)
+
+        # GAM: Memorize Interaction
+        # Сохраняем успешные взаимодействия как эпизоды
+        if self.memorizer and context.get("use_memory", True):
+            try:
+                from src.ai.memory.schemas import MemorySource
+                # Формируем контент для запоминания: Запрос + Ответ (кратко)
+                # В будущем здесь будет более сложная логика выделения фактов
+                response_preview = str(response)[:200]
+                memory_content = f"Query: {query}\nResponse: {response_preview}"
+                
+                self.memorizer.remember(
+                    content=memory_content,
+                    source=MemorySource.INFERENCE,
+                    confidence=1.0,
+                    metadata={"query_type": intent.query_type.value}
+                )
+            except Exception as e:
+                logger.warning(f"Failed to memorize interaction: {e}")
 
         return response
 
@@ -226,13 +276,41 @@ class AIOrchestrator:
     async def _execute_strategies(self, query: str, intent: QueryIntent, context: Dict) -> Dict:
         # Execute strategies based on intent
 
+        # Adaptive Routing (Self-Evolution)
+        # If we have multiple candidates and adaptive routing is enabled (default),
+        # use StrategySelector to pick the best one instead of running all.
+        use_adaptive = context.get("use_adaptive_routing", True)
+        
+        if use_adaptive and len(intent.preferred_services) > 1:
+            try:
+                from src.ai.optimization.strategy_selector import get_strategy_selector
+                selector = get_strategy_selector()
+                
+                # Select best service
+                best_service = selector.select_strategy(intent.preferred_services, intent.query_type.value)
+                
+                logger.info(
+                    f"Adaptive Routing: Selected {best_service} from {intent.preferred_services}",
+                    extra={"query_type": intent.query_type.value}
+                )
+                
+                # Override preferred services to just the best one
+                intent.preferred_services = [best_service]
+                
+            except Exception as e:
+                logger.warning(f"Adaptive routing failed, falling back to parallel: {e}")
+
         # Single service optimization
         if len(intent.preferred_services) == 1:
             service = intent.preferred_services[0]
             strategy = self._get_strategy(service, context)
             if strategy:
+                start_time = time.time()
+                success = False
                 try:
-                    return await strategy.execute(query, context)
+                    result = await strategy.execute(query, context)
+                    success = True
+                    return result
                 except Exception as e:
                     logger.error(f"Service {service} failed: {e}")
                     return {
@@ -241,16 +319,30 @@ class AIOrchestrator:
                             service: {"error": str(e)}
                         }
                     }
+                finally:
+                    # Publish telemetry event
+                    duration = time.time() - start_time
+                    await self.event_publisher.publish(
+                        EventType.STRATEGY_PERFORMANCE_RECORDED,
+                        payload={
+                            "service": service.value if hasattr(service, "value") else str(service),
+                            "duration": duration,
+                            "success": success,
+                            "query_type": intent.query_type.value
+                        }
+                    )
 
-        # Parallel execution
+        # Parallel execution (fallback or explicit request)
         tasks = []
         service_names = []
+        start_times = {}
 
         for service in intent.preferred_services:
             strategy = self._get_strategy(service, context)
             if strategy:
                 tasks.append(strategy.execute(query, context))
                 service_names.append(strategy.service_name)
+                start_times[strategy.service_name] = time.time()
 
         if not tasks:
             return {"error": "No suitable services found"}
@@ -263,12 +355,27 @@ class AIOrchestrator:
 
         for i, result in enumerate(results):
             service_name = service_names[i]
+            duration = time.time() - start_times.get(service_name, time.time())
+            success = False
+            
             if isinstance(result, Exception):
                 logger.error(f"Service {service_name} failed: {result}")
                 combined_results[service_name] = {"error": str(result)}
             else:
                 combined_results[service_name] = result
                 successful_count += 1
+                success = True
+            
+            # Publish telemetry event for each service
+            await self.event_publisher.publish(
+                EventType.STRATEGY_PERFORMANCE_RECORDED,
+                payload={
+                    "service": service_name,
+                    "duration": duration,
+                    "success": success,
+                    "query_type": intent.query_type.value
+                }
+            )
 
         return {
             "type": "multi_service",

@@ -56,6 +56,11 @@ class EventType(str, Enum):
     DOC_REQUESTED = "agent.tw.doc_requested"
     DOC_GENERATED = "agent.tw.doc_generated"
 
+    # Self-Evolution Events
+    AI_FEEDBACK_RECEIVED = "ai.evolution.feedback_received"
+    STRATEGY_PERFORMANCE_RECORDED = "ai.evolution.strategy_performance"
+    CODE_ERROR_DETECTED = "ai.evolution.code_error"
+
     # System Events
     SYSTEM_HEALTH_CHECK = "system.health.check"
     SYSTEM_ERROR = "system.error"

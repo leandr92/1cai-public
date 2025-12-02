@@ -724,6 +724,82 @@ sequenceDiagram
 
 </details>
 
+<details>
+<summary><strong>🧬 4. Self-Evolution Architecture (Phases 1-3)</strong></summary>
+
+Система, способная к самостоятельному улучшению и адаптации.
+
+```mermaid
+graph TD
+    subgraph Senses ["👀 Senses (Instrumentation)"]
+        Telemetry[Telemetry Collector]
+        Logs[Log Analyzer]
+        Metrics[Prometheus]
+    end
+
+    subgraph Brain ["🧠 Brain (Meta-Optimizer)"]
+        Selector[Strategy Selector]
+        Reflector[Strike 3 Reflector]
+        Optimizer[Meta-Optimizer]
+    end
+
+    subgraph Hands ["🛠️ Hands (RSI)"]
+        Git[Git Automation]
+        Prompt[Prompt Optimizer]
+        Code[Code Generator]
+    end
+
+    Senses --> Brain
+    Brain --> Hands
+    Hands --> Senses
+```
+
+**Компоненты:**
+1.  **Senses (Чувства)**: Сбор метрик производительности и ошибок (`TelemetryCollector`).
+2.  **Brain (Мозг)**:
+    -   **Strategy Selector**: Выбор лучшего LLM провайдера (Multi-Armed Bandit).
+    -   **Strike 3 Reflector**: Анализ повторяющихся ошибок и генерация предложений по улучшению.
+3.  **Hands (Руки)**:
+    -   **Git Automation**: Безопасное создание PR (Rule of Two).
+    -   **Prompt Optimizer**: Автоматическое улучшение системных промптов.
+
+</details>
+
+<details>
+<summary><strong>🧠 5. Cognitive Memory (GAM)</strong></summary>
+
+Человекоподобная память для долгосрочного контекста и обучения.
+
+```mermaid
+graph LR
+    User[User Input] --> Memorizer
+    
+    subgraph GAM ["Cognitive Memory"]
+        Memorizer[Memorizer]
+        Consolidator[Consolidator]
+        Compiler[Context Compiler]
+        
+        subgraph Store ["Memory Store"]
+            Episodic[Episodic (Events)]
+            Semantic[Semantic (Facts)]
+            Procedural[Procedural (Skills)]
+        end
+    end
+    
+    Memorizer --> Store
+    Consolidator --> Store
+    Store --> Compiler
+    Compiler --> LLM[LLM Context]
+```
+
+**Ключевые технологии:**
+1.  **Provenance Tracking**: Отслеживание источника каждого воспоминания (User, Inference, Dream).
+2.  **Ebbinghaus Decay**: Реалистичное "забывание" неактуальной информации со временем.
+3.  **JIT Context Compilation**: Сборка релевантного "брифинга" перед каждым запросом к LLM.
+4.  **AI Dreaming**: Фоновая консолидация памяти и генерация инсайтов во время простоя.
+
+</details>
+
 
 
 ## 🎯 Все модули платформы (38 модулей)
